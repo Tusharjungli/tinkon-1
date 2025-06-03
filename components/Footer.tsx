@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa"; // Install: npm i react-icons
+import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -8,15 +8,21 @@ export default function Footer() {
       <div className="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center md:justify-between gap-4">
         {/* Logo and Brand */}
         <div className="flex items-center gap-3">
-          {/* Replace with your logo path */}
-          <Image
-            src="/logo.png" // update to your actual logo path (public/logo.png)
-            alt="Tinkon Logo"
-            width={40}
-            height={40}
-            className="rounded-full border"
-          />
-          <span className="font-bold text-xl">Tink On It</span>
+          {/* If logo file is missing, fallback to text */}
+          <div className="flex items-center gap-2">
+            <Image
+              src="/logo.png"
+              alt="Tinkon Logo"
+              width={40}
+              height={40}
+              className="rounded-full border bg-gray-100"
+              onError={(e) => {
+                // Hide image if not found (fallback to text)
+                (e.target as HTMLImageElement).style.display = 'none';
+              }}
+            />
+            <span className="font-bold text-xl">Tink On It</span>
+          </div>
         </div>
 
         {/* Footer Nav: Required Docs */}
@@ -28,14 +34,32 @@ export default function Footer() {
 
         {/* Social Icons */}
         <div className="flex gap-5 text-gray-500">
-          <a href="https://www.linkedin.com/in/tushar-p-bb6466122/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-700">
+          <a
+            href="https://linkedin.com/in/your-linkedin"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="hover:text-blue-700"
+          >
             <FaLinkedin size={22} />
           </a>
-          <a href="https://github.com/Tusharjungli11" target="_blank" rel="noopener noreferrer" className="hover:text-black">
+          <a
+            href="https://github.com/your-github"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className="hover:text-black"
+          >
             <FaGithub size={22} />
           </a>
-          <a href="https://instagram.com/your-insta" target="_blank" rel="noopener noreferrer" className="hover:text-black">
-            <FaTwitter size={22} />
+          <a
+            href="https://instagram.com/your-insta"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="hover:text-pink-500"
+          >
+            <FaInstagram size={22} />
           </a>
         </div>
       </div>
