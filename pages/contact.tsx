@@ -9,12 +9,12 @@ export default function ContactPage() {
         <ul className="space-y-2">
           <li>
             <strong>Email:</strong>{" "}
-            <a href="mailto:your@email.com" className="text-blue-600 underline">your@email.com</a>
+            <a href="mailto:jungli0beast@gmail.com" className="text-blue-600 underline">tusharpanchal@gmail.com</a>
           </li>
           <li>
             <strong>LinkedIn:</strong>{" "}
-            <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener" className="text-blue-600 underline">
-              linkedin.com/in/your-profile
+            <a href="https://www.linkedin.com/in/tushar-p-bb6466122/" target="_blank" rel="noopener" className="text-blue-600 underline">
+              linkedin.com/in/tusharpanchal
             </a>
           </li>
         </ul>

@@ -5,7 +5,7 @@ export default function AboutPage() {
     <main className="max-w-2xl mx-auto px-4 py-16">
       <div className="flex flex-col items-center">
         <Image
-          src="/images/profile.jpg"
+          src="/images/profile.png"
           alt="Tushar Panchal"
           width={120}
           height={120}
