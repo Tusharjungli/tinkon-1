@@ -1,60 +1,90 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import Link from "next/link";
+import { format } from "date-fns";
+import matter from "gray-matter";
+import fs from "fs";
+import path from "path";
+import { MDXProvider } from "@mdx-js/react";
+import * as React from "react";
 
+// Blog post meta type
 type BlogMeta = {
   title: string;
   description: string;
   date: string;
   category: string;
   coverImage: string;
-  tags?: string[];
   slug: string;
+};
+
+type BlogDetailProps = {
+  post: BlogMeta;
   content: string;
 };
 
-export default function BlogDetailPage({ post }: { post: BlogMeta }) {
-  // 🚩 THIS MUST BE SYNC!
-  if (!post) return <div>Not found</div>;
+const BLOG_DIR = path.join(process.cwd(), "content/blog");
+
+export default function BlogDetailPage({ post, content }: BlogDetailProps) {
   return (
-    <article className="max-w-3xl mx-auto px-4 py-12">
-      <div className="mb-6">
-        <Image
-          src={post.coverImage}
-          alt={post.title}
-          width={800}
-          height={400}
-          className="rounded-2xl object-cover"
-        />
+    <article className="max-w-3xl mx-auto px-4 py-16">
+      <Link href="/blog" className="text-blue-600 underline text-sm mb-6 inline-block">
+        ← Back to all blogs
+      </Link>
+      {post.coverImage && (
+        <div className="mb-8">
+          <Image
+            src={post.coverImage}
+            alt={post.title}
+            width={800}
+            height={400}
+            className="rounded-xl object-cover w-full h-72"
+            priority
+          />
+        </div>
+      )}
+      <div className="flex items-center gap-4 mb-2 text-xs text-gray-500 uppercase">
+        <span>{post.category}</span>
+        <span>•</span>
+        <span>{format(new Date(post.date), "dd MMM yyyy")}</span>
       </div>
-      <span className="text-xs text-gray-500 uppercase">{post.category}</span>
-      <h1 className="text-4xl font-bold mb-4 mt-2">{post.title}</h1>
-      <p className="text-md text-gray-700 mb-6">{post.description}</p>
+      <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+      <p className="text-gray-600 mb-8">{post.description}</p>
       <div className="prose prose-lg max-w-none">
-        <MDXRemote source={post.content} />
+        {/* MDX content goes here */}
+        <MDXProvider>{React.createElement("div", { dangerouslySetInnerHTML: { __html: content } })}</MDXProvider>
       </div>
-      <div className="mt-8 text-xs text-gray-400">{post.date}</div>
     </article>
   );
 }
 
+// Generate static paths
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { getAllPosts } = await import("@/lib/blog");
-  const posts = getAllPosts();
-  return {
-    paths: posts.map((post) => ({
-      params: { slug: post.slug },
-    })),
-    fallback: false,
-  };
+  const files = fs.readdirSync(BLOG_DIR);
+  const paths = files
+    .filter((file) => file.endsWith(".mdx"))
+    .map((file) => ({
+      params: { slug: file.replace(/\.mdx$/, "") },
+    }));
+  return { paths, fallback: false };
 };
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { getPostBySlug } = await import("@/lib/blog");
-  const post = getPostBySlug(context.params!.slug as string);
+// Get static props
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const slug = params?.slug as string;
+  const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
+  const source = fs.readFileSync(filePath, "utf8");
+  const { data, content } = matter(source);
+
   return {
-    props: {
-      post,
+  props: {
+    post: {
+      ...data,
+      date: data.date ? String(data.date) : "",
+      slug,
     },
-  };
+    content,
+  },
+};
+
 };
