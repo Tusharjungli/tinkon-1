@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa"; // Install: npm i react-icons
 
 export default function Footer() {
   return (
@@ -21,8 +22,21 @@ export default function Footer() {
         {/* Footer Nav: Required Docs */}
         <div className="flex gap-6 text-sm text-gray-600">
           <Link href="/privacy-policy" className="hover:underline">Privacy Policy</Link>
-          <Link href="/terms" className="hover:underline">Terms of Use</Link>
+          <Link href="/terms" className="hover:underline">Terms</Link>
           <Link href="/disclaimer" className="hover:underline">Disclaimer</Link>
+        </div>
+
+        {/* Social Icons */}
+        <div className="flex gap-5 text-gray-500">
+          <a href="https://www.linkedin.com/in/tushar-p-bb6466122/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-700">
+            <FaLinkedin size={22} />
+          </a>
+          <a href="https://github.com/Tusharjungli11" target="_blank" rel="noopener noreferrer" className="hover:text-black">
+            <FaGithub size={22} />
+          </a>
+          <a href="https://instagram.com/your-insta" target="_blank" rel="noopener noreferrer" className="hover:text-black">
+            <FaTwitter size={22} />
+          </a>
         </div>
       </div>
 
