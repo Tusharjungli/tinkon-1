@@ -35,7 +35,7 @@ export default function Footer() {
         {/* Social Icons */}
         <div className="flex gap-5 text-gray-500">
           <a
-            href="https://linkedin.com/in/your-linkedin"
+            href="https://www.linkedin.com/in/tushar-p-bb6466121112/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"
@@ -53,7 +53,7 @@ export default function Footer() {
             <FaGithub size={22} />
           </a>
           <a
-            href="https://instagram.com/your-insta"
+            href="https://instagram.com/panchal_tusharr/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
