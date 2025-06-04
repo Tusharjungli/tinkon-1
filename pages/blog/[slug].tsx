@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,7 +9,6 @@ import path from "path";
 import { MDXProvider } from "@mdx-js/react";
 import * as React from "react";
 
-// Blog post meta type
 type BlogMeta = {
   title: string;
   description: string;
@@ -27,34 +27,49 @@ const BLOG_DIR = path.join(process.cwd(), "content/blog");
 
 export default function BlogDetailPage({ post, content }: BlogDetailProps) {
   return (
-    <article className="max-w-3xl mx-auto px-4 py-16">
-      <Link href="/blog" className="text-blue-600 underline text-sm mb-6 inline-block">
-        ← Back to all blogs
-      </Link>
-      {post.coverImage && (
-        <div className="mb-8">
-          <Image
-            src={post.coverImage}
-            alt={post.title}
-            width={800}
-            height={400}
-            className="rounded-xl object-cover w-full h-72"
-            priority
-          />
+    <>
+      <Head>
+        <title>{post.title} — Tink On It</title>
+        <meta name="description" content={post.description} />
+        <meta property="og:title" content={`${post.title} — Tink On It`} />
+        <meta property="og:description" content={post.description} />
+        <meta property="og:image" content={post.coverImage || "https://tinkon.in/og-image.jpg"} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://tinkon.in/blog/${post.slug}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${post.title} — Tink On It`} />
+        <meta name="twitter:description" content={post.description} />
+        <meta name="twitter:image" content={post.coverImage || "https://tinkon.in/og-image.jpg"} />
+      </Head>
+      <article className="max-w-3xl mx-auto px-4 py-16">
+        <Link href="/blog" className="text-blue-600 underline text-sm mb-6 inline-block">
+          ← Back to all blogs
+        </Link>
+        {post.coverImage && (
+          <div className="mb-8">
+            <Image
+              src={post.coverImage}
+              alt={post.title}
+              width={800}
+              height={400}
+              className="rounded-xl object-cover w-full h-72"
+              priority
+            />
+          </div>
+        )}
+        <div className="flex items-center gap-4 mb-2 text-xs text-gray-500 uppercase">
+          <span>{post.category}</span>
+          <span>•</span>
+          <span>{format(new Date(post.date), "dd MMM yyyy")}</span>
         </div>
-      )}
-      <div className="flex items-center gap-4 mb-2 text-xs text-gray-500 uppercase">
-        <span>{post.category}</span>
-        <span>•</span>
-        <span>{format(new Date(post.date), "dd MMM yyyy")}</span>
-      </div>
-      <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-      <p className="text-gray-600 mb-8">{post.description}</p>
-      <div className="prose prose-lg max-w-none">
-        {/* MDX content goes here */}
-        <MDXProvider>{React.createElement("div", { dangerouslySetInnerHTML: { __html: content } })}</MDXProvider>
-      </div>
-    </article>
+        <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+        <p className="text-gray-600 mb-8">{post.description}</p>
+        <div className="prose prose-lg max-w-none">
+          {/* MDX content goes here */}
+          <MDXProvider>{React.createElement("div", { dangerouslySetInnerHTML: { __html: content } })}</MDXProvider>
+        </div>
+      </article>
+    </>
   );
 }
 
@@ -77,14 +92,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { data, content } = matter(source);
 
   return {
-  props: {
-    post: {
-      ...data,
-      date: data.date ? String(data.date) : "",
-      slug,
+    props: {
+      post: {
+        ...data,
+        date: data.date ? String(data.date) : "",
+        slug,
+      },
+      content,
     },
-    content,
-  },
-};
-
+  };
 };
