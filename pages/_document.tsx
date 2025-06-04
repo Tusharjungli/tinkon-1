@@ -5,6 +5,8 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
         {/* Basic SEO */}
         <meta name="description" content="Tink On It – Real, raw stories on life, dogs, tech, and the journey of an introvert." />
         <meta name="keywords" content="blog, introvert, dogs, tech, life, maturity, brainstorming, personal stories, Tushar Panchal" />

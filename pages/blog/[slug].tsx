@@ -6,8 +6,13 @@ import { format } from "date-fns";
 import matter from "gray-matter";
 import fs from "fs";
 import path from "path";
-import { MDXProvider } from "@mdx-js/react";
-import * as React from "react";
+import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
+import Quote from "../../components/Quote";
+import Note from "../../components/Note";
+import Warning from "../../components/Warning";
+import Divider from "../../components/Divider";
+
 
 type BlogMeta = {
   title: string;
@@ -20,16 +25,26 @@ type BlogMeta = {
 
 type BlogDetailProps = {
   post: BlogMeta;
-  content: string;
+  mdxSource: MDXRemoteSerializeResult;
 };
 
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
 
-export default function BlogDetailPage({ post, content }: BlogDetailProps) {
+// MDX custom components mapping
+const mdxComponents = {
+  Image,
+  Quote,
+  Note,
+  Warning,
+  Divider,
+  // You can add more custom components here, like Quote, Note, etc.
+};
+
+export default function BlogDetailPage({ post, mdxSource }: BlogDetailProps) {
   return (
     <>
       <Head>
-        <title>{post.title} — Tink On It</title>
+        <title>{`${post.title} — Tink On It`}</title>
         <meta name="description" content={post.description} />
         <meta property="og:title" content={`${post.title} — Tink On It`} />
         <meta property="og:description" content={post.description} />
@@ -65,15 +80,14 @@ export default function BlogDetailPage({ post, content }: BlogDetailProps) {
         <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
         <p className="text-gray-600 mb-8">{post.description}</p>
         <div className="prose prose-lg max-w-none">
-          {/* MDX content goes here */}
-          <MDXProvider>{React.createElement("div", { dangerouslySetInnerHTML: { __html: content } })}</MDXProvider>
+          <MDXRemote {...mdxSource} components={mdxComponents} />
         </div>
       </article>
     </>
   );
 }
 
-// Generate static paths
+// Generate static paths for blog posts
 export const getStaticPaths: GetStaticPaths = async () => {
   const files = fs.readdirSync(BLOG_DIR);
   const paths = files
@@ -84,12 +98,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false };
 };
 
-// Get static props
+// Fetch post data and serialize MDX at build time
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string;
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
   const source = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(source);
+
+  const mdxSource = await serialize(content);
 
   return {
     props: {
@@ -98,7 +114,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         date: data.date ? String(data.date) : "",
         slug,
       },
-      content,
+      mdxSource,
     },
   };
 };
