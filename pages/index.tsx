@@ -2,6 +2,8 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { getAllPosts, BlogMeta } from "@/lib/blog";
+import dynamic from "next/dynamic";
+const FloatingFeedback = dynamic(() => import("@/components/FloatingFeedback"), { ssr: false });
 
 type HomeProps = {
   featured: BlogMeta | null;
@@ -147,6 +149,7 @@ export default function Home({ featured, highlights }: HomeProps) {
           Or scroll down and get lost in the chaos of my head.
         </p>
       </section>
+      <FloatingFeedback />
     </>
   );
 }

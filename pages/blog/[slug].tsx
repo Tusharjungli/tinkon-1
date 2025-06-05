@@ -13,7 +13,6 @@ import Note from "../../components/Note";
 import Warning from "../../components/Warning";
 import Divider from "../../components/Divider";
 
-
 type BlogMeta = {
   title: string;
   description: string;
@@ -37,7 +36,6 @@ const mdxComponents = {
   Note,
   Warning,
   Divider,
-  // You can add more custom components here, like Quote, Note, etc.
 };
 
 export default function BlogDetailPage({ post, mdxSource }: BlogDetailProps) {
@@ -55,16 +53,55 @@ export default function BlogDetailPage({ post, mdxSource }: BlogDetailProps) {
         <meta name="twitter:title" content={`${post.title} — Tink On It`} />
         <meta name="twitter:description" content={post.description} />
         <meta name="twitter:image" content={post.coverImage || "https://tinkon.in/og-image.jpg"} />
+        {/* SEO Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              "headline": post.title,
+              "image": post.coverImage,
+              "author": {
+                "@type": "Person",
+                "name": "Tushar Panchal"
+              },
+              "datePublished": post.date,
+              "publisher": {
+                "@type": "Organization",
+                "name": "Tink On It",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://tinkon.in/og-image.jpg"
+                }
+              },
+              "description": post.description,
+              "url": `https://tinkon.in/blog/${post.slug}`,
+              "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": `https://tinkon.in/blog/${post.slug}`
+              }
+            }),
+          }}
+        />
       </Head>
       <article className="max-w-3xl mx-auto px-4 py-16">
+        {/* Breadcrumbs */}
+        <nav className="text-xs text-gray-400 mb-3">
+          <Link href="/" className="hover:underline">Home</Link> /{" "}
+          <Link href="/blog" className="hover:underline">Blog</Link> /{" "}
+          <span className="text-gray-500">{post.title}</span>
+        </nav>
+        {/* Back link */}
         <Link href="/blog" className="text-blue-600 underline text-sm mb-6 inline-block">
           ← Back to all blogs
         </Link>
+        {/* Blog cover image */}
         {post.coverImage && (
           <div className="mb-8">
             <Image
               src={post.coverImage}
-              alt={post.title}
+              alt={`Cover image for blog post '${post.title}'`}
               width={800}
               height={400}
               className="rounded-xl object-cover w-full h-72"
@@ -72,15 +109,38 @@ export default function BlogDetailPage({ post, mdxSource }: BlogDetailProps) {
             />
           </div>
         )}
-        <div className="flex items-center gap-4 mb-2 text-xs text-gray-500 uppercase">
-          <span>{post.category}</span>
-          <span>•</span>
-          <span>{format(new Date(post.date), "dd MMM yyyy")}</span>
-        </div>
+        {/* Meta info */}
+        <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400 uppercase mb-4">
+        <span>{format(new Date(post.date), "dd MMM yyyy")}</span>
+        <span>—</span>
+        <span>{post.category}</span>
+      </div>
+
+        {/* Title */}
         <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+        {/* Description */}
         <p className="text-gray-600 mb-8">{post.description}</p>
+        {/* Blog Content */}
         <div className="prose prose-lg max-w-none">
           <MDXRemote {...mdxSource} components={mdxComponents} />
+        </div>
+        {/* Internal linking - Related posts (customize these links) */}
+        <hr className="my-10" />
+        <div className="text-gray-600 text-base">
+          <strong>Liked this?</strong> You might also enjoy:
+          <ul className="list-disc list-inside mt-2">
+            <li>
+              <Link href="/blog/building-tinkon" className="underline text-indigo-600">
+                Building Tinkon: The Messy, Honest Truth
+              </Link>
+            </li>
+            <li>
+              <Link href="/blog/hello-world" className="underline text-indigo-600">
+                Hello World (First Blog)
+              </Link>
+            </li>
+            {/* Add/change links as you write more blogs */}
+          </ul>
         </div>
       </article>
     </>
