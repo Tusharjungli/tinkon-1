@@ -11,6 +11,34 @@ const ChatIcon = (
 export default function FloatingFeedback() {
   const [open, setOpen] = useState(false);
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  // AJAX Formspree handler
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch("https://formspree.io/f/manjnpzn", {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        setSent(true);
+        form.reset();
+      } else {
+        setError("Something went wrong. Please try again!");
+      }
+    } catch {
+      setError("Could not send feedback. Check your connection!");
+    }
+    setLoading(false);
+  }
 
   return (
     <>
@@ -30,14 +58,14 @@ export default function FloatingFeedback() {
 
       {/* GLASSY MODAL */}
       {open && (
-        <div className="fixed inset-0 z-50 bg-black/30 flex justify-end items-end">
+        <div className="fixed inset-0 z-50 bg-black/30 flex justify-end items-end sm:items-center sm:justify-center">
           <div
-            className="relative w-[90vw] max-w-md m-6 rounded-2xl p-8 shadow-2xl
-                      bg-white/80 backdrop-blur-xl border border-white/40"
+            className="relative w-[95vw] max-w-md m-4 rounded-2xl p-8 shadow-2xl
+                      bg-white/90 backdrop-blur-xl border border-white/40"
           >
             {/* Close (X) */}
             <button
-              onClick={() => { setOpen(false); setSent(false); }}
+              onClick={() => { setOpen(false); setSent(false); setError(""); setLoading(false); }}
               className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-gray-600 transition"
               aria-label="Close"
               style={{ background: "transparent", border: "none" }}
@@ -53,21 +81,41 @@ export default function FloatingFeedback() {
             </div>
             {!sent ? (
               <form
-                action="https://formspree.io/f/manjnpzn" // <-- Replace with your real Formspree endpoint!
-                method="POST"
-                target="_blank"
-                onSubmit={() => setSent(true)}
+                onSubmit={handleSubmit}
                 className="flex flex-col gap-3"
                 autoComplete="off"
               >
-                <input type="text" name="name" required placeholder="Your name" className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-indigo-300 transition" />
-                <input type="email" name="email" required placeholder="Your email" className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-indigo-300 transition" />
-                <textarea name="message" required placeholder="Your feedback or story..." rows={4} className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-indigo-300 transition" />
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  disabled={loading}
+                  placeholder="Your name"
+                  className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-indigo-300 transition"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  disabled={loading}
+                  placeholder="Your email"
+                  className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-indigo-300 transition"
+                />
+                <textarea
+                  name="message"
+                  required
+                  disabled={loading}
+                  placeholder="Your feedback or story..."
+                  rows={4}
+                  className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-indigo-300 transition"
+                />
+                {error && <div className="text-red-500 text-sm font-semibold">{error}</div>}
                 <button
                   type="submit"
-                  className="bg-gradient-to-r from-indigo-500 to-pink-500 text-white font-semibold rounded-lg py-2 mt-2 shadow-lg hover:opacity-90 transition"
+                  disabled={loading}
+                  className="bg-gradient-to-r from-indigo-500 to-pink-500 text-white font-semibold rounded-lg py-2 mt-2 shadow-lg hover:opacity-90 transition disabled:opacity-60"
                 >
-                  Send
+                  {loading ? "Sending..." : "Send"}
                 </button>
               </form>
             ) : (

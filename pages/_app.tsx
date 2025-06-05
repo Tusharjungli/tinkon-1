@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Poppins } from "next/font/google";
+import FloatingFeedback from "../components/FloatingFeedback";
 
 // Configure Poppins font
 const poppins = Poppins({
@@ -18,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </main>
       <Footer />
+      <FloatingFeedback />
     </div>
   );
 }
