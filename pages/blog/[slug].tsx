@@ -104,7 +104,7 @@ export default function BlogDetailPage({ post, mdxSource }: BlogDetailProps) {
               alt={`Cover image for blog post '${post.title}'`}
               width={800}
               height={400}
-              className="rounded-xl object-cover w-full h-72"
+              className="rounded-xl object-contain w-full max-h-[400px] bg-gray-100"
               priority
             />
           </div>
@@ -115,7 +115,6 @@ export default function BlogDetailPage({ post, mdxSource }: BlogDetailProps) {
         <span>—</span>
         <span>{post.category}</span>
       </div>
-
         {/* Title */}
         <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
         {/* Description */}

@@ -23,6 +23,7 @@ const CATEGORIES = [
   "Brainstorming",
   "Personal Stories",
   "Introvert",
+  "Coming Soon",
 ];
 
 export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
@@ -69,6 +70,20 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
             </Link>
           ))}
         </div>
+
+        {/* Prompt for Coming Soon category */}
+        {selected === "Coming Soon" && (
+          <div className="mb-8 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg text-left">
+            <div className="text-base text-yellow-900 font-semibold mb-1">
+              📝 Drop your feedback or ideas below—what do you want to read in this story?
+            </div>
+            <div className="text-gray-700 text-sm">
+              Share your thoughts using the <strong>feedback button</strong> at the bottom right—or{" "}
+              <Link href="/contact" className="underline text-indigo-600">contact me</Link> directly!
+            </div>
+          </div>
+        )}
+
         <ul>
           {filtered.length === 0 && (
             <div className="text-gray-500 italic text-center py-16">
