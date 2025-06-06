@@ -21,7 +21,7 @@ export default function Navbar() {
     <nav className="w-full border-b bg-white sticky top-0 z-10">
       <div className="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
         <Link href="/" className="text-2xl font-extrabold tracking-tight">
-          Tink<span className="font-black text-black">On</span>It
+          Tink<span className="font-black text-black">on</span>.in
         </Link>
         {/* Desktop Nav */}
         <div className="hidden sm:flex gap-6 text-sm font-medium relative">
