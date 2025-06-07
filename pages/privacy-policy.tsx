@@ -3,7 +3,7 @@ export default function PrivacyPolicy() {
     <section className="max-w-2xl mx-auto py-24 px-6">
       <h2 className="text-3xl font-bold mb-6">Privacy Policy</h2>
       <p className="mb-3">
-        <b>Last updated:</b> June 2024
+        <b>Last updated:</b> June 2025
       </p>
       <p className="mb-3">
         Welcome to <b>Tink On It</b> (<b>&quot;us&quot;, &quot;we&quot;, or &quot;our&quot;</b>). Your privacy is important to us.
