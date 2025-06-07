@@ -4,13 +4,13 @@ export default function Disclaimer() {
       <h2 className="text-3xl font-bold mb-6">Disclaimer</h2>
       <p className="mb-3"><b>Last updated:</b> June 2025</p>
       <p className="mb-3">
-        All content provided on <b>Tink On It</b> is for informational purposes only. The owner of this blog makes no representations as to the accuracy or completeness of any information on this site or found by following any link on this site.
+        The content on <b>Tink On It</b> is just for sharing ideas and experiences. I try to keep everything real and honest, but I can&apos;t guarantee all info is always accurate or up-to-date. Any actions you take based on what you read here are strictly at your own risk.
       </p>
       <p className="mb-3">
-        <b>Tink On It</b> will not be liable for any errors or omissions in this information nor for the availability of this information. The owner will not be liable for any losses, injuries, or damages from the display or use of this information.
+        <b>Tink On It</b> and its owner are not responsible for any losses, injuries, or damages resulting from use of this site or content. All links to external sites are for reference only—I have no control over their content.
       </p>
       <p>
-        This policy is subject to change at any time.
+        This disclaimer may change without notice, so please check back if you’re concerned.
       </p>
     </section>
   );

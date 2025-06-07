@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
+import { FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6"; // X (Twitter) icon
 
 export default function Footer() {
   return (
@@ -8,7 +9,6 @@ export default function Footer() {
       <div className="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center md:justify-between gap-4">
         {/* Logo and Brand */}
         <div className="flex items-center gap-3">
-          {/* If logo file is missing, fallback to text */}
           <div className="flex items-center gap-2">
             <Image
               src="/logo.png"
@@ -17,7 +17,6 @@ export default function Footer() {
               height={40}
               className="rounded-full border bg-gray-100"
               onError={(e) => {
-                // Hide image if not found (fallback to text)
                 (e.target as HTMLImageElement).style.display = 'none';
               }}
             />
@@ -44,13 +43,12 @@ export default function Footer() {
             <FaLinkedin size={22} />
           </a>
           <a
-            href="https://github.com/your-github"
-            target="_blank"
+            href="https://x.com/tushar_tinkon" 
             rel="noopener noreferrer"
-            aria-label="GitHub"
+            aria-label="Twitter"
             className="hover:text-black"
           >
-            <FaGithub size={22} />
+            <FaXTwitter size={23} />
           </a>
           <a
             href="https://instagram.com/panchal_tusharr/"

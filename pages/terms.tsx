@@ -2,29 +2,29 @@ export default function Terms() {
   return (
     <section className="max-w-2xl mx-auto py-24 px-6">
       <h2 className="text-3xl font-bold mb-6">Terms of Use</h2>
-      <p className="mb-3"><b>Last updated:</b> June 2024</p>
+      <p className="mb-3"><b>Last updated:</b> June 2025</p>
       <p className="mb-3">
-        By using <b>Tink On It</b> (&quot;the Site&quot;), you agree to these Terms of Use. If you do not agree, please do not use this site.
+        By using <b>Tink On It</b> (“the Site”), you agree to these terms. If you don’t agree, please don’t use the site.
       </p>
-      <h3 className="text-xl font-semibold mt-8 mb-2">Content</h3>
+      <h3 className="text-xl font-semibold mt-8 mb-2">Content & Use</h3>
       <p className="mb-3">
-        All posts, articles, and opinions on this blog are for informational purposes only. We are not responsible for any actions you take based on the content here.
+        Everything here is for information and inspiration only—not official advice. Please use your own judgment before acting on anything you read.
       </p>
-      <h3 className="text-xl font-semibold mt-8 mb-2">Intellectual Property</h3>
+      <h3 className="text-xl font-semibold mt-8 mb-2">Originality & Copyright</h3>
       <p className="mb-3">
-        All content on this site is original unless credited. Please do not copy or republish without permission.
+        All writing and images are original unless otherwise credited. Please don’t copy or reuse without permission—just ask if you want to share!
       </p>
-      <h3 className="text-xl font-semibold mt-8 mb-2">User Conduct</h3>
+      <h3 className="text-xl font-semibold mt-8 mb-2">Respectful Conduct</h3>
       <p className="mb-3">
-        Please use this site respectfully. Do not post spam or abusive content.
+        Treat this space and other readers with respect. No spam, hate, or abuse. We reserve the right to moderate comments or content.
       </p>
-      <h3 className="text-xl font-semibold mt-8 mb-2">Liability</h3>
+      <h3 className="text-xl font-semibold mt-8 mb-2">No Liability</h3>
       <p className="mb-3">
-        We do our best to provide accurate information, but cannot guarantee the completeness or reliability of any content.
+        We try to keep info accurate and up-to-date, but can’t promise perfection. Use the site at your own risk.
       </p>
-      <h3 className="text-xl font-semibold mt-8 mb-2">Changes</h3>
+      <h3 className="text-xl font-semibold mt-8 mb-2">Updates</h3>
       <p>
-        We may update these terms at any time. Changes will be posted on this page.
+        Terms may change any time. Check this page for updates if you care about the fine print.
       </p>
     </section>
   );
