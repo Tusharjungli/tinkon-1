@@ -12,6 +12,8 @@ import Quote from "../../components/Quote";
 import Note from "../../components/Note";
 import Warning from "../../components/Warning";
 import Divider from "../../components/Divider";
+import BookmarkButton from "../../components/BookmarkButton";
+import SharePopover from "../../components/SharePopover";
 
 type BlogMeta = {
   title: string;
@@ -31,7 +33,6 @@ type BlogDetailProps = {
 
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
 
-// MDX custom components mapping
 const mdxComponents = {
   Image,
   Quote,
@@ -41,6 +42,7 @@ const mdxComponents = {
 };
 
 export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDetailProps) {
+  const url = `https://tinkon.in/blog/${post.slug}`;
   return (
     <>
       <Head>
@@ -50,7 +52,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
         <meta property="og:description" content={post.description} />
         <meta property="og:image" content={post.coverImage || "https://tinkon.in/og-image.jpg"} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://tinkon.in/blog/${post.slug}`} />
+        <meta property="og:url" content={url} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${post.title} — Tink On It`} />
         <meta name="twitter:description" content={post.description} />
@@ -64,25 +66,16 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
               "@type": "BlogPosting",
               "headline": post.title,
               "image": post.coverImage,
-              "author": {
-                "@type": "Person",
-                "name": "Tushar Panchal"
-              },
+              "author": { "@type": "Person", "name": "Tushar Panchal" },
               "datePublished": post.date,
               "publisher": {
                 "@type": "Organization",
                 "name": "Tink On It",
-                "logo": {
-                  "@type": "ImageObject",
-                  "url": "https://tinkon.in/og-image.jpg"
-                }
+                "logo": { "@type": "ImageObject", "url": "https://tinkon.in/og-image.jpg" }
               },
               "description": post.description,
-              "url": `https://tinkon.in/blog/${post.slug}`,
-              "mainEntityOfPage": {
-                "@type": "WebPage",
-                "@id": `https://tinkon.in/blog/${post.slug}`
-              }
+              "url": url,
+              "mainEntityOfPage": { "@type": "WebPage", "@id": url }
             }),
           }}
         />
@@ -117,8 +110,12 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
           <span>—</span>
           <span>{post.category}</span>
         </div>
-        {/* Title */}
-        <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+        {/* Title + Bookmark + Share */}
+        <div className="flex items-center gap-2 mb-2">
+          <h1 className="text-4xl font-bold">{post.title}</h1>
+          <BookmarkButton slug={post.slug} title={post.title} />
+          <SharePopover url={url} title={post.title} />
+        </div>
         {/* Description */}
         <p className="text-gray-600 mb-8">{post.description}</p>
         {/* Blog Content */}
