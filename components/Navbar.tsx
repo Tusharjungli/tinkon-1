@@ -104,9 +104,6 @@ export default function Navbar() {
               <Link href="/contact" className="py-2 hover:underline" onClick={() => setMobileOpen(false)}>
                 Contact
               </Link>
-              <Link href="/coming-soon" className="hover:underline">
-              🕒 Coming Soon
-              </Link>
 
             </div>
           </div>

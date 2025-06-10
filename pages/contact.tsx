@@ -24,7 +24,7 @@ export default function Contact() {
         <div className="space-y-2 text-base text-gray-800">
           <div>
             <span className="font-semibold">Email: </span>
-            <a href="mailto:tusharpanchal@gmail.com" className="underline text-blue-600">
+            <a href="mailto:jungli0beast@gmail.com" className="underline text-blue-600">
               tusharpanchal@gmail.com
             </a>
           </div>

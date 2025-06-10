@@ -20,7 +20,8 @@ export default function Footer() {
                 (e.target as HTMLImageElement).style.display = 'none';
               }}
             />
-            <span className="font-bold text-xl">Tink On It</span>
+            <Link href="/" className="font-bold text-xl hover:underline" aria-label="Home">Tink On It</Link>
+
           </div>
         </div>
 
@@ -34,7 +35,7 @@ export default function Footer() {
         {/* Social Icons */}
         <div className="flex gap-5 text-gray-500">
           <a
-            href="https://www.linkedin.com/in/tushar-p-bb6466121112/"
+            href="https://www.linkedin.com/in/tushar-p-bb6466122/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"

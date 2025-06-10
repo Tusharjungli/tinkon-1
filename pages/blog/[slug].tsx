@@ -14,6 +14,8 @@ import Warning from "../../components/Warning";
 import Divider from "../../components/Divider";
 import BookmarkButton from "../../components/BookmarkButton";
 import SharePopover from "../../components/SharePopover";
+import { motion } from "framer-motion";
+
 
 type BlogMeta = {
   title: string;
@@ -93,17 +95,26 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
         </Link>
         {/* Blog cover image */}
         {post.coverImage && (
-          <div className="mb-8">
+          <motion.div
+            className="mb-8"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          >
             <Image
               src={post.coverImage}
               alt={`Cover image for blog post '${post.title}'`}
               width={800}
               height={400}
-              className="rounded-xl object-contain w-full max-h-[400px] bg-gray-100"
+              className="rounded-xl mx-auto shadow-lg"
+              style={{ width: "100%", height: "auto" }} // ensures responsive and not cropped
               priority
+              placeholder="blur"
+              blurDataURL="/images/blur-placeholder.png"
             />
-          </div>
+          </motion.div>
         )}
+
         {/* Meta info */}
         <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400 uppercase mb-4">
           <span>{format(new Date(post.date), "dd MMM yyyy")}</span>
