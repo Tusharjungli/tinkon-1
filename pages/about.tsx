@@ -41,27 +41,29 @@ export default function AboutPage() {
               Hi, I&apos;m <b>Tushar</b>—born and raised in Bhiwani, Haryana: a city with just enough chaos to keep life interesting, and enough peace on the edges for an introvert like me to hide out and recharge.
             </p>
             <p>
-              As a kid, I was that quiet observer in the back of the class, watching people&apos;s habits and gestures like I was studying for a final exam in “How to Be Human.” (Spoiler: I still haven&apos;t passed.) Teachers said, “Don’t copy.” I say, “What is life but a remix?” Even Apple copied nature.
+              As a kid, I was that quiet observer in the back of the class, watching people&apos;s habits and gestures like I was studying for a final exam in &ldquo;How to Be Human.&rdquo; <span className="italic">(Spoiler: I still haven&apos;t passed.)</span> Teachers always said, &ldquo;Don&apos;t copy.&rdquo; I say, <span className="font-semibold">&ldquo;What is life but a remix?&rdquo;</span> Even Apple copied nature.
             </p>
             <p>
-              I’m stubborn in a calm way—a weird combo that means I won’t fight you, but I definitely won’t agree with you either. I fake it in social situations because it’s easier than explaining why I’d rather hang out with my dog than a group of loud humans. Sometimes I fake it when I’m alone, just for practice. (I know, it’s a work in progress.)
+              I&apos;m stubborn in a calm way—a weird combo that means I won&apos;t fight you, but I definitely won&apos;t agree with you either. I fake it in social situations because it&apos;s easier than explaining why I&apos;d rather hang out with my dog than a group of loud humans. <span className="italic">(Sometimes I even fake conversations when I&apos;m alone, just for practice. I know—it&apos;s a work in progress.)</span>
             </p>
             <p>
-              Writing isn’t just my escape—it’s my sanity button. My brain buzzes 24/7, and dumping those thoughts onto a page is the only way I can get a little peace. Turns out, putting your feelings into words is the cheapest therapy out there, and no one tries to fix you with “just think positive!” advice.
+              Writing isn&apos;t just my escape—it&apos;s my sanity button. My brain buzzes 24/7, and dumping those thoughts onto a page is the only way I can get a little peace. Turns out, putting your feelings into words is the cheapest therapy out there, and no one interrupts you with unwanted &ldquo;just think positive!&rdquo; advice.
             </p>
             <p>
-              These days, you’ll catch me soaking in the quiet—reading under a tree, counting stars, or having deep, one-sided conversations with dogs. Dogs just get it, you know? They don’t judge if you overthink everything, or if your idea of a good time is watching leaves fall instead of scrolling through Reels.
+              These days, you&apos;ll catch me soaking in the quiet—reading under a tree, counting stars, or having deep, one-sided conversations with my dog (Harry). <span className="font-semibold">Dogs just get it, you know?</span> They don&apos;t judge if you overthink everything, or if your idea of a good time is watching leaves fall instead of scrolling through Reels.
             </p>
             <p>
-              If you take anything from my writing, let it be this: squeeze out your thoughts like ketchup. Let the mess out, put it on paper, and see what happens. Life isn’t meant to be bottled up or perfectly filtered. (That’s what Instagram is for.)
+              <span className="font-semibold">If you take anything from my writing, let it be this:</span>
+              <br />
+              Squeeze out your thoughts like ketchup. Let the mess out, put it on paper, and see what happens. Life isn&apos;t meant to be bottled up or perfectly filtered—<span className="italic">(that&apos;s what Instagram is for.)</span>
             </p>
             <p>
-              So, welcome to <b>Tink On It</b>—my little patch of the internet for raw thoughts, unfinished stories, dog wisdom, and the kind of honesty you usually only share with Google Search at 2am.
+              So, welcome to <b>Tink On It</b>—my little patch of the internet for raw thoughts, unfinished stories, dog wisdom, and the kind of honesty you usually only share with Google Search at 2 am.
             </p>
           </div>
           <p className="text-gray-500 text-center mt-8 italic">
             <span>
-              Still here? Thanks for reading the unfiltered me. If we ever meet, I’ll probably act awkward and forget how to end a conversation. But hey, that’s why I have a blog.
+              Still here? Thanks for reading the unfiltered me. If we ever meet, I&apos;ll probably act awkward and forget how to end the conversation. But hey, that&apos;s why I have a blog.
             </span>
           </p>
         </div>

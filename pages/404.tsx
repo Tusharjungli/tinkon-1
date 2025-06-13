@@ -14,7 +14,6 @@ export default function FloatingFeedback() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [showTooltip, setShowTooltip] = useState(false);
 
   // AJAX Formspree handler
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -44,11 +43,9 @@ export default function FloatingFeedback() {
 
   return (
     <>
-      {/* FAB BUTTON with animated tooltip */}
+      {/* FAB BUTTON with subtle pop-in animation */}
       <motion.button
-        onMouseEnter={() => setShowTooltip(true)}
-        onMouseLeave={() => setShowTooltip(false)}
-        onClick={() => { setShowTooltip(false); setOpen(true); }}
+        onClick={() => setOpen(true)}
         className="fixed z-50 bottom-8 right-8 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-xl hover:scale-105 transition-transform
                    text-white rounded-full w-16 h-16 flex items-center justify-center backdrop-blur-lg bg-opacity-80 border-none"
         aria-label="Feedback"
@@ -61,21 +58,6 @@ export default function FloatingFeedback() {
         transition={{ duration: 0.4, ease: "easeOut" }}
       >
         {ChatIcon}
-        {/* Tooltip */}
-        <AnimatePresence>
-          {showTooltip && !open && (
-            <motion.div
-              initial={{ opacity: 0, y: 10, scale: 0.96 }}
-              animate={{ opacity: 1, y: -36, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.96 }}
-              transition={{ duration: 0.22, ease: "easeOut" }}
-              className="absolute bottom-full right-1/2 translate-x-1/2 bg-white px-3 py-1 rounded-lg text-xs text-gray-800 shadow-md border border-gray-200 whitespace-nowrap pointer-events-none"
-              style={{ marginBottom: '8px', zIndex: 9999 }}
-            >
-              Got a thought? I read every one!
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.button>
 
       {/* Modal with AnimatePresence for smooth fade/slide-in */}
@@ -110,12 +92,7 @@ export default function FloatingFeedback() {
                   {ChatIcon}
                   Feedback
                 </div>
-                <p className="text-sm text-gray-500 mt-1">
-                  Your words land directly in my inbox. No bots, just me.<br />
-                  <span className="text-xs text-gray-400 mt-1 block">
-                    I promise I’m the only one reading this.
-                  </span>
-                </p>
+                <p className="text-sm text-gray-500 mt-1">Your words land directly in my inbox. No bots, just me.</p>
               </div>
               {!sent ? (
                 <form
@@ -143,7 +120,7 @@ export default function FloatingFeedback() {
                     name="message"
                     required
                     disabled={loading}
-                    placeholder="Your feedback, story, or awkward confession..."
+                    placeholder="Your feedback or story..."
                     rows={4}
                     className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-indigo-300 transition"
                   />
@@ -164,7 +141,7 @@ export default function FloatingFeedback() {
                   transition={{ duration: 0.4 }}
                 >
                   Thank you for your feedback!<br />
-                  I’ll read it soon. You made my day.
+                  I’ll read it soon.
                 </motion.div>
               )}
             </motion.div>
