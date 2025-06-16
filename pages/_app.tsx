@@ -1,5 +1,6 @@
-// _app.tsx
+// pages/_app.tsx
 import type { AppProps } from "next/app";
+import Script from "next/script";
 import "../styles/globals.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -16,8 +17,24 @@ const poppins = Poppins({
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+
   return (
     <div className={`${poppins.className} bg-white min-h-screen flex flex-col font-sans`}>
+      {/* Google Analytics scripts */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-FDQH2BHV5G"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-FDQH2BHV5G', {
+            page_path: window.location.pathname,
+          });
+        `}
+      </Script>
       <Navbar />
       <main className="flex-1">
         <AnimatePresence mode="wait" initial={false}>
