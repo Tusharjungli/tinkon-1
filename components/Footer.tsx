@@ -34,15 +34,14 @@ export default function Footer() {
 
         {/* Social Icons */}
         <div className="flex gap-5 text-gray-500">
-          <a
-            href="https://www.linkedin.com/in/tushar-p-bb6466122/"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/get-linkedin"
             aria-label="LinkedIn"
             className="hover:text-blue-700"
           >
             <FaLinkedin size={22} />
-          </a>
+          </Link>
+
           <a
             href="https://x.com/tushar_tinkon" 
             rel="noopener noreferrer"
