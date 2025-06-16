@@ -1,5 +1,6 @@
 // pages/_document.tsx
 import { Html, Head, Main, NextScript } from "next/document";
+import Script from "next/script";
 
 export default function Document() {
   return (
@@ -40,6 +41,15 @@ export default function Document() {
           content="Real, raw stories for introverts, dog lovers, and more."
         />
         <meta name="twitter:image" content="https://tinkon.in/og-image.jpg" />
+
+        {/* Google AdSense code for site verification */}
+        <Script
+          id="adsense-init"
+          async
+          strategy="afterInteractive"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2523023048414648"
+          crossOrigin="anonymous"
+        />
       </Head>
       <body>
         <Main />
