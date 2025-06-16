@@ -16,13 +16,13 @@ import BookmarkButton from "../../components/BookmarkButton";
 import SharePopover from "../../components/SharePopover";
 import { motion } from "framer-motion";
 
-
 type BlogMeta = {
   title: string;
   description: string;
   date: string;
   category: string;
   coverImage: string;
+  ogImage?: string; // custom OG image
   slug: string;
   tags?: string[];
 };
@@ -45,6 +45,8 @@ const mdxComponents = {
 
 export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDetailProps) {
   const url = `https://tinkon.in/blog/${post.slug}`;
+  const ogImage = post.ogImage || post.coverImage || "https://tinkon.in/og-image.jpg";
+
   return (
     <>
       <Head>
@@ -52,13 +54,13 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
         <meta name="description" content={post.description} />
         <meta property="og:title" content={`${post.title} — Tink On It`} />
         <meta property="og:description" content={post.description} />
-        <meta property="og:image" content={post.coverImage || "https://tinkon.in/og-image.jpg"} />
+        <meta property="og:image" content={ogImage.startsWith('http') ? ogImage : `https://tinkon.in${ogImage}`} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={url} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${post.title} — Tink On It`} />
         <meta name="twitter:description" content={post.description} />
-        <meta name="twitter:image" content={post.coverImage || "https://tinkon.in/og-image.jpg"} />
+        <meta name="twitter:image" content={ogImage.startsWith('http') ? ogImage : `https://tinkon.in${ogImage}`} />
         {/* SEO Structured Data */}
         <script
           type="application/ld+json"
@@ -67,7 +69,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
               "@context": "https://schema.org",
               "@type": "BlogPosting",
               "headline": post.title,
-              "image": post.coverImage,
+              "image": ogImage.startsWith('http') ? ogImage : `https://tinkon.in${ogImage}`,
               "author": { "@type": "Person", "name": "Tushar Panchal" },
               "datePublished": post.date,
               "publisher": {
@@ -107,7 +109,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
               width={800}
               height={400}
               className="rounded-xl mx-auto shadow-lg"
-              style={{ width: "100%", height: "auto" }} // ensures responsive and not cropped
+              style={{ width: "100%", height: "auto" }}
               priority
               placeholder="blur"
               blurDataURL="/images/blur-placeholder.png"
