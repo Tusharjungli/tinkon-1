@@ -44,11 +44,11 @@ export default function Document() {
 
         {/* Google AdSense code for site verification */}
         <Script
-          id="adsense-init"
+          id="adsense-script"
           async
-          strategy="afterInteractive"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2523023048414648"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2523023048841648"
           crossOrigin="anonymous"
+          strategy="afterInteractive"
         />
       </Head>
       <body>
