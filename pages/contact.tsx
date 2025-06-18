@@ -1,4 +1,6 @@
 import Head from "next/head";
+import Link from "next/link";
+
 
 export default function Contact() {
   return (
@@ -30,14 +32,14 @@ export default function Contact() {
           </div>
           <div>
             <span className="font-semibold">LinkedIn: </span>
-            <a
-              href="https://www.linkedin.com/in/tushar-p-bb6466122/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/get-linkedin"
               className="underline text-blue-600"
+              aria-label="LinkedIn"
             >
               linkedin.com/in/tusharpanchal
-            </a>
+            </Link>
+
           </div>
         </div>
         <div className="text-gray-500 pt-6 text-sm">
