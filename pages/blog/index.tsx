@@ -3,6 +3,8 @@ import { GetStaticProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
+import { format } from "date-fns";
+
 
 type BlogMeta = {
   title: string;
@@ -23,7 +25,6 @@ const CATEGORIES = [
   "Brainstorming",
   "Personal Stories",
   "Introvert",
-  "Coming Soon",
 ];
 
 export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
@@ -71,18 +72,7 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
           ))}
         </div>
 
-        {/* Prompt for Coming Soon category */}
-        {selected === "Coming Soon" && (
-          <div className="mb-8 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded-lg text-left">
-            <div className="text-base text-yellow-900 font-semibold mb-1">
-              📝 Drop your feedback or ideas below—what do you want to read in this story?
-            </div>
-            <div className="text-gray-700 text-sm">
-              Share your thoughts using the <strong>feedback button</strong> at the bottom right—or{" "}
-              <Link href="/contact" className="underline text-indigo-600">contact me</Link> directly!
-            </div>
-          </div>
-        )}
+        
 
         <ul>
           {filtered.length === 0 && (
@@ -96,8 +86,9 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
                 <h2 className="text-2xl font-bold hover:underline">{post.title}</h2>
               </Link>
               <p className="text-gray-400 text-sm mt-1 mb-2">
-                {post.date} — <span className="uppercase">{post.category}</span>
+                {format(new Date(post.date), "dd MMM yyyy")} — <span className="uppercase">{post.category}</span>
               </p>
+
               <p className="mb-1">{post.description}</p>
             </li>
           ))}

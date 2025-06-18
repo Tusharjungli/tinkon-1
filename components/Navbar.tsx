@@ -11,7 +11,6 @@ const categories = [
   "Brainstorming",
   "Personal Stories",
   "Introvert",
-  "Coming Soon",
 ];
 
 export default function Navbar() {

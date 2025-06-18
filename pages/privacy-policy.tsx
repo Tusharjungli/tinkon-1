@@ -30,7 +30,10 @@ export default function PrivacyPolicy() {
       <h3 className="text-xl font-semibold mt-8 mb-2">Contact</h3>
       <p>
         Got questions or concerns? Email me at <a href="mailto:jungli0beast@gmail.com" className="underline text-blue-600">tushar@tinkon.in</a>.
+      
       </p>
+      <p className="mt-4">
+        By using <b>Tink On It</b>, you agree to this Privacy Policy. We may update it, so check back occasionally. </p>
     </section>
   );
 }
