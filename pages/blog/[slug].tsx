@@ -15,6 +15,8 @@ import Divider from "../../components/Divider";
 import BookmarkButton from "../../components/BookmarkButton";
 import SharePopover from "../../components/SharePopover";
 import { motion } from "framer-motion";
+import Breadcrumb from "../../components/Breadcrumb";
+//import EmojiReactions from "../../components/EmojiReactions";
 
 type BlogMeta = {
   title: string;
@@ -22,7 +24,7 @@ type BlogMeta = {
   date: string;
   category: string;
   coverImage: string;
-  ogImage?: string; // custom OG image
+  ogImage?: string;
   slug: string;
   tags?: string[];
 };
@@ -83,14 +85,46 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
             }),
           }}
         />
+        {/* Breadcrumb JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://tinkon.in/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Blog",
+                  "item": "https://tinkon.in/blog"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": post.title,
+                  "item": url
+                }
+              ]
+            })
+          }}
+        />
       </Head>
       <article className="max-w-3xl mx-auto px-4 py-16">
-        {/* Breadcrumbs */}
-        <nav className="text-xs text-gray-400 mb-3">
-          <Link href="/" className="hover:underline">Home</Link> /{" "}
-          <Link href="/blog" className="hover:underline">Blog</Link> /{" "}
-          <span className="text-gray-500">{post.title}</span>
-        </nav>
+        {/* Polished Breadcrumbs */}
+        <Breadcrumb
+          items={[
+            { name: "Home", href: "/" },
+            { name: "Blog", href: "/blog" },
+            { name: post.title }
+          ]}
+        />
         {/* Back link */}
         <Link href="/blog" className="text-blue-600 underline text-sm mb-6 inline-block">
           ← Back to all blogs
@@ -135,6 +169,8 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
         <div className="prose prose-lg max-w-none">
           <MDXRemote {...mdxSource} components={mdxComponents} />
         </div>
+        {/* Emoji Reactions */}
+        {/*<EmojiReactions />*/}
         {/* Recommendations */}
         {recommended && recommended.length > 0 && (
           <>
