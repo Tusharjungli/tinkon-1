@@ -9,6 +9,7 @@ const categories = [
   "Maturity",
   "Tech",
   "Brainstorming",
+  "Spiritual",
   "Personal Stories",
   "Introvert",
 ];

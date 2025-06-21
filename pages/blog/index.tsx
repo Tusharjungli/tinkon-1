@@ -23,6 +23,7 @@ const CATEGORIES = [
   "Maturity",
   "Tech",
   "Brainstorming",
+  "Spiritual",
   "Personal Stories",
   "Introvert",
 ];
