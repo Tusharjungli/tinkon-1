@@ -40,7 +40,7 @@ export default function GetLinkedIn() {
         <meta name="robots" content="noindex, nofollow" />
       </Head>
       <main className="max-w-lg mx-auto py-28 px-6 flex flex-col items-center text-center">
-        <h1 className="text-3xl font-bold mb-2">🔒 LinkedIn On Request</h1>
+        <h1 className="text-3xl font-bold mb-2"> LinkedIn On Request</h1>
         <p className="mb-8 text-gray-600">
           I only share my LinkedIn with genuine people and collaborators.<br />
           If you’re looking to connect for real, <b>just drop your email and a short note</b> below.<br />
