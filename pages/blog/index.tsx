@@ -57,8 +57,8 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
       <div className="max-w-3xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold mb-8">Blog</h1>
         
-        {/* Category Filter */}
-        <div className="flex flex-wrap gap-3 mb-10 sticky top-2 z-10 bg-white/80 backdrop-blur-sm py-2">
+        {/* Category Filter - now just a simple row, not sticky or z-indexed */}
+        <div className="flex flex-wrap gap-3 mb-10 bg-white py-2">
           {CATEGORIES.map((cat) => (
             <Link
               key={cat}
@@ -67,8 +67,7 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
               className={`px-4 py-2 rounded-full border text-sm font-semibold transition
                 ${selected === cat
                   ? "bg-black text-white border-black"
-                  : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200 hover:text-black"}
-              `}
+                  : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200 hover:text-black"}`}
               style={{ textDecoration: "none" }}
             >
               {cat}

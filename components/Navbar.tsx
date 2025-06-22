@@ -187,7 +187,7 @@ export default function Navbar() {
                     >
                       <Link
                         href={path}
-                        className="py-2 text-gray-700 rounded hover:bg-gray-100 hover:text-black block transition-colors"
+                        className="py-2 text-gray-700 rounded font-semibold hover:bg-gray-100 hover:text-black block transition-colors"
                         onClick={() => setMobileOpen(false)}
                       >
                         {path === "/blog" ? "Blog" : path === "/about" ? "About" : "Contact"}
