@@ -81,7 +81,7 @@ export default function FloatingFeedback() {
               {/* Close (X) */}
               <button
                 onClick={() => { setOpen(false); setSent(false); setError(""); setLoading(false); }}
-                className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-gray-600 transition"
+                className="absolute top-4 right-4 text-2xl text-gray-500 hover:text-gray-600 transition"
                 aria-label="Close"
                 style={{ background: "transparent", border: "none" }}
               >

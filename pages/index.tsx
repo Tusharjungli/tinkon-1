@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getAllPosts, BlogMeta } from "@/lib/blog";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 
 const FloatingFeedback = dynamic(() => import("@/components/FloatingFeedback"), { ssr: false });
 
@@ -25,6 +26,9 @@ export async function getStaticProps() {
 }
 
 export default function Home({ featured, highlights }: HomeProps) {
+  const router = useRouter();
+  const canonicalUrl = `https://tinkon.in${router.asPath === "/" ? "" : router.asPath.split("?")[0]}`;
+
   return (
     <>
       <Head>
@@ -33,8 +37,10 @@ export default function Home({ featured, highlights }: HomeProps) {
           name="description"
           content="The homepage of Tink On It. Real, raw stories, life as an introvert, dogs, failures, late-night ideas, and the unfiltered journey of Tushar Panchal."
         />
+        <link rel="canonical" href={canonicalUrl} />
       </Head>
 
+      {/* ...rest of your component is unchanged, as your contrast is already good here... */}
       {/* HERO */}
       <motion.section
         className="max-w-2xl mx-auto py-20 px-6 text-center"
@@ -85,7 +91,7 @@ export default function Home({ featured, highlights }: HomeProps) {
                 priority
               />
             </div>
-            <span className="text-xs uppercase tracking-wider text-gray-400 mb-1">
+            <span className="text-xs uppercase tracking-wider text-gray-500 mb-1">
               In the Spotlight
             </span>
             <h2 className="text-2xl font-bold mt-2 mb-1">{featured.title}</h2>
@@ -133,7 +139,7 @@ export default function Home({ featured, highlights }: HomeProps) {
                   height={180}
                   className="rounded-lg object-cover w-full h-36 mb-4"
                 />
-                <span className="text-xs uppercase tracking-wider text-gray-400 mb-1">{post.category}</span>
+                <span className="text-xs uppercase tracking-wider text-gray-500 mb-1">{post.category}</span>
                 <h4 className="text-lg font-bold mb-1">{post.title}</h4>
                 <p className="text-gray-500 text-sm flex-1">{post.description}</p>
                 <Link

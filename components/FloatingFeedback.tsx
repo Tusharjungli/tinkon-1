@@ -100,7 +100,7 @@ export default function FloatingFeedback() {
               {/* Close (X) */}
               <button
                 onClick={() => { setOpen(false); setSent(false); setError(""); setLoading(false); }}
-                className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-black transition"
+                className="absolute top-4 right-4 text-2xl text-gray-500 hover:text-black transition"
                 aria-label="Close"
                 style={{ background: "transparent", border: "none" }}
               >
@@ -113,7 +113,7 @@ export default function FloatingFeedback() {
                 </div>
                 <p className="text-sm text-gray-500 mt-1">
                   Your words land directly in my inbox. No bots, just me.<br />
-                  <span className="text-xs text-gray-400 mt-1 block">
+                  <span className="text-xs text-gray-500 mt-1 block">
                     I promise I’m the only one reading this.
                   </span>
                 </p>

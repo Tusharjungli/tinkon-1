@@ -34,7 +34,7 @@ export default function BookmarkButton({ slug, }: { slug: string; title: string 
       title={saved ? "Saved!" : "Save this post"}
       type="button"
       className={`ml-2 text-xl transition focus:outline-none ${
-        saved ? "text-yellow-500" : "text-gray-400 hover:text-yellow-500"
+        saved ? "text-yellow-500" : "text-gray-600 hover:text-yellow-500"
       }`}
       whileHover={{
         scale: 1.18,

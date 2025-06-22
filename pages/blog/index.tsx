@@ -29,8 +29,8 @@ const CATEGORIES = [
 ];
 
 export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
-  // Category filter from query (?category=...)
   const router = useRouter();
+  const canonicalUrl = `https://tinkon.in${router.asPath === "/blog" ? "/blog" : router.asPath.split("?")[0]}`;
   const selected =
     typeof router.query.category === "string" ? router.query.category : "All";
 
@@ -44,11 +44,13 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
       <Head>
         <title>Blog — Tink On It</title>
         <meta name="description" content="Browse Tushar's real, raw stories on dogs, life, tech, maturity, and more. Filter by category for introverts, thinkers, and dog people." />
+        {/* Canonical tag */}
+        <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content="Blog — Tink On It" />
         <meta property="og:description" content="Browse Tushar's real, raw stories on dogs, life, tech, maturity, and more. Filter by category for introverts, thinkers, and dog people." />
         <meta property="og:image" content="https://tinkon.in/og-image.jpg" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://tinkon.in/blog" />
+        <meta property="og:url" content={canonicalUrl} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Blog — Tink On It" />
         <meta name="twitter:description" content="Browse Tushar's real, raw stories on dogs, life, tech, maturity, and more. Filter by category for introverts, thinkers, and dog people." />
@@ -56,8 +58,7 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
       </Head>
       <div className="max-w-3xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold mb-8">Blog</h1>
-        
-        {/* Category Filter - now just a simple row, not sticky or z-indexed */}
+        {/* Category Filter */}
         <div className="flex flex-wrap gap-3 mb-10 bg-white py-2">
           {CATEGORIES.map((cat) => (
             <Link
@@ -74,11 +75,10 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
             </Link>
           ))}
         </div>
-
         {/* Blog Cards */}
         <ul>
           {filtered.length === 0 && (
-            <div className="text-gray-500 italic text-center py-16">
+            <div className="text-gray-600 italic text-center py-16">
               No posts found for this category.
             </div>
           )}
@@ -93,10 +93,10 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
               <Link href={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
                 <h2 className="text-2xl font-bold text-black transition-colors">{post.title}</h2>
               </Link>
-              <p className="text-gray-400 text-sm mt-1 mb-2">
+              <p className="text-gray-700 text-sm mt-1 mb-2">
                 {format(new Date(post.date), "dd MMM yyyy")} — <span className="uppercase">{post.category}</span>
               </p>
-              <p className="mb-1 text-gray-700">{post.description}</p>
+              <p className="mb-1 text-gray-800">{post.description}</p>
             </motion.li>
           ))}
         </ul>
@@ -105,7 +105,6 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
   );
 }
 
-// This runs only on the server at build time!
 export const getStaticProps: GetStaticProps = async () => {
   const { getAllPosts } = await import("@/lib/blog");
   const posts = getAllPosts();

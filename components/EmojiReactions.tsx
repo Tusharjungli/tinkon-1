@@ -60,7 +60,7 @@ export default function EmojiReactions() {
           </button>
         ))}
       </div>
-      <div className="text-xs text-gray-400 italic mb-1">
+      <div className="text-xs text-gray-500 italic mb-1">
         <span>Emoji reactions are in progress. Your click isn’t being saved (yet)!</span>
       </div>
       {selected && (

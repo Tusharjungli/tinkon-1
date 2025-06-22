@@ -16,7 +16,7 @@ import BookmarkButton from "../../components/BookmarkButton";
 import SharePopover from "../../components/SharePopover";
 import { AnimatePresence, motion } from "framer-motion";
 import Breadcrumb from "../../components/Breadcrumb";
-//import EmojiReactions from "../../components/EmojiReactions";
+import { useRouter } from "next/router"; // NEW: for canonical
 
 type BlogMeta = {
   title: string;
@@ -48,6 +48,9 @@ const mdxComponents = {
 export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDetailProps) {
   const url = `https://tinkon.in/blog/${post.slug}`;
   const ogImage = post.ogImage || post.coverImage || "https://tinkon.in/og-image.jpg";
+  const router = useRouter();
+  // Remove query params for canonical (safe for SSR)
+  const canonicalUrl = `https://tinkon.in${router.asPath.split("?")[0]}`;
 
   return (
     <>
@@ -63,7 +66,9 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
         <meta name="twitter:title" content={`${post.title} — Tink On It`} />
         <meta name="twitter:description" content={post.description} />
         <meta name="twitter:image" content={ogImage.startsWith('http') ? ogImage : `https://tinkon.in${ogImage}`} />
-        {/* SEO Structured Data */}
+        {/* CANONICAL FIX */}
+        <link rel="canonical" href={canonicalUrl} />
+        {/* SEO Structured Data (unchanged) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -125,7 +130,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="max-w-3xl mx-auto px-4 py-16"
         >
-          {/* Polished Breadcrumbs */}
+          {/* Breadcrumbs */}
           <Breadcrumb
             items={[
               { name: "Home", href: "/" },
@@ -134,10 +139,10 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
             ]}
           />
           {/* Back link */}
-          <Link href="/blog" className="text-blue-600 underline text-sm mb-6 inline-block">
+          <Link href="/blog" className="text-black underline text-sm mb-6 inline-block">
             ← Back to all blogs
           </Link>
-          {/* Blog cover image with animation */}
+          {/* Blog cover image */}
           {post.coverImage && (
             <motion.div
               className="mb-8"
@@ -160,7 +165,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
           )}
 
           {/* Meta info */}
-          <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400 uppercase mb-4">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-gray-700 uppercase mb-4">
             <span>{format(new Date(post.date), "dd MMM yyyy")}</span>
             <span>—</span>
             <span>{post.category}</span>
@@ -172,26 +177,24 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
             <SharePopover url={url} title={post.title} />
           </div>
           {/* Description */}
-          <p className="text-gray-600 mb-8">{post.description}</p>
+          <p className="text-gray-800 mb-8">{post.description}</p>
           {/* Blog Content */}
           <div className="prose prose-lg max-w-none">
             <MDXRemote {...mdxSource} components={mdxComponents} />
           </div>
-          {/* Emoji Reactions */}
-          {/*<EmojiReactions />*/}
           {/* Recommendations */}
           {recommended && recommended.length > 0 && (
             <>
               <hr className="my-10" />
-              <div className="text-gray-600 text-base">
+              <div className="text-gray-700 text-base">
                 <strong>Liked this?</strong> You might also enjoy:
                 <ul className="list-disc list-inside mt-2">
                   {recommended.map((r) => (
                     <li key={r.slug}>
-                      <Link href={`/blog/${r.slug}`} className="underline text-indigo-600">
+                      <Link href={`/blog/${r.slug}`} className="underline text-black">
                         {r.title}
                       </Link>
-                      <span className="text-xs text-gray-400 ml-2">
+                      <span className="text-xs text-gray-600 ml-2">
                         ({r.category})
                       </span>
                     </li>
