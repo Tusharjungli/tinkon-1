@@ -14,7 +14,7 @@ import Warning from "../../components/Warning";
 import Divider from "../../components/Divider";
 import BookmarkButton from "../../components/BookmarkButton";
 import SharePopover from "../../components/SharePopover";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Breadcrumb from "../../components/Breadcrumb";
 //import EmojiReactions from "../../components/EmojiReactions";
 
@@ -116,83 +116,92 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
           }}
         />
       </Head>
-      <article className="max-w-3xl mx-auto px-4 py-16">
-        {/* Polished Breadcrumbs */}
-        <Breadcrumb
-          items={[
-            { name: "Home", href: "/" },
-            { name: "Blog", href: "/blog" },
-            { name: post.title }
-          ]}
-        />
-        {/* Back link */}
-        <Link href="/blog" className="text-blue-600 underline text-sm mb-6 inline-block">
-          ← Back to all blogs
-        </Link>
-        {/* Blog cover image */}
-        {post.coverImage && (
-          <motion.div
-            className="mb-8"
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
-            <Image
-              src={post.coverImage}
-              alt={`Cover image for blog post '${post.title}'`}
-              width={800}
-              height={400}
-              className="rounded-xl mx-auto shadow-lg"
-              style={{ width: "100%", height: "auto" }}
-              priority
-              placeholder="blur"
-              blurDataURL="/images/blur-placeholder.png"
-            />
-          </motion.div>
-        )}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={post.slug}
+          initial={{ opacity: 0, y: 48 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 16 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="max-w-3xl mx-auto px-4 py-16"
+        >
+          {/* Polished Breadcrumbs */}
+          <Breadcrumb
+            items={[
+              { name: "Home", href: "/" },
+              { name: "Blog", href: "/blog" },
+              { name: post.title }
+            ]}
+          />
+          {/* Back link */}
+          <Link href="/blog" className="text-blue-600 underline text-sm mb-6 inline-block">
+            ← Back to all blogs
+          </Link>
+          {/* Blog cover image with animation */}
+          {post.coverImage && (
+            <motion.div
+              className="mb-8"
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              <Image
+                src={post.coverImage}
+                alt={`Cover image for blog post '${post.title}'`}
+                width={800}
+                height={400}
+                className="rounded-xl mx-auto shadow-lg"
+                style={{ width: "100%", height: "auto" }}
+                priority
+                placeholder="blur"
+                blurDataURL="/images/blur-placeholder.png"
+              />
+            </motion.div>
+          )}
 
-        {/* Meta info */}
-        <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400 uppercase mb-4">
-          <span>{format(new Date(post.date), "dd MMM yyyy")}</span>
-          <span>—</span>
-          <span>{post.category}</span>
-        </div>
-        {/* Title + Bookmark + Share */}
-        <div className="flex items-center gap-2 mb-2">
-          <h1 className="text-4xl font-bold">{post.title}</h1>
-          <BookmarkButton slug={post.slug} title={post.title} />
-          <SharePopover url={url} title={post.title} />
-        </div>
-        {/* Description */}
-        <p className="text-gray-600 mb-8">{post.description}</p>
-        {/* Blog Content */}
-        <div className="prose prose-lg max-w-none">
-          <MDXRemote {...mdxSource} components={mdxComponents} />
-        </div>
-        {/* Emoji Reactions */}
-        {/*<EmojiReactions />*/}
-        {/* Recommendations */}
-        {recommended && recommended.length > 0 && (
-          <>
-            <hr className="my-10" />
-            <div className="text-gray-600 text-base">
-              <strong>Liked this?</strong> You might also enjoy:
-              <ul className="list-disc list-inside mt-2">
-                {recommended.map((r) => (
-                  <li key={r.slug}>
-                    <Link href={`/blog/${r.slug}`} className="underline text-indigo-600">
-                      {r.title}
-                    </Link>
-                    <span className="text-xs text-gray-400 ml-2">
-                      ({r.category})
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </>
-        )}
-      </article>
+          {/* Meta info */}
+          <div className="flex flex-wrap items-center gap-2 text-xs text-gray-400 uppercase mb-4">
+            <span>{format(new Date(post.date), "dd MMM yyyy")}</span>
+            <span>—</span>
+            <span>{post.category}</span>
+          </div>
+          {/* Title + Bookmark + Share */}
+          <div className="flex items-center gap-2 mb-2">
+            <h1 className="text-4xl font-bold">{post.title}</h1>
+            <BookmarkButton slug={post.slug} title={post.title} />
+            <SharePopover url={url} title={post.title} />
+          </div>
+          {/* Description */}
+          <p className="text-gray-600 mb-8">{post.description}</p>
+          {/* Blog Content */}
+          <div className="prose prose-lg max-w-none">
+            <MDXRemote {...mdxSource} components={mdxComponents} />
+          </div>
+          {/* Emoji Reactions */}
+          {/*<EmojiReactions />*/}
+          {/* Recommendations */}
+          {recommended && recommended.length > 0 && (
+            <>
+              <hr className="my-10" />
+              <div className="text-gray-600 text-base">
+                <strong>Liked this?</strong> You might also enjoy:
+                <ul className="list-disc list-inside mt-2">
+                  {recommended.map((r) => (
+                    <li key={r.slug}>
+                      <Link href={`/blog/${r.slug}`} className="underline text-indigo-600">
+                        {r.title}
+                      </Link>
+                      <span className="text-xs text-gray-400 ml-2">
+                        ({r.category})
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 }

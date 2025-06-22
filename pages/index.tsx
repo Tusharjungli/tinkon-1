@@ -3,6 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAllPosts, BlogMeta } from "@/lib/blog";
 import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
+
 const FloatingFeedback = dynamic(() => import("@/components/FloatingFeedback"), { ssr: false });
 
 type HomeProps = {
@@ -34,27 +36,44 @@ export default function Home({ featured, highlights }: HomeProps) {
       </Head>
 
       {/* HERO */}
-      <section className="max-w-2xl mx-auto py-20 px-6 text-center">
-  <h1 className="text-5xl font-black mb-4 tracking-tight">Tink On It</h1>
-  <p className="text-base text-gray-700 mb-6">
-    Hi, I’m <span className="font-semibold text-gray-900">Tushar</span>.
-  </p>
-  <p className="text-lg text-gray-700 mb-8">
-    This place isn’t just a blog—it’s where I think out loud. I share what’s on my mind, the good and the bad. Sometimes I talk about feeling lost, sometimes about the funny side of failing, or just stories about life with my dog and family.
-  </p>
-  <p className="text-lg text-gray-700 mb-8">
-    If you like honest stories and simple thoughts (sometimes a little messy), you’ll probably feel at home here. 
-    Welcome to Tink On It—read, relate, smile, or just chill.
-  </p>
-  <span className="inline-block bg-indigo-100 text-indigo-700 px-5 py-2 rounded-full text-sm font-medium shadow-sm">
-    Real talk. Simple words. No filters.
-  </span>
-</section>
-
+      <motion.section
+        className="max-w-2xl mx-auto py-20 px-6 text-center"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
+        <motion.h1
+          className="text-5xl font-black mb-4 tracking-tight"
+          initial={{ letterSpacing: "-0.04em" }}
+          animate={{ letterSpacing: "-0.01em" }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
+        >
+          Tink On It
+        </motion.h1>
+        <p className="text-base text-gray-700 mb-6">
+          Hi, I’m <span className="font-semibold text-gray-900">Tushar</span>.
+        </p>
+        <p className="text-lg text-gray-700 mb-8">
+          This place isn’t just a blog—it’s where I think out loud. I share what’s on my mind, the good and the bad. Sometimes I talk about feeling lost, sometimes about the funny side of failing, or just stories about life with my dog and family.
+        </p>
+        <p className="text-lg text-gray-700 mb-8">
+          If you like honest stories and simple thoughts (sometimes a little messy), you’ll probably feel at home here. 
+          Welcome to Tink On It—read, relate, smile, or just chill.
+        </p>
+        <span className="inline-block bg-gray-100 text-black px-5 py-2 rounded-full text-sm font-medium shadow-sm">
+          Real talk. Simple words. No filters.
+        </span>
+      </motion.section>
 
       {/* FEATURED STORY */}
       {featured && (
-        <section className="max-w-3xl mx-auto px-6 mb-16">
+        <motion.section
+          className="max-w-3xl mx-auto px-6 mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <div className="bg-gray-50 rounded-2xl shadow p-6">
             <div className="mb-4">
               <Image
@@ -71,25 +90,42 @@ export default function Home({ featured, highlights }: HomeProps) {
             </span>
             <h2 className="text-2xl font-bold mt-2 mb-1">{featured.title}</h2>
             <p className="text-gray-500 text-sm mb-3">{featured.description}</p>
-            <Link
-              href={`/blog/${featured.slug}`}
-              className="inline-block bg-black text-white px-6 py-2 rounded-full font-semibold transition hover:bg-gray-800"
+            <motion.div
+              whileHover={{ scale: 1.07, boxShadow: "0 4px 18px rgba(30,30,30,0.12)" }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-block"
             >
-              Dive In
-            </Link>
+              <Link
+                href={`/blog/${featured.slug}`}
+                className="inline-block bg-black text-white px-6 py-2 rounded-full font-semibold transition hover:bg-gray-900"
+              >
+                Dive In
+              </Link>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* HIGHLIGHTS */}
       {highlights && highlights.length > 0 && (
-        <section className="max-w-4xl mx-auto px-6 mb-20">
+        <motion.section
+          className="max-w-4xl mx-auto px-6 mb-20"
+          initial={{ opacity: 0, y: 36 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
           <h3 className="text-xl font-semibold mb-6 text-left text-gray-900">
             Fresh from the mind...
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {highlights.map((post) => (
-              <div key={post.slug} className="bg-white rounded-xl shadow-md hover:shadow-lg transition p-4 flex flex-col">
+              <motion.div
+                key={post.slug}
+                className="bg-white rounded-xl shadow-md hover:shadow-lg transition p-4 flex flex-col"
+                whileHover={{ y: -5, scale: 1.03, boxShadow: "0 8px 24px rgba(0,0,0,0.11)" }}
+                whileTap={{ scale: 0.97 }}
+              >
                 <Image
                   src={post.coverImage}
                   alt={post.title}
@@ -102,53 +138,77 @@ export default function Home({ featured, highlights }: HomeProps) {
                 <p className="text-gray-500 text-sm flex-1">{post.description}</p>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="inline-block mt-4 text-indigo-600 font-semibold hover:underline"
+                  className="inline-block mt-4 text-black font-semibold hover:underline"
                 >
                   Read
                 </Link>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </section>
+
+        </motion.section>
       )}
 
       {/* TINY ABOUT ME */}
-      <section className="max-w-md mx-auto text-center my-16">
-        <div className="bg-indigo-50 rounded-xl p-6 shadow-sm">
+      <motion.section
+        className="max-w-md mx-auto text-center my-16"
+        initial={{ opacity: 0, y: 36 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
+        <div className="bg-gray-50 rounded-xl p-6 shadow-sm">
           <h4 className="text-lg font-semibold mb-1">A little about me</h4>
           <p className="text-gray-700 text-base">
             I’m Tushar—professional overthinker, lifelong dog lover, part-time philosopher.<br />
             If you ever spot me outside, I probably lost internet at home.
           </p>
-          <Link
-            href="/about"
-            className="inline-block mt-3 text-indigo-700 font-medium hover:underline"
+          <motion.div
+            whileHover={{ scale: 1.09 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-block"
           >
-            Read the full story &rarr;
-          </Link>
+            <Link
+              href="/about"
+              className="inline-block mt-3 text-black font-medium hover:underline"
+            >
+              Read the full story &rarr;
+            </Link>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* HUMOROUS QUOTE */}
       <section className="max-w-xl mx-auto text-center my-10">
         <blockquote className="italic text-gray-500">
           “If you’re reading this, you’re officially in my inner circle of Internet introverts.”
-
         </blockquote>
       </section>
 
       {/* MAIN BLOG CTA */}
-      <section className="max-w-xl mx-auto text-center mb-12">
-        <Link
-          href="/blog"
-          className="inline-block bg-black text-white px-8 py-3 rounded-full font-semibold transition hover:bg-gray-800"
+      <motion.section
+        className="max-w-xl mx-auto text-center mb-12"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.55, ease: "easeOut" }}
+      >
+        <motion.div
+          whileHover={{ scale: 1.09, boxShadow: "0 6px 24px rgba(30,30,30,0.12)" }}
+          whileTap={{ scale: 0.98 }}
+          className="inline-block"
         >
-          Start Reading
-        </Link>
+          <Link
+            href="/blog"
+            className="inline-block bg-black text-white px-8 py-3 rounded-full font-semibold transition hover:bg-gray-900"
+          >
+            Start Reading
+          </Link>
+        </motion.div>
         <p className="mt-4 text-gray-500 text-sm">
           Or scroll down and get lost in the chaos of my head.
         </p>
-      </section>
+      </motion.section>
       <FloatingFeedback />
     </>
   );

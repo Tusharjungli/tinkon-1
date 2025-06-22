@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { FaShareAlt, FaWhatsapp, FaLinkedin, FaTwitter, FaFacebook, FaRegCopy } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 export default function SharePopover({ url, title }: { url: string; title: string }) {
   const [open, setOpen] = useState(false);
@@ -22,52 +23,66 @@ export default function SharePopover({ url, title }: { url: string; title: strin
 
   return (
     <div className="relative inline-block">
-      <button
+      <motion.button
         onClick={() => setOpen((v) => !v)}
         aria-label="Share"
         className="text-gray-500 hover:text-indigo-600 p-2 rounded-full transition border border-gray-200 bg-white shadow-sm"
         type="button"
+        whileHover={{ scale: 1.13, boxShadow: "0 4px 18px rgba(99,102,241,0.12)" }}
+        whileTap={{ scale: 0.95 }}
       >
         <FaShareAlt size={20} />
-      </button>
+      </motion.button>
       {open && (
-        <div
+        <motion.div
           ref={popoverRef}
           className="absolute z-30 mt-2 right-0 bg-white border rounded-lg shadow-xl p-3 flex flex-col gap-2 w-44 animate-fade-in"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.18, ease: "easeOut" }}
         >
-          <a
+          <motion.a
             href={`https://wa.me/?text=${shareText}%20${shareUrl}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-gray-700 hover:text-green-600 px-2 py-1 rounded transition"
+            whileHover={{ scale: 1.06, backgroundColor: "#f0fff4" }}
+            whileTap={{ scale: 0.97 }}
           >
             <FaWhatsapp size={18} /> WhatsApp
-          </a>
-          <a
+          </motion.a>
+          <motion.a
             href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-gray-700 hover:text-blue-500 px-2 py-1 rounded transition"
+            whileHover={{ scale: 1.06, backgroundColor: "#f0f7ff" }}
+            whileTap={{ scale: 0.97 }}
           >
             <FaTwitter size={18} /> X (Twitter)
-          </a>
-          <a
+          </motion.a>
+          <motion.a
             href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-gray-700 hover:text-blue-700 px-2 py-1 rounded transition"
+            whileHover={{ scale: 1.06, backgroundColor: "#f0f7ff" }}
+            whileTap={{ scale: 0.97 }}
           >
             <FaLinkedin size={18} /> LinkedIn
-          </a>
-          <a
+          </motion.a>
+          <motion.a
             href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-gray-700 hover:text-blue-600 px-2 py-1 rounded transition"
+            whileHover={{ scale: 1.06, backgroundColor: "#f0f7ff" }}
+            whileTap={{ scale: 0.97 }}
           >
             <FaFacebook size={18} /> Facebook
-          </a>
-          <button
+          </motion.a>
+          <motion.button
             className="flex items-center gap-2 text-gray-700 hover:text-purple-600 px-2 py-1 rounded transition w-full"
             onClick={() => {
               navigator.clipboard.writeText(url);
@@ -75,10 +90,12 @@ export default function SharePopover({ url, title }: { url: string; title: strin
               setTimeout(() => setCopied(false), 1400);
             }}
             type="button"
+            whileHover={{ scale: 1.06, backgroundColor: "#f6f0ff" }}
+            whileTap={{ scale: 0.97 }}
           >
             <FaRegCopy size={17} /> {copied ? "Copied!" : "Copy Link"}
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
       )}
       <style jsx global>{`
         @keyframes fade-in {

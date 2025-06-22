@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// SVG icon (chat bubble)
+// SVG icon (monochrome, inherit currentColor)
 const ChatIcon = (
   <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" strokeLinejoin="round" strokeLinecap="round"/>
@@ -49,16 +49,17 @@ export default function FloatingFeedback() {
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         onClick={() => { setShowTooltip(false); setOpen(true); }}
-        className="fixed z-50 bottom-8 right-8 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-xl hover:scale-105 transition-transform
-                   text-white rounded-full w-16 h-16 flex items-center justify-center backdrop-blur-lg bg-opacity-80 border-none"
+        className="fixed z-50 bottom-8 right-8 bg-white border border-gray-300 shadow-lg hover:shadow-xl transition 
+                   text-black rounded-full w-16 h-16 flex items-center justify-center backdrop-blur-lg"
         aria-label="Feedback"
         style={{
-          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.18)",
-          border: "1.5px solid rgba(255,255,255,0.1)",
+          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.09)",
         }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
+        whileHover={{ scale: 1.11, backgroundColor: "#f4f4f5", color: "#222" }}
+        whileTap={{ scale: 0.97, backgroundColor: "#e5e7eb", color: "#111" }}
+        transition={{ duration: 0.24, ease: "easeOut" }}
       >
         {ChatIcon}
         {/* Tooltip */}
@@ -86,7 +87,7 @@ export default function FloatingFeedback() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.22 }}
           >
             <motion.div
               className="relative w-[95vw] max-w-md m-4 rounded-2xl p-8 shadow-2xl
@@ -94,19 +95,19 @@ export default function FloatingFeedback() {
               initial={{ y: 60, opacity: 0, scale: 0.98 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 60, opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              transition={{ duration: 0.27, ease: "easeOut" }}
             >
               {/* Close (X) */}
               <button
                 onClick={() => { setOpen(false); setSent(false); setError(""); setLoading(false); }}
-                className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-gray-600 transition"
+                className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-black transition"
                 aria-label="Close"
                 style={{ background: "transparent", border: "none" }}
               >
                 &times;
               </button>
               <div className="mb-3">
-                <div className="flex items-center gap-2 text-indigo-600 font-bold text-lg">
+                <div className="flex items-center gap-2 text-black font-bold text-lg">
                   {ChatIcon}
                   Feedback
                 </div>
@@ -129,7 +130,7 @@ export default function FloatingFeedback() {
                     required
                     disabled={loading}
                     placeholder="Your name"
-                    className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-indigo-300 transition"
+                    className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-black transition"
                   />
                   <input
                     type="email"
@@ -137,7 +138,7 @@ export default function FloatingFeedback() {
                     required
                     disabled={loading}
                     placeholder="Your email"
-                    className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-indigo-300 transition"
+                    className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-black transition"
                   />
                   <textarea
                     name="message"
@@ -145,13 +146,13 @@ export default function FloatingFeedback() {
                     disabled={loading}
                     placeholder="Your feedback, story, or awkward confession..."
                     rows={4}
-                    className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-indigo-300 transition"
+                    className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-black transition"
                   />
                   {error && <div className="text-red-500 text-sm font-semibold">{error}</div>}
                   <button
                     type="submit"
                     disabled={loading}
-                    className="bg-gradient-to-r from-indigo-500 to-pink-500 text-white font-semibold rounded-lg py-2 mt-2 shadow-lg hover:opacity-90 transition disabled:opacity-60"
+                    className="bg-black text-white font-semibold rounded-lg py-2 mt-2 shadow-lg hover:bg-gray-900 transition disabled:opacity-60"
                   >
                     {loading ? "Sending..." : "Send"}
                   </button>

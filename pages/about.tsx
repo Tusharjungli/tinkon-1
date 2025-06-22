@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function AboutPage() {
   return (
@@ -27,15 +28,27 @@ export default function AboutPage() {
         <meta name="twitter:image" content="https://tinkon.in/og-image.jpg" />
       </Head>
       <main className="max-w-2xl mx-auto px-4 py-16">
-        <div className="flex flex-col items-center">
-          <Image
-            src="/images/profile.webp"
-            alt="Tushar Panchal"
-            width={120}
-            height={120}
+        <motion.div
+          className="flex flex-col items-center bg-white/70 backdrop-blur-md rounded-2xl p-8"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
+          <motion.div
+            whileHover={{ scale: 1.06 }}
+            transition={{ type: "spring", stiffness: 220, damping: 17 }}
             className="rounded-full mb-4"
-          />
-          <h1 className="text-3xl font-bold mb-2">About Me</h1>
+          >
+            <Image
+              src="/images/profile.webp"
+              alt="Tushar Panchal"
+              width={120}
+              height={120}
+              className="rounded-full"
+              priority
+            />
+          </motion.div>
+          <h1 className="text-3xl font-bold mb-2 text-black">About Me</h1>
           <div className="space-y-5 text-lg text-gray-700 text-center">
             <p>
               Hi, I&apos;m <b>Tushar</b>—born and raised in Bhiwani, Haryana: a city with just enough chaos to keep life interesting, and enough peace on the edges for an introvert like me to hide out and recharge.
@@ -66,7 +79,7 @@ export default function AboutPage() {
               Still here? Thanks for reading the unfiltered me. If we ever meet, I&apos;ll probably act awkward and forget how to end the conversation. But hey, that&apos;s why I have a blog.
             </span>
           </p>
-        </div>
+        </motion.div>
       </main>
     </>
   );
