@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, ReactNode } from "react";
 import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -81,19 +81,21 @@ export default function Navbar() {
               </div>
             )}
           </div>
-          {/* --- Desktop nav links with minimal bounce and black hover --- */}
           <NavBounceLink href="/blog">Blog</NavBounceLink>
           <NavBounceLink href="/about">About</NavBounceLink>
           <NavBounceLink href="/contact">Contact</NavBounceLink>
         </div>
         {/* Mobile Hamburger */}
-        <button
+        <motion.button
           className="sm:hidden text-2xl"
+          whileTap={{ scale: 0.88 }}
+          whileHover={{ scale: 1.14 }}
           onClick={() => setMobileOpen(true)}
           aria-label="Open menu"
+          transition={{ type: "spring", stiffness: 300, damping: 22 }}
         >
           <FaBars />
-        </button>
+        </motion.button>
         {/* Mobile Drawer */}
         <AnimatePresence>
           {mobileOpen && (
@@ -108,9 +110,9 @@ export default function Navbar() {
             >
               <motion.div
                 className="bg-white w-64 h-full p-6 flex flex-col gap-4 relative shadow-lg"
-                initial={{ x: 96, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                exit={{ x: 96, opacity: 0 }}
+                initial={{ x: 96, opacity: 0, scale: 0.98 }}
+                animate={{ x: 0, opacity: 1, scale: 1 }}
+                exit={{ x: 96, opacity: 0, scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 340, damping: 34, duration: 0.24 }}
               >
                 <button
@@ -125,28 +127,74 @@ export default function Navbar() {
                 </Link>
                 <div>
                   <span className="text-gray-600 font-semibold">Categories</span>
-                  <div className="flex flex-col gap-1 mt-1">
-                    {categories.map((cat) => (
-                      <Link
+                  <motion.div
+                    className="flex flex-col gap-1 mt-1"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      hidden: {},
+                      visible: {
+                        transition: {
+                          staggerChildren: 0.055
+                        }
+                      }
+                    }}
+                  >
+                    {categories.map((cat, i) => (
+                      <motion.div
                         key={cat}
-                        href={`/blog?category=${encodeURIComponent(cat)}`}
-                        className="block px-2 py-2 text-gray-700 rounded hover:bg-gray-100 hover:text-black transition-colors"
+                        variants={{
+                          hidden: { opacity: 0, x: 18 },
+                          visible: { opacity: 1, x: 0 }
+                        }}
+                        whileTap={{ scale: 0.96 }}
+                        transition={{ type: "spring", stiffness: 320, damping: 26, delay: 0.01 * i }}
+                      >
+                        <Link
+                          href={`/blog?category=${encodeURIComponent(cat)}`}
+                          className="block px-2 py-2 text-gray-700 rounded hover:bg-gray-100 hover:text-black transition-colors"
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {cat}
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
+                {/* Stagger in main links below */}
+                <motion.div
+                  className="flex flex-col gap-1 mt-4"
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    hidden: {},
+                    visible: {
+                      transition: {
+                        staggerChildren: 0.07
+                      }
+                    }
+                  }}
+                >
+                  {["/blog", "/about", "/contact"].map((path, idx) => (
+                    <motion.div
+                      key={path}
+                      variants={{
+                        hidden: { opacity: 0, x: 18 },
+                        visible: { opacity: 1, x: 0 }
+                      }}
+                      whileTap={{ scale: 0.96 }}
+                      transition={{ type: "spring", stiffness: 320, damping: 26, delay: 0.13 + 0.06 * idx }}
+                    >
+                      <Link
+                        href={path}
+                        className="py-2 text-gray-700 rounded hover:bg-gray-100 hover:text-black block transition-colors"
                         onClick={() => setMobileOpen(false)}
                       >
-                        {cat}
+                        {path === "/blog" ? "Blog" : path === "/about" ? "About" : "Contact"}
                       </Link>
-                    ))}
-                  </div>
-                </div>
-                <Link href="/blog" className="py-2 text-gray-700 rounded hover:bg-gray-100 hover:text-black transition-colors" onClick={() => setMobileOpen(false)}>
-                  Blog
-                </Link>
-                <Link href="/about" className="py-2 text-gray-700 rounded hover:bg-gray-100 hover:text-black transition-colors" onClick={() => setMobileOpen(false)}>
-                  About
-                </Link>
-                <Link href="/contact" className="py-2 text-gray-700 rounded hover:bg-gray-100 hover:text-black transition-colors" onClick={() => setMobileOpen(false)}>
-                  Contact
-                </Link>
+                    </motion.div>
+                  ))}
+                </motion.div>
               </motion.div>
             </motion.div>
           )}
@@ -156,8 +204,7 @@ export default function Navbar() {
   );
 }
 
-// --- Desktop nav bounce link ---
-import { ReactNode } from "react";
+// --- Desktop nav bounce link helper ---
 function NavBounceLink({ href, children }: { href: string; children: ReactNode }) {
   return (
     <motion.div
