@@ -65,26 +65,26 @@ export default function Navbar() {
             {catOpen && (
               <div className="absolute top-8 left-0 w-44 bg-white border rounded shadow-lg py-2 z-50">
                 {categories.map((cat) => (
-                  <Link
+                  <motion.div
                     key={cat}
-                    href={`/blog?category=${encodeURIComponent(cat)}`}
-                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                    whileHover={{ scale: 1.06 }}
+                    transition={{ type: "spring", stiffness: 370, damping: 24 }}
                   >
-                    {cat}
-                  </Link>
+                    <Link
+                      href={`/blog?category=${encodeURIComponent(cat)}`}
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-black transition-colors rounded"
+                    >
+                      {cat}
+                    </Link>
+                  </motion.div>
                 ))}
               </div>
             )}
           </div>
-          <Link href="/blog" className="hover:underline">
-            Blog
-          </Link>
-          <Link href="/about" className="hover:underline">
-            About
-          </Link>
-          <Link href="/contact" className="hover:underline">
-            Contact
-          </Link>
+          {/* --- Desktop nav links with minimal bounce and black hover --- */}
+          <NavBounceLink href="/blog">Blog</NavBounceLink>
+          <NavBounceLink href="/about">About</NavBounceLink>
+          <NavBounceLink href="/contact">Contact</NavBounceLink>
         </div>
         {/* Mobile Hamburger */}
         <button
@@ -114,7 +114,7 @@ export default function Navbar() {
                 transition={{ type: "spring", stiffness: 340, damping: 34, duration: 0.24 }}
               >
                 <button
-                  className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-gray-600"
+                  className="absolute top-4 right-4 text-2xl text-gray-400 hover:text-gray-800"
                   onClick={() => setMobileOpen(false)}
                   aria-label="Close menu"
                 >
@@ -130,7 +130,7 @@ export default function Navbar() {
                       <Link
                         key={cat}
                         href={`/blog?category=${encodeURIComponent(cat)}`}
-                        className="block px-2 py-2 text-gray-700 rounded hover:bg-gray-100"
+                        className="block px-2 py-2 text-gray-700 rounded hover:bg-gray-100 hover:text-black transition-colors"
                         onClick={() => setMobileOpen(false)}
                       >
                         {cat}
@@ -138,13 +138,13 @@ export default function Navbar() {
                     ))}
                   </div>
                 </div>
-                <Link href="/blog" className="py-2 hover:underline" onClick={() => setMobileOpen(false)}>
+                <Link href="/blog" className="py-2 text-gray-700 rounded hover:bg-gray-100 hover:text-black transition-colors" onClick={() => setMobileOpen(false)}>
                   Blog
                 </Link>
-                <Link href="/about" className="py-2 hover:underline" onClick={() => setMobileOpen(false)}>
+                <Link href="/about" className="py-2 text-gray-700 rounded hover:bg-gray-100 hover:text-black transition-colors" onClick={() => setMobileOpen(false)}>
                   About
                 </Link>
-                <Link href="/contact" className="py-2 hover:underline" onClick={() => setMobileOpen(false)}>
+                <Link href="/contact" className="py-2 text-gray-700 rounded hover:bg-gray-100 hover:text-black transition-colors" onClick={() => setMobileOpen(false)}>
                   Contact
                 </Link>
               </motion.div>
@@ -153,5 +153,24 @@ export default function Navbar() {
         </AnimatePresence>
       </div>
     </nav>
+  );
+}
+
+// --- Desktop nav bounce link ---
+import { ReactNode } from "react";
+function NavBounceLink({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <motion.div
+      whileHover={{ y: -2, scale: 1.09 }}
+      transition={{ type: "spring", stiffness: 350, damping: 22 }}
+      style={{ display: "inline-block" }}
+    >
+      <Link
+        href={href}
+        className="transition-colors duration-150 text-gray-700 hover:text-black"
+      >
+        {children}
+      </Link>
+    </motion.div>
   );
 }
