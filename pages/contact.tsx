@@ -18,17 +18,17 @@ export default function Contact() {
         <meta name="twitter:image" content="https://tinkon.in/og-image.jpg" />
       </Head>
       <main className="max-w-xl mx-auto py-24 px-6">
-        <section className="bg-white/70 backdrop-blur-md rounded-2xl p-8 flex flex-col">
-          <h1 className="text-4xl font-bold mb-8 text-black">Contact</h1>
-          <p className="mb-4 text-lg text-gray-700">
+        <section className="bg-white/70 dark:bg-gray-900/85 backdrop-blur-md rounded-2xl p-8 flex flex-col transition-colors">
+          <h1 className="text-4xl font-bold mb-8 text-black dark:text-white">Contact</h1>
+          <p className="mb-4 text-lg text-gray-700 dark:text-gray-200">
             Got something on your mind? Want to share your own story, ask a question, or just say hi? I’m always open to a good message—even if you’re just here to recommend a dog meme.
           </p>
-          <div className="space-y-2 text-base text-gray-800">
+          <div className="space-y-2 text-base text-gray-800 dark:text-gray-100">
             <div>
               <span className="font-semibold">Email: </span>
               <a
                 href="mailto:tusharpanchal@gmail.com"
-                className="text-black hover:underline transition-colors"
+                className="text-black dark:text-white hover:underline focus:underline transition-colors"
                 style={{ textDecoration: "none" }}
               >
                 tusharpanchal@gmail.com
@@ -38,7 +38,7 @@ export default function Contact() {
               <span className="font-semibold">LinkedIn: </span>
               <Link
                 href="/get-linkedin"
-                className="text-black hover:underline transition-colors"
+                className="text-black dark:text-white hover:underline focus:underline transition-colors"
                 aria-label="LinkedIn"
                 style={{ textDecoration: "none" }}
               >
@@ -46,7 +46,7 @@ export default function Contact() {
               </Link>
             </div>
           </div>
-          <div className="text-gray-500 pt-6 text-sm">
+          <div className="text-gray-500 dark:text-gray-400 pt-6 text-sm">
             <span>
               <i>
                 P.S. I actually read every email—even the weird ones. Replies might be slow, but they&apos;re real.

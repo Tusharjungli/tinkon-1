@@ -3,13 +3,13 @@ import Image from "next/image";
 import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { motion } from "framer-motion";
-import { useState, ReactNode } from "react"; // <--- Add this!
+import { useState, ReactNode } from "react";
 
 export default function Footer() {
   return (
-    <footer className="border-t py-10 bg-white mt-12">
+    <footer className="border-t dark:border-white py-10 bg-white dark:bg-gray-950 mt-12 transition-colors duration-200">
       <div className="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center md:justify-between gap-4">
-        {/* Logo and Brand */}
+        {/* Logo and Brand (Logo NOT affected by dark mode) */}
         <motion.div
           whileHover={{ scale: 1.08 }}
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
@@ -21,26 +21,31 @@ export default function Footer() {
               alt="Tinkon Logo"
               width={40}
               height={40}
+              // Always stays the same, no dark:bg or dark:border!
               className="rounded-full border bg-gray-100"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = 'none';
               }}
             />
-            <Link href="/" className="font-bold text-xl hover:underline" aria-label="Home">
+            <Link
+              href="/"
+              className="font-bold text-xl hover:underline text-black dark:text-gray-100"
+              aria-label="Home"
+            >
               Tink On It
             </Link>
           </div>
         </motion.div>
 
         {/* Footer Nav: Required Docs */}
-        <div className="flex gap-6 text-sm text-gray-600">
+        <div className="flex gap-6 text-sm text-gray-600 dark:text-gray-400">
           <FooterBounceLink href="/privacy-policy">Privacy Policy</FooterBounceLink>
           <FooterBounceLink href="/terms">Terms</FooterBounceLink>
           <FooterBounceLink href="/disclaimer">Disclaimer</FooterBounceLink>
         </div>
 
         {/* Social Icons */}
-        <div className="flex gap-5 text-gray-500">
+        <div className="flex gap-5 text-gray-500 dark:text-gray-400">
           <FooterIcon
             href="/get-linkedin"
             ariaLabel="LinkedIn"
@@ -51,7 +56,7 @@ export default function Footer() {
           <FooterIcon
             href="https://x.com/tushar_tinkon"
             ariaLabel="Twitter"
-            hoverColor="#000"
+            hoverColor="#fff"
             isExternal
           >
             <FaXTwitter size={23} />
@@ -67,11 +72,11 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mt-6 text-center text-xs text-gray-500">
+      <div className="mt-6 text-center text-xs text-gray-500 dark:text-gray-400">
         &copy; {new Date().getFullYear()} Tushar Panchal — Made in India for thinkers and introverts.
         <br />
         <span className="italic">
-          Built with <span className="font-bold text-black">real stories</span>, imperfect journeys, and a lot of chai.
+          Built with <span className="font-bold text-black dark:text-white">real stories</span>, imperfect journeys, and a lot of chai.
         </span>
       </div>
     </footer>
@@ -89,7 +94,7 @@ function FooterBounceLink({ href, children }: { href: string; children: ReactNod
     >
       <Link
         href={href}
-        className="transition-colors duration-150 text-gray-600 hover:text-black"
+        className="transition-colors duration-150 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
       >
         {children}
       </Link>
@@ -119,7 +124,7 @@ function FooterIcon({
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noopener noreferrer" : undefined}
       style={{
-        color: hover ? hoverColor : "#6b7280", // gray-500 default
+        color: hover ? hoverColor : undefined,
         display: "inline-flex",
       }}
       whileHover={{ scale: 1.2 }}

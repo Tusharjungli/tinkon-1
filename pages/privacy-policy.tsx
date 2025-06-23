@@ -1,6 +1,6 @@
 export default function PrivacyPolicy() {
   return (
-    <section className="max-w-2xl mx-auto py-24 px-6">
+    <section className="max-w-2xl mx-auto py-24 px-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-xl shadow">
       <h2 className="text-3xl font-bold mb-6">Privacy Policy</h2>
       <p className="mb-3"><b>Last updated:</b> June 2025</p>
       <p className="mb-3">
@@ -29,11 +29,18 @@ export default function PrivacyPolicy() {
       </p>
       <h3 className="text-xl font-semibold mt-8 mb-2">Contact</h3>
       <p>
-        Got questions or concerns? Email me at <a href="mailto:jungli0beast@gmail.com" className="underline text-blue-600">tushar@tinkon.in</a>.
-      
+        Got questions or concerns? Email me at{" "}
+        <a
+          href="mailto:jungli0beast@gmail.com"
+          className="underline text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition"
+        >
+          tushar@tinkon.in
+        </a>
+        .
       </p>
       <p className="mt-4">
-        By using <b>Tink On It</b>, you agree to this Privacy Policy. We may update it, so check back occasionally. </p>
+        By using <b>Tink On It</b>, you agree to this Privacy Policy. We may update it, so check back occasionally.
+      </p>
     </section>
   );
 }

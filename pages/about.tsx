@@ -29,7 +29,7 @@ export default function AboutPage() {
       </Head>
       <main className="max-w-2xl mx-auto px-4 py-16">
         <motion.div
-          className="flex flex-col items-center bg-white/70 backdrop-blur-md rounded-2xl p-8"
+          className="flex flex-col items-center bg-white/70 dark:bg-gray-900/80 backdrop-blur-md rounded-2xl p-8 transition-colors"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
@@ -48,8 +48,8 @@ export default function AboutPage() {
               priority
             />
           </motion.div>
-          <h1 className="text-3xl font-bold mb-2 text-black">About Me</h1>
-          <div className="space-y-5 text-lg text-gray-700 text-center">
+          <h1 className="text-3xl font-bold mb-2 text-black dark:text-white">About Me</h1>
+          <div className="space-y-5 text-lg text-gray-800 dark:text-gray-100 text-center">
             <p>
               Hi, I&apos;m <b>Tushar</b>—born and raised in Bhiwani, Haryana: a city with just enough chaos to keep life interesting, and enough peace on the edges for an introvert like me to hide out and recharge.
             </p>
@@ -74,7 +74,7 @@ export default function AboutPage() {
               So, welcome to <b>Tink On It</b>—my little patch of the internet for raw thoughts, unfinished stories, dog wisdom, and the kind of honesty you usually only share with Google Search at 2 am.
             </p>
           </div>
-          <p className="text-gray-500 text-center mt-8 italic">
+          <p className="text-gray-500 dark:text-gray-400 text-center mt-8 italic">
             <span>
               Still here? Thanks for reading the unfiltered me. If we ever meet, I&apos;ll probably act awkward and forget how to end the conversation. But hey, that&apos;s why I have a blog.
             </span>

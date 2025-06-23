@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { motion } from "framer-motion";
 
-export default function BookmarkButton({ slug, }: { slug: string; title: string }) {
+export default function BookmarkButton({ slug }: { slug: string; title: string }) {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
@@ -33,9 +33,13 @@ export default function BookmarkButton({ slug, }: { slug: string; title: string 
       aria-label={saved ? "Remove Bookmark" : "Save this post"}
       title={saved ? "Saved!" : "Save this post"}
       type="button"
-      className={`ml-2 text-xl transition focus:outline-none ${
-        saved ? "text-yellow-500" : "text-gray-600 hover:text-yellow-500"
-      }`}
+      className={`ml-2 text-xl transition focus:outline-none
+        ${
+          saved
+            ? "text-yellow-500"
+            : "text-gray-600 dark:text-gray-300 hover:text-yellow-500"
+        }
+      `}
       whileHover={{
         scale: 1.18,
         boxShadow: saved

@@ -40,7 +40,6 @@ export default function Home({ featured, highlights }: HomeProps) {
         <link rel="canonical" href={canonicalUrl} />
       </Head>
 
-      {/* ...rest of your component is unchanged, as your contrast is already good here... */}
       {/* HERO */}
       <motion.section
         className="max-w-2xl mx-auto py-20 px-6 text-center"
@@ -49,24 +48,24 @@ export default function Home({ featured, highlights }: HomeProps) {
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
         <motion.h1
-          className="text-5xl font-black mb-4 tracking-tight"
+          className="text-5xl font-black mb-4 tracking-tight text-black dark:text-white"
           initial={{ letterSpacing: "-0.04em" }}
           animate={{ letterSpacing: "-0.01em" }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
         >
           Tink On It
         </motion.h1>
-        <p className="text-base text-gray-700 mb-6">
-          Hi, I’m <span className="font-semibold text-gray-900">Tushar</span>.
+        <p className="text-base text-gray-700 dark:text-gray-300 mb-6">
+          Hi, I’m <span className="font-semibold text-gray-900 dark:text-gray-100">Tushar</span>.
         </p>
-        <p className="text-lg text-gray-700 mb-8">
+        <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
           This place isn’t just a blog—it’s where I think out loud. I share what’s on my mind, the good and the bad. Sometimes I talk about feeling lost, sometimes about the funny side of failing, or just stories about life with my dog and family.
         </p>
-        <p className="text-lg text-gray-700 mb-8">
+        <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
           If you like honest stories and simple thoughts (sometimes a little messy), you’ll probably feel at home here. 
           Welcome to Tink On It—read, relate, smile, or just chill.
         </p>
-        <span className="inline-block bg-gray-100 text-black px-5 py-2 rounded-full text-sm font-medium shadow-sm">
+        <span className="inline-block bg-gray-200 dark:bg-gray-700 text-black dark:text-white px-5 py-2 rounded-full text-sm font-medium shadow-sm">
           Real talk. Simple words. No filters.
         </span>
       </motion.section>
@@ -80,7 +79,7 @@ export default function Home({ featured, highlights }: HomeProps) {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <div className="bg-gray-50 rounded-2xl shadow p-6">
+          <div className="bg-gray-300 dark:bg-gray-700 rounded-2xl shadow p-6 transition-colors">
             <div className="mb-4">
               <Image
                 src={featured.coverImage}
@@ -91,11 +90,11 @@ export default function Home({ featured, highlights }: HomeProps) {
                 priority
               />
             </div>
-            <span className="text-xs uppercase tracking-wider text-gray-500 mb-1">
+            <span className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-300 mb-1">
               In the Spotlight
             </span>
-            <h2 className="text-2xl font-bold mt-2 mb-1">{featured.title}</h2>
-            <p className="text-gray-500 text-sm mb-3">{featured.description}</p>
+            <h2 className="text-2xl font-bold mt-2 mb-1 text-black dark:text-white">{featured.title}</h2>
+            <p className="text-gray-500 dark:text-gray-300 text-sm mb-3">{featured.description}</p>
             <motion.div
               whileHover={{ scale: 1.07, boxShadow: "0 4px 18px rgba(30,30,30,0.12)" }}
               whileTap={{ scale: 0.97 }}
@@ -103,7 +102,7 @@ export default function Home({ featured, highlights }: HomeProps) {
             >
               <Link
                 href={`/blog/${featured.slug}`}
-                className="inline-block bg-black text-white px-6 py-2 rounded-full font-semibold transition hover:bg-gray-900"
+                className="inline-block bg-black dark:bg-white text-white dark:text-black px-6 py-2 rounded-full font-semibold transition hover:bg-gray-900 dark:hover:bg-gray-100"
               >
                 Dive In
               </Link>
@@ -121,14 +120,14 @@ export default function Home({ featured, highlights }: HomeProps) {
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <h3 className="text-xl font-semibold mb-6 text-left text-gray-900">
+          <h3 className="text-xl font-semibold mb-6 text-left text-gray-700 dark:text-white">
             Fresh from the mind...
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {highlights.map((post) => (
               <motion.div
                 key={post.slug}
-                className="bg-white rounded-xl shadow-md hover:shadow-lg transition p-4 flex flex-col"
+                className="bg-gray-300 dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition p-4 flex flex-col"
                 whileHover={{ y: -5, scale: 1.03, boxShadow: "0 8px 24px rgba(0,0,0,0.11)" }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -139,19 +138,18 @@ export default function Home({ featured, highlights }: HomeProps) {
                   height={180}
                   className="rounded-lg object-cover w-full h-36 mb-4"
                 />
-                <span className="text-xs uppercase tracking-wider text-gray-500 mb-1">{post.category}</span>
-                <h4 className="text-lg font-bold mb-1">{post.title}</h4>
-                <p className="text-gray-500 text-sm flex-1">{post.description}</p>
+                <span className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-300 mb-1">{post.category}</span>
+                <h4 className="text-lg font-bold mb-1 text-black dark:text-white">{post.title}</h4>
+                <p className="text-gray-500 dark:text-gray-300 text-sm flex-1">{post.description}</p>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="inline-block mt-4 text-black font-semibold hover:underline"
+                  className="inline-block mt-4 text-black dark:text-white font-semibold hover:underline"
                 >
                   Read
                 </Link>
               </motion.div>
             ))}
           </div>
-
         </motion.section>
       )}
 
@@ -163,9 +161,9 @@ export default function Home({ featured, highlights }: HomeProps) {
         viewport={{ once: true }}
         transition={{ duration: 0.7, ease: "easeOut" }}
       >
-        <div className="bg-gray-50 rounded-xl p-6 shadow-sm">
-          <h4 className="text-lg font-semibold mb-1">A little about me</h4>
-          <p className="text-gray-700 text-base">
+        <div className="bg-gray-200 dark:bg-gray-700 rounded-xl p-6 shadow-sm transition-colors">
+          <h4 className="text-lg font-semibold mb-1 text-black dark:text-white">A little about me</h4>
+          <p className="text-gray-700 dark:text-gray-300 text-base">
             I’m Tushar—professional overthinker, lifelong dog lover, part-time philosopher.<br />
             If you ever spot me outside, I probably lost internet at home.
           </p>
@@ -176,7 +174,7 @@ export default function Home({ featured, highlights }: HomeProps) {
           >
             <Link
               href="/about"
-              className="inline-block mt-3 text-black font-medium hover:underline"
+              className="inline-block mt-3 text-black dark:text-white font-medium hover:underline"
             >
               Read the full story &rarr;
             </Link>
@@ -186,7 +184,7 @@ export default function Home({ featured, highlights }: HomeProps) {
 
       {/* HUMOROUS QUOTE */}
       <section className="max-w-xl mx-auto text-center my-10">
-        <blockquote className="italic text-gray-500">
+        <blockquote className="italic text-gray-500 dark:text-gray-300">
           “If you’re reading this, you’re officially in my inner circle of Internet introverts.”
         </blockquote>
       </section>
@@ -206,12 +204,12 @@ export default function Home({ featured, highlights }: HomeProps) {
         >
           <Link
             href="/blog"
-            className="inline-block bg-black text-white px-8 py-3 rounded-full font-semibold transition hover:bg-gray-900"
+            className="inline-block bg-black dark:bg-white text-white dark:text-black px-8 py-3 rounded-full font-semibold transition hover:bg-gray-900 dark:hover:bg-gray-100"
           >
             Start Reading
           </Link>
         </motion.div>
-        <p className="mt-4 text-gray-500 text-sm">
+        <p className="mt-4 text-gray-500 dark:text-gray-300 text-sm">
           Or scroll down and get lost in the chaos of my head.
         </p>
       </motion.section>

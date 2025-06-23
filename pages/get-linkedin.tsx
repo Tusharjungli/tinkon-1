@@ -1,4 +1,3 @@
-// pages/get-linkedin.tsx
 import Head from "next/head";
 import { useState } from "react";
 
@@ -40,53 +39,57 @@ export default function GetLinkedIn() {
         <meta name="robots" content="noindex, nofollow" />
       </Head>
       <main className="max-w-lg mx-auto py-28 px-6 flex flex-col items-center text-center">
-        <h1 className="text-3xl font-bold mb-2"> LinkedIn On Request</h1>
-        <p className="mb-8 text-gray-600">
-          I only share my LinkedIn with genuine people and collaborators.<br />
-          If you’re looking to connect for real, <b>just drop your email and a short note</b> below.<br />
-          If we vibe, I’ll personally reply with my LinkedIn link!
-        </p>
-        {!sent ? (
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col items-center gap-4 w-full max-w-sm"
-            autoComplete="off"
-          >
-            <input
-              type="email"
-              name="email"
-              required
-              disabled={loading}
-              placeholder="Your email"
-              className="rounded-lg p-3 bg-white border border-gray-200 w-full focus:ring-2 focus:ring-indigo-200 transition"
-            />
-            <textarea
-              name="message"
-              required
-              disabled={loading}
-              placeholder="Why do you want to connect? (Short intro)"
-              rows={3}
-              className="rounded-lg p-3 bg-white border border-gray-200 w-full focus:ring-2 focus:ring-indigo-200 transition"
-            />
-            {error && <div className="text-red-500 text-sm">{error}</div>}
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg-indigo-600 text-white font-semibold rounded-lg py-2 px-8 shadow hover:opacity-90 transition disabled:opacity-60"
+        <section className="w-full bg-white/70 dark:bg-gray-900/90 backdrop-blur-md rounded-2xl p-8 transition-colors">
+          <h1 className="text-3xl font-bold mb-2 text-black dark:text-white"> LinkedIn On Request</h1>
+          <p className="mb-8 text-gray-600 dark:text-gray-300">
+            I only share my LinkedIn with genuine people and collaborators.<br />
+            If you’re looking to connect for real, <b>just drop your email and a short note</b> below.<br />
+            If we vibe, I’ll personally reply with my LinkedIn link!
+          </p>
+          {!sent ? (
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col items-center gap-4 w-full max-w-sm"
+              autoComplete="off"
             >
-              {loading ? "Sending..." : "Request Access"}
-            </button>
-          </form>
-        ) : (
-          <div className="mt-8 p-4 bg-green-50 border border-green-200 rounded-xl shadow-sm text-green-700">
-            <p className="font-semibold text-lg mb-2">Thanks for reaching out!</p>
-            <p>
-              If we vibe, I’ll reply to your email soon with my LinkedIn.<br />
-              (If not, nothing personal—just keeping things real!)
-            </p>
-            <p className="mt-4 text-xs text-gray-500 italic">Want a faster reply? Tell me where you found this page!</p>
-          </div>
-        )}
+              <input
+                type="email"
+                name="email"
+                required
+                disabled={loading}
+                placeholder="Your email"
+                className="rounded-lg p-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-black dark:text-gray-100 w-full focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-800 transition"
+              />
+              <textarea
+                name="message"
+                required
+                disabled={loading}
+                placeholder="Why do you want to connect? (Short intro)"
+                rows={3}
+                className="rounded-lg p-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-black dark:text-gray-100 w-full focus:ring-2 focus:ring-indigo-300 dark:focus:ring-indigo-800 transition"
+              />
+              {error && <div className="text-red-500 text-sm">{error}</div>}
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-indigo-600 text-white font-semibold rounded-lg py-2 px-8 shadow hover:opacity-90 transition disabled:opacity-60"
+              >
+                {loading ? "Sending..." : "Request Access"}
+              </button>
+            </form>
+          ) : (
+            <div className="mt-8 p-4 bg-green-50 dark:bg-green-900/40 border border-green-200 dark:border-green-700 rounded-xl shadow-sm text-green-700 dark:text-green-200">
+              <p className="font-semibold text-lg mb-2">Thanks for reaching out!</p>
+              <p>
+                If we vibe, I’ll reply to your email soon with my LinkedIn.<br />
+                (If not, nothing personal—just keeping things real!)
+              </p>
+              <p className="mt-4 text-xs text-gray-500 dark:text-gray-400 italic">
+                Want a faster reply? Tell me where you found this page!
+              </p>
+            </div>
+          )}
+        </section>
       </main>
     </>
   );

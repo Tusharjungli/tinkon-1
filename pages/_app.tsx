@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   return (
-    <div className={`${poppins.className} bg-white min-h-screen flex flex-col font-sans`}>
+    <div className={`${poppins.className} bg-white dark:bg-gray-950 min-h-screen flex flex-col font-sans transition-colors`}>
       {/* Google Analytics scripts */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-FDQH2BHV5G"

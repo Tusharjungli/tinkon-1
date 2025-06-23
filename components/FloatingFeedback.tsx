@@ -49,8 +49,7 @@ export default function FloatingFeedback() {
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         onClick={() => { setShowTooltip(false); setOpen(true); }}
-        className="fixed z-50 bottom-8 right-8 bg-white border border-gray-300 shadow-lg hover:shadow-xl transition 
-                   text-black rounded-full w-16 h-16 flex items-center justify-center backdrop-blur-lg"
+        className="fixed z-50 bottom-8 right-8 bg-white dark:bg-gray-500 border border-gray-300 dark:border-gray-800 shadow-lg hover:shadow-xl transition text-black dark:text-white rounded-full w-16 h-16 flex items-center justify-center backdrop-blur-lg"
         aria-label="Feedback"
         style={{
           boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.09)",
@@ -70,7 +69,7 @@ export default function FloatingFeedback() {
               animate={{ opacity: 1, y: -36, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.96 }}
               transition={{ duration: 0.22, ease: "easeOut" }}
-              className="absolute bottom-full right-1/2 translate-x-1/2 bg-white px-3 py-1 rounded-lg text-xs text-gray-800 shadow-md border border-gray-200 whitespace-nowrap pointer-events-none"
+              className="absolute bottom-full right-1/2 translate-x-1/2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 px-3 py-1 rounded-lg text-xs shadow-md border border-gray-200 dark:border-gray-800 whitespace-nowrap pointer-events-none"
               style={{ marginBottom: '8px', zIndex: 9999 }}
             >
               Got a thought? I read every one!
@@ -91,7 +90,7 @@ export default function FloatingFeedback() {
           >
             <motion.div
               className="relative w-[95vw] max-w-md m-4 rounded-2xl p-8 shadow-2xl
-                        bg-white/90 backdrop-blur-xl border border-white/40"
+                        bg-white/90 dark:bg-gray-900/95 backdrop-blur-xl border border-white/40 dark:border-gray-700 transition-colors"
               initial={{ y: 60, opacity: 0, scale: 0.98 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 60, opacity: 0, scale: 0.98 }}
@@ -100,20 +99,20 @@ export default function FloatingFeedback() {
               {/* Close (X) */}
               <button
                 onClick={() => { setOpen(false); setSent(false); setError(""); setLoading(false); }}
-                className="absolute top-4 right-4 text-2xl text-gray-500 hover:text-black transition"
+                className="absolute top-4 right-4 text-2xl text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white transition"
                 aria-label="Close"
                 style={{ background: "transparent", border: "none" }}
               >
                 &times;
               </button>
               <div className="mb-3">
-                <div className="flex items-center gap-2 text-black font-bold text-lg">
+                <div className="flex items-center gap-2 text-black dark:text-white font-bold text-lg">
                   {ChatIcon}
                   Feedback
                 </div>
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-gray-500 dark:text-gray-300 mt-1">
                   Your words land directly in my inbox. No bots, just me.<br />
-                  <span className="text-xs text-gray-500 mt-1 block">
+                  <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 block">
                     I promise I’m the only one reading this.
                   </span>
                 </p>
@@ -130,7 +129,7 @@ export default function FloatingFeedback() {
                     required
                     disabled={loading}
                     placeholder="Your name"
-                    className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-black transition"
+                    className="rounded-lg p-3 bg-white/90 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-black dark:text-white focus:ring-2 focus:ring-black dark:focus:ring-gray-600 transition"
                   />
                   <input
                     type="email"
@@ -138,28 +137,28 @@ export default function FloatingFeedback() {
                     required
                     disabled={loading}
                     placeholder="Your email"
-                    className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-black transition"
+                    className="rounded-lg p-3 bg-white/90 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-black dark:text-white focus:ring-2 focus:ring-black dark:focus:ring-gray-600 transition"
                   />
                   <textarea
                     name="message"
                     required
                     disabled={loading}
-                    placeholder="Your feedback, story, or awkward confession..."
+                    placeholder="Your feedback, story, or comment"
                     rows={4}
-                    className="rounded-lg p-3 bg-white/90 border border-gray-200 focus:ring-2 focus:ring-black transition"
+                    className="rounded-lg p-3 bg-white/90 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-black dark:text-white focus:ring-2 focus:ring-black dark:focus:ring-gray-600 transition"
                   />
                   {error && <div className="text-red-500 text-sm font-semibold">{error}</div>}
                   <button
                     type="submit"
                     disabled={loading}
-                    className="bg-black text-white font-semibold rounded-lg py-2 mt-2 shadow-lg hover:bg-gray-900 transition disabled:opacity-60"
+                    className="bg-black dark:bg-gray-500 text-white font-semibold rounded-lg py-2 mt-2 shadow-lg hover:bg-gray-900 dark:hover:bg-gray-700 transition disabled:opacity-60"
                   >
                     {loading ? "Sending..." : "Send"}
                   </button>
                 </form>
               ) : (
                 <motion.div
-                  className="text-green-600 font-semibold py-8 text-center animate-pulse"
+                  className="text-green-600 dark:text-green-300 font-semibold py-8 text-center animate-pulse"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4 }}

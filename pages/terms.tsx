@@ -1,6 +1,6 @@
 export default function Terms() {
   return (
-    <section className="max-w-2xl mx-auto py-24 px-6">
+    <section className="max-w-2xl mx-auto py-24 px-6 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 rounded-xl shadow">
       <h2 className="text-3xl font-bold mb-6">Terms of Use</h2>
       <p className="mb-3"><b>Last updated:</b> June 2025</p>
       <p className="mb-3">
