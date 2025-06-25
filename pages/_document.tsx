@@ -1,4 +1,3 @@
-// pages/_document.tsx
 import { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
 
@@ -21,7 +20,8 @@ export default function Document() {
           content="blog, introvert, dogs, tech, life, maturity, brainstorming, personal stories, Tushar Panchal"
         />
         <meta name="author" content="Tushar Panchal" />
-        <link rel="canonical" href="https://tinkon.in/" />
+
+        {/* DO NOT set a sitewide canonical tag here! */}
 
         {/* Open Graph for Social Sharing */}
         <meta property="og:title" content="Tink On It" />

@@ -27,7 +27,10 @@ export async function getStaticProps() {
 
 export default function Home({ featured, highlights }: HomeProps) {
   const router = useRouter();
-  const canonicalUrl = `https://tinkon.in${router.asPath === "/" ? "" : router.asPath.split("?")[0]}`;
+  const canonicalUrl =
+    router.asPath === "/" || router.asPath === ""
+      ? "https://tinkon.in/"
+      : `https://tinkon.in${router.asPath.split("?")[0]}`;
 
   return (
     <>
@@ -127,9 +130,15 @@ export default function Home({ featured, highlights }: HomeProps) {
             {highlights.map((post) => (
               <motion.div
                 key={post.slug}
-                className="bg-gray-300 dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition p-4 flex flex-col"
+                className="bg-gray-300 dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition p-4 flex flex-col cursor-pointer group"
                 whileHover={{ y: -5, scale: 1.03, boxShadow: "0 8px 24px rgba(0,0,0,0.11)" }}
                 whileTap={{ scale: 0.97 }}
+                onClick={() => window.location.href = `/blog/${post.slug}`}
+                tabIndex={0}
+                onKeyPress={e => {
+                  if (e.key === "Enter") window.location.href = `/blog/${post.slug}`;
+                }}
+                style={{ outline: "none" }}
               >
                 <Image
                   src={post.coverImage}
@@ -141,12 +150,11 @@ export default function Home({ featured, highlights }: HomeProps) {
                 <span className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-300 mb-1">{post.category}</span>
                 <h4 className="text-lg font-bold mb-1 text-black dark:text-white">{post.title}</h4>
                 <p className="text-gray-500 dark:text-gray-300 text-sm flex-1">{post.description}</p>
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="inline-block mt-4 text-black dark:text-white font-semibold hover:underline"
+                <span
+                  className="inline-block mt-4 text-black dark:text-white font-semibold group-hover:underline"
                 >
                   Read
-                </Link>
+                </span>
               </motion.div>
             ))}
           </div>

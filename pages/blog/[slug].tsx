@@ -16,7 +16,6 @@ import BookmarkButton from "../../components/BookmarkButton";
 import SharePopover from "../../components/SharePopover";
 import { AnimatePresence, motion } from "framer-motion";
 import Breadcrumb from "../../components/Breadcrumb";
-import { useRouter } from "next/router"; // for canonical
 
 type BlogMeta = {
   title: string;
@@ -48,8 +47,7 @@ const mdxComponents = {
 export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDetailProps) {
   const url = `https://tinkon.in/blog/${post.slug}`;
   const ogImage = post.ogImage || post.coverImage || "https://tinkon.in/og-image.jpg";
-  const router = useRouter();
-  const canonicalUrl = `https://tinkon.in${router.asPath.split("?")[0]}`;
+  const canonicalUrl = `https://tinkon.in/blog/${post.slug}`;
 
   return (
     <>
@@ -65,7 +63,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
         <meta name="twitter:title" content={`${post.title} — Tink On It`} />
         <meta name="twitter:description" content={post.description} />
         <meta name="twitter:image" content={ogImage.startsWith('http') ? ogImage : `https://tinkon.in${ogImage}`} />
-        {/* CANONICAL */}
+        {/* FIXED CANONICAL TAG */}
         <link rel="canonical" href={canonicalUrl} />
         {/* SEO Structured Data */}
         <script
