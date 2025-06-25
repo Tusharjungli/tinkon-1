@@ -84,23 +84,46 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
             </div>
           )}
           {filtered.map((post) => (
-            <motion.li
-              key={post.slug}
-              className="mb-8 pb-6 border-b last:border-b-0 last:pb-0 bg-white dark:bg-gray-950 rounded-xl shadow-sm transition-colors"
-              whileHover={{ scale: 1.015, boxShadow: "0 4px 18px rgba(0,0,0,0.06)" }}
-              transition={{ type: "spring", stiffness: 330, damping: 25 }}
-              style={{ listStyle: "none" }}
-            >
-              <Link href={`/blog/${post.slug}`} style={{ textDecoration: "none" }}>
-                <h2 className="text-2xl font-bold text-black dark:text-white transition-colors">{post.title}</h2>
+            <li key={post.slug} className="mb-8 pb-6 border-b last:border-b-0 last:pb-0 list-none">
+              <Link
+                href={`/blog/${post.slug}`}
+                className="block group focus:outline-none cursor-pointer transition"
+                style={{ textDecoration: "none" }}
+                tabIndex={0}
+              >
+                <motion.div
+                  whileHover={{ scale: 1.015, boxShadow: "0 4px 18px rgba(0,0,0,0.08)" }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 330, damping: 25 }}
+                  className={`
+                    bg-white dark:bg-gray-950 rounded-xl shadow-sm transition-colors
+                    px-5 py-4
+                    border border-transparent
+                    group-hover:bg-gray-50 dark:group-hover:bg-gray-900
+                    group-focus:ring-2 group-focus:ring-indigo-200 dark:group-focus:ring-gray-800
+                  `}
+                  style={{
+                    boxShadow: "0 1px 4px rgba(20,20,20,0.04)",
+                  }}
+                >
+                  <h2 className="text-2xl font-bold text-black dark:text-white group-hover:underline transition-colors">
+                    {post.title}
+                  </h2>
+                  <p className="text-gray-700 dark:text-gray-300 text-sm mt-1 mb-2">
+                    {format(new Date(post.date), "dd MMM yyyy")} — <span className="uppercase">{post.category}</span>
+                  </p>
+                  <p className="mb-1 text-gray-800 dark:text-gray-200">{post.description}</p>
+                </motion.div>
               </Link>
-              <p className="text-gray-700 dark:text-gray-300 text-sm mt-1 mb-2">
-                {format(new Date(post.date), "dd MMM yyyy")} — <span className="uppercase">{post.category}</span>
-              </p>
-              <p className="mb-1 text-gray-800 dark:text-gray-200">{post.description}</p>
-            </motion.li>
+            </li>
           ))}
         </ul>
+        {/* Hide the default focus ring on links (make it accessible, but subtle) */}
+        <style jsx global>{`
+          a:focus {
+            outline: none !important;
+          }
+        `}</style>
       </div>
     </>
   );
