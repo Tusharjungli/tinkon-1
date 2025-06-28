@@ -62,7 +62,7 @@ export default function Footer() {
             <FaXTwitter size={23} />
           </FooterIcon>
           <FooterIcon
-            href="https://instagram.com/panchal_tusharr/"
+            href="https://www.instagram.com/tinkonit/"
             ariaLabel="Instagram"
             hoverColor="#d946ef"
             isExternal
