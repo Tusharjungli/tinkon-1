@@ -5,14 +5,21 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "@/lib/useTheme";
 
 const categories = [
+  "All",
   "Dogs",
   "Life",
-  "Maturity",
+  "Growth",
+  "Mind",
   "Tech",
-  "Brainstorming",
+  "School",
+  "City",
+  "Village",
+  "Failures",
+  "Love",
+  "Faith",
   "Spiritual",
+  "Thoughts",
   "Personal Stories",
-  "Introvert",
 ];
 
 export default function Navbar() {
