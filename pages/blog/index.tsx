@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 type BlogMeta = {
   title: string;
@@ -96,6 +97,7 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 330, damping: 25 }}
                   className={`
+                    flex flex-col sm:flex-row items-start gap-6
                     bg-white dark:bg-gray-950 rounded-xl shadow-sm transition-colors
                     px-5 py-4
                     border border-transparent
@@ -106,13 +108,26 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
                     boxShadow: "0 1px 4px rgba(20,20,20,0.04)",
                   }}
                 >
-                  <h2 className="text-2xl font-bold text-black dark:text-white group-hover:underline transition-colors">
-                    {post.title}
-                  </h2>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm mt-1 mb-2">
-                    {format(new Date(post.date), "dd MMM yyyy")} — <span className="uppercase">{post.category}</span>
-                  </p>
-                  <p className="mb-1 text-gray-800 dark:text-gray-200">{post.description}</p>
+                  {/* Cover Image */}
+                  <div className="w-full sm:w-40 flex-shrink-0 mb-4 sm:mb-0">
+                    <Image
+                      src={post.coverImage}
+                      alt={post.title}
+                      width={180}
+                      height={120}
+                      className="rounded-xl object-cover w-full h-28 shadow-sm"
+                    />
+                  </div>
+                  {/* Blog Info */}
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-2xl font-bold text-black dark:text-white group-hover:underline transition-colors mb-1">
+                      {post.title}
+                    </h2>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm mb-2">
+                      {format(new Date(post.date), "dd MMM yyyy")} — <span className="uppercase">{post.category}</span>
+                    </p>
+                    <p className="mb-1 text-gray-800 dark:text-gray-200 line-clamp-3">{post.description}</p>
+                  </div>
                 </motion.div>
               </Link>
             </li>
