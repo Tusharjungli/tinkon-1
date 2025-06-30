@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { useState, useEffect, useRef, ReactNode } from "react";
-import { FaChevronDown, FaBars, FaTimes, FaMoon, FaSun } from "react-icons/fa";
+import { FaChevronDown, FaBars, FaTimes, /*FaMoon, FaSun*/ } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
-import { useTheme } from "@/lib/useTheme";
+/*import { useTheme } from "@/lib/useTheme";*/
 
 const categories = [
   "All",
@@ -26,7 +26,7 @@ export default function Navbar() {
   const [catOpen, setCatOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const mobileDrawerRef = useRef<HTMLDivElement>(null);
-  const { theme, toggle } = useTheme();
+  {/*const { theme, toggle } = useTheme();*/}
 
   // Prevent background scroll when mobile menu open
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function Navbar() {
           <NavBounceLink href="/contact">Contact</NavBounceLink>
         </div>
         {/* Theme Toggle Button */}
-        <button
+        {/*<button
   onClick={toggle}
   aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
   className="ml-3 p-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
@@ -127,7 +127,7 @@ export default function Navbar() {
       </motion.span>
     )}
   </AnimatePresence>
-</button>
+</button>*/}
         {/* Mobile Hamburger */}
         <motion.button
           className="sm:hidden text-2xl ml-2 text-gray-700 dark:text-gray-200"

@@ -56,7 +56,7 @@ export default function Footer() {
           <FooterIcon
             href="https://x.com/tushar_tinkon"
             ariaLabel="Twitter"
-            hoverColor="#fff"
+            hoverColor="#1a1a1a"
             isExternal
           >
             <FaXTwitter size={23} />

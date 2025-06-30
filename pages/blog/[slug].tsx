@@ -16,6 +16,7 @@ import BookmarkButton from "../../components/BookmarkButton";
 import SharePopover from "../../components/SharePopover";
 import { AnimatePresence, motion } from "framer-motion";
 import Breadcrumb from "../../components/Breadcrumb";
+import ReadingProgress from "../../components/ReadingProgress";
 
 type BlogMeta = {
   title: string;
@@ -118,6 +119,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
           }}
         />
       </Head>
+      <ReadingProgress />
       <AnimatePresence mode="wait">
         <motion.div
           key={post.slug}
@@ -183,25 +185,48 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
           </div>
           {/* Recommendations */}
           {recommended && recommended.length > 0 && (
-            <>
-              <hr className="my-10 border-gray-200 dark:border-gray-700" />
-              <div className="text-gray-700 dark:text-gray-300 text-base">
-                <strong>Liked this?</strong> You might also enjoy:
-                <ul className="list-disc list-inside mt-2">
-                  {recommended.map((r) => (
-                    <li key={r.slug}>
-                      <Link href={`/blog/${r.slug}`} className="underline text-black dark:text-white">
-                        {r.title}
-                      </Link>
-                      <span className="text-xs text-gray-600 dark:text-gray-400 ml-2">
-                        ({r.category})
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </>
-          )}
+  <>
+    <hr className="my-10 border-gray-200 dark:border-gray-700" />
+    <div className="text-gray-700 dark:text-gray-300 text-base">
+      <strong>Liked this?</strong> You might also enjoy:
+      <ul className="list-disc list-inside mt-2">
+        {recommended.map((r, ) => (
+          <motion.li
+            key={r.slug}
+            initial={{ y: 0, boxShadow: "none" }}
+            whileHover={{
+              y: -2,
+              boxShadow: "0 2px 10px rgba(0,0,0,0.06)"
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 140,
+              damping: 16
+            }}
+            className="inline-block mb-2"
+          >
+            <Link
+              href={`/blog/${r.slug}`}
+              className="inline-block text-black dark:text-white font-semibold hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors no-underline focus:outline-none"
+              style={{
+                textDecoration: "none",
+                borderBottom: "2px solid transparent",
+                transition: "color 0.2s, border-bottom-color 0.2s"
+              }}
+            >
+              {r.title}
+            </Link>
+            <span className="text-xs text-gray-600 dark:text-gray-400 ml-2">
+              ({r.category})
+            </span>
+          </motion.li>
+        ))}
+      </ul>
+    </div>
+  </>
+)}
+
+
         </motion.div>
       </AnimatePresence>
     </>
