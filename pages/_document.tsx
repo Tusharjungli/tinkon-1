@@ -22,10 +22,7 @@ export default function Document() {
         <meta name="author" content="Tushar Panchal" />
 
         {/* GOOGLE SEARCH CONSOLE SITE VERIFICATION */}
-        <meta
-          name="google-site-verification"
-          content="Wm0HR0OZoFdbB_ULBRKyoUjaNrTKrDniOaJ7c4Xa8Xo"
-        />
+        <meta name="google-site-verification" content="Wm0HRO0ZoFdbB_ULBRKyoUjaNrTKrDniOaJ7c4Xa8Xo" />
 
         {/* DO NOT set a sitewide canonical tag here! */}
 
