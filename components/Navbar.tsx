@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useState, useEffect, useRef, ReactNode } from "react";
-import { FaChevronDown, FaBars, FaTimes, /*FaMoon, FaSun*/ } from "react-icons/fa";
+import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 /*import { useTheme } from "@/lib/useTheme";*/
 
@@ -25,6 +25,7 @@ const categories = [
 export default function Navbar() {
   const [catOpen, setCatOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showMobileCats, setShowMobileCats] = useState(false);
   const mobileDrawerRef = useRef<HTMLDivElement>(null);
   {/*const { theme, toggle } = useTheme();*/}
 
@@ -80,7 +81,7 @@ export default function Navbar() {
                     transition={{ type: "spring", stiffness: 370, damping: 24 }}
                   >
                     <Link
-                      href={`/blog?category=${encodeURIComponent(cat)}`}
+                      href={cat === "All" ? "/blog" : `/blog?category=${encodeURIComponent(cat)}`}
                       className="block px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 hover:text-black dark:hover:bg-gray-800 dark:hover:text-white transition-colors rounded"
                     >
                       {cat}
@@ -95,39 +96,7 @@ export default function Navbar() {
           <NavBounceLink href="/contact">Contact</NavBounceLink>
         </div>
         {/* Theme Toggle Button */}
-        {/*<button
-  onClick={toggle}
-  aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-  className="ml-3 p-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
-  type="button"
-  style={{ overflow: "hidden", width: 34, height: 34, display: "flex", alignItems: "center", justifyContent: "center" }}
->
-  <AnimatePresence mode="wait" initial={false}>
-    {theme === "dark" ? (
-      <motion.span
-        key="sun"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.8, opacity: 0 }}
-        transition={{ duration: 0.18, ease: [0.33, 1, 0.68, 1] }}
-        style={{ display: "inline-block" }}
-      >
-        <FaSun size={20} />
-      </motion.span>
-    ) : (
-      <motion.span
-        key="moon"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.8, opacity: 0 }}
-        transition={{ duration: 0.18, ease: [0.33, 1, 0.68, 1] }}
-        style={{ display: "inline-block" }}
-      >
-        <FaMoon size={20} />
-      </motion.span>
-    )}
-  </AnimatePresence>
-</button>*/}
+        {/* <button> ... </button> */}
         {/* Mobile Hamburger */}
         <motion.button
           className="sm:hidden text-2xl ml-2 text-gray-700 dark:text-gray-200"
@@ -152,7 +121,7 @@ export default function Navbar() {
               transition={{ duration: 0.19, ease: "easeOut" }}
             >
               <motion.div
-                className="bg-white dark:bg-gray-900 w-64 h-full max-h-screen p-6 flex flex-col gap-4 relative shadow-lg overflow-y-auto"
+                className="bg-white dark:bg-gray-900 w-64 h-full max-h-screen p-6 flex flex-col gap-1 relative shadow-lg overflow-y-auto"
                 initial={{ x: 96, opacity: 0, scale: 0.98 }}
                 animate={{ x: 0, opacity: 1, scale: 1 }}
                 exit={{ x: 96, opacity: 0, scale: 0.98 }}
@@ -165,79 +134,73 @@ export default function Navbar() {
                 >
                   <FaTimes />
                 </button>
-                <Link href="/" className="text-xl font-extrabold mb-2 dark:text-white" onClick={() => setMobileOpen(false)}>
+                <Link
+                  href="/"
+                  className="text-xl font-extrabold mb-4 mt-2 dark:text-white"
+                  onClick={() => setMobileOpen(false)}
+                >
                   TinkOnIt
                 </Link>
-                <div>
-                  <span className="text-gray-600 dark:text-gray-300 font-semibold">Categories</span>
-                  <motion.div
-                    className="flex flex-col gap-1 mt-1"
-                    initial="hidden"
-                    animate="visible"
-                    variants={{
-                      hidden: {},
-                      visible: {
-                        transition: {
-                          staggerChildren: 0.055
-                        }
-                      }
-                    }}
+                {/* --- Main nav links --- */}
+                <nav className="flex flex-col gap-1">
+                  {/* Categories collapsible */}
+                  <button
+                    className="flex items-center justify-between w-full px-1 py-3 text-lg font-semibold text-gray-800 dark:text-gray-100 rounded focus:outline-none"
+                    onClick={() => setShowMobileCats(open => !open)}
                   >
-                    {categories.map((cat, i) => (
+                    <span>Categories</span>
+                    <FaChevronDown
+                      className={`ml-2 transition-transform ${showMobileCats ? "rotate-180" : ""}`}
+                      size={16}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {showMobileCats && (
                       <motion.div
-                        key={cat}
-                        variants={{
-                          hidden: { opacity: 0, x: 18 },
-                          visible: { opacity: 1, x: 0 }
-                        }}
-                        whileTap={{ scale: 0.96 }}
-                        transition={{ type: "spring", stiffness: 320, damping: 26, delay: 0.01 * i }}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden"
                       >
-                        <Link
-                          href={`/blog?category=${encodeURIComponent(cat)}`}
-                          className="block px-2 py-2 text-gray-700 dark:text-gray-200 rounded hover:bg-gray-100 hover:text-black dark:hover:bg-gray-800 dark:hover:text-white transition-colors"
-                          onClick={() => setMobileOpen(false)}
-                        >
-                          {cat}
-                        </Link>
+                        {categories.map(cat => (
+                          <Link
+                            key={cat}
+                            href={cat === "All" ? "/blog" : `/blog?category=${encodeURIComponent(cat)}`}
+                            className="block pl-4 pr-2 py-2 text-gray-700 dark:text-gray-300 text-base hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors"
+                            onClick={() => {
+                              setMobileOpen(false);
+                              setShowMobileCats(false);
+                            }}
+                          >
+                            {cat}
+                          </Link>
+                        ))}
                       </motion.div>
-                    ))}
-                  </motion.div>
-                </div>
-                {/* Stagger in main links below */}
-                <motion.div
-                  className="flex flex-col gap-1 mt-4"
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    hidden: {},
-                    visible: {
-                      transition: {
-                        staggerChildren: 0.07
-                      }
-                    }
-                  }}
-                >
-                  {["/blog", "/about", "/contact"].map((path, idx) => (
-                    <motion.div
-                      key={path}
-                      variants={{
-                        hidden: { opacity: 0, x: 18 },
-                        visible: { opacity: 1, x: 0 }
-                      }}
-                      whileTap={{ scale: 0.96 }}
-                      transition={{ type: "spring", stiffness: 320, damping: 26, delay: 0.13 + 0.06 * idx }}
-                    >
-                      <Link
-                        href={path}
-                        className="py-2 text-gray-700 dark:text-gray-100 rounded font-semibold hover:bg-gray-100 hover:text-black dark:hover:bg-gray-800 dark:hover:text-white block transition-colors"
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        {path === "/blog" ? "Blog" : path === "/about" ? "About" : "Contact"}
-                      </Link>
-                    </motion.div>
-                  ))}
-                </motion.div>
+                    )}
+                  </AnimatePresence>
+                  {/* Other main links */}
+                  <Link
+                    href="/blog"
+                    className="px-1 py-3 text-lg font-semibold text-gray-800 dark:text-gray-100 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Blog
+                  </Link>
+                  <Link
+                    href="/about"
+                    className="px-1 py-3 text-lg font-semibold text-gray-800 dark:text-gray-100 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    About
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="px-1 py-3 text-lg font-semibold text-gray-800 dark:text-gray-100 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Contact
+                  </Link>
+                </nav>
               </motion.div>
             </motion.div>
           )}
