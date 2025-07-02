@@ -17,6 +17,11 @@ import SharePopover from "../../components/SharePopover";
 import { AnimatePresence, motion } from "framer-motion";
 import Breadcrumb from "../../components/Breadcrumb";
 import ReadingProgress from "../../components/ReadingProgress";
+import dynamic from "next/dynamic";
+import PostActionsBar from "../../components/PostActionsBar";
+
+
+const CommentSection = dynamic(() => import("../../components/CommentSection"), { ssr: false });
 
 type BlogMeta = {
   title: string;
@@ -50,6 +55,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
   const ogImage = post.ogImage || post.coverImage || "https://tinkon.in/og-image.jpg";
   const canonicalUrl = `https://tinkon.in/blog/${post.slug}`;
 
+  
   return (
     <>
       <Head>
@@ -64,7 +70,6 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
         <meta name="twitter:title" content={`${post.title} — Tink On It`} />
         <meta name="twitter:description" content={post.description} />
         <meta name="twitter:image" content={ogImage.startsWith('http') ? ogImage : `https://tinkon.in${ogImage}`} />
-        {/* FIXED CANONICAL TAG */}
         <link rel="canonical" href={canonicalUrl} />
         {/* SEO Structured Data */}
         <script
@@ -171,12 +176,17 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
             <span>—</span>
             <span>{post.category}</span>
           </div>
-          {/* Title + Bookmark + Share */}
-          <div className="flex items-center gap-2 mb-2">
+
+          {/* Title */}
+          <div className="mb-2">
             <h1 className="text-4xl font-bold text-black dark:text-white">{post.title}</h1>
+          </div>
+          {/* Bookmark and Share */}
+          <div className="flex items-center gap-2 mb-2">
             <BookmarkButton slug={post.slug} title={post.title} />
             <SharePopover url={url} title={post.title} />
           </div>
+
           {/* Description */}
           <p className="text-gray-800 dark:text-gray-200 mb-8">{post.description}</p>
           {/* Blog Content (prose) */}
@@ -185,48 +195,56 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
           </div>
           {/* Recommendations */}
           {recommended && recommended.length > 0 && (
-  <>
-    <hr className="my-10 border-gray-200 dark:border-gray-700" />
-    <div className="text-gray-700 dark:text-gray-300 text-base">
-      <strong>Liked this?</strong> You might also enjoy:
-      <ul className="list-disc list-inside mt-2">
-        {recommended.map((r, ) => (
-          <motion.li
-            key={r.slug}
-            initial={{ y: 0, boxShadow: "none" }}
-            whileHover={{
-              y: -2,
-              boxShadow: "0 2px 10px rgba(0,0,0,0.06)"
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 140,
-              damping: 16
-            }}
-            className="inline-block mb-2"
-          >
-            <Link
-              href={`/blog/${r.slug}`}
-              className="inline-block text-black dark:text-white font-semibold hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors no-underline focus:outline-none"
-              style={{
-                textDecoration: "none",
-                borderBottom: "2px solid transparent",
-                transition: "color 0.2s, border-bottom-color 0.2s"
-              }}
-            >
-              {r.title}
-            </Link>
-            <span className="text-xs text-gray-600 dark:text-gray-400 ml-2">
-              ({r.category})
-            </span>
-          </motion.li>
-        ))}
-      </ul>
-    </div>
-  </>
-)}
+            <>
+              <hr className="my-10 border-gray-200 dark:border-gray-700" />
+              <div className="text-gray-700 dark:text-gray-300 text-base">
+                <strong>Liked this?</strong> You might also enjoy:
+                <ul className="list-disc list-inside mt-2">
+                  {recommended.map((r) => (
+                    <motion.li
+                      key={r.slug}
+                      initial={{ y: 0, boxShadow: "none" }}
+                      whileHover={{
+                        y: -2,
+                        boxShadow: "0 2px 10px rgba(0,0,0,0.06)"
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 140,
+                        damping: 16
+                      }}
+                      className="inline-block mb-2"
+                    >
+                      <Link
+                        href={`/blog/${r.slug}`}
+                        className="inline-block text-black dark:text-white font-semibold hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors no-underline focus:outline-none"
+                        style={{
+                          textDecoration: "none",
+                          borderBottom: "2px solid transparent",
+                          transition: "color 0.2s, border-bottom-color 0.2s"
+                        }}
+                      >
+                        {r.title}
+                      </Link>
+                      <span className="text-xs text-gray-600 dark:text-gray-400 ml-2">
+                        ({r.category})
+                      </span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          )}
 
+          {/* --- Post Actions Bar (universal like, bookmark, share) --- */}
+          <PostActionsBar
+            postSlug={post.slug}
+            bookmark={<BookmarkButton slug={post.slug} title={post.title} />}
+            share={<SharePopover url={url} title={post.title} />}
+          />
 
+          {/* --- Comments Section --- */}
+          <CommentSection postSlug={post.slug} />
         </motion.div>
       </AnimatePresence>
     </>
