@@ -152,7 +152,7 @@ export default function Navbar() {
               transition={{ duration: 0.19, ease: "easeOut" }}
             >
               <motion.div
-                className="bg-white dark:bg-gray-900 w-64 h-full p-6 flex flex-col gap-4 relative shadow-lg"
+                className="bg-white dark:bg-gray-900 w-64 h-full max-h-screen p-6 flex flex-col gap-4 relative shadow-lg overflow-y-auto"
                 initial={{ x: 96, opacity: 0, scale: 0.98 }}
                 animate={{ x: 0, opacity: 1, scale: 1 }}
                 exit={{ x: 96, opacity: 0, scale: 0.98 }}
