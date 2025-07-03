@@ -238,10 +238,10 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
 
           {/* --- Post Actions Bar (universal like, bookmark, share) --- */}
           <PostActionsBar
-            postSlug={post.slug}
             bookmark={<BookmarkButton slug={post.slug} title={post.title} />}
             share={<SharePopover url={url} title={post.title} />}
           />
+
 
           {/* --- Comments Section --- */}
           <CommentSection postSlug={post.slug} />
