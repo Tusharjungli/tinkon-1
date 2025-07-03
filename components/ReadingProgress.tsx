@@ -37,7 +37,7 @@ export default function ReadingProgress() {
           width: `${progress}%`,
           background: "linear-gradient(90deg, #6366F1 0%, #EC4899 100%)",
           borderRadius: "2px",
-          transition: "width 0.22s cubic-bezier(0.4, 0, 0.2, 1)",
+          transition: "width 0.08s linear",
           willChange: "width",
         }}
       />
