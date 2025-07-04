@@ -1,5 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
+import { FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaXTwitter, } from "react-icons/fa6";
+import { motion } from "framer-motion";
+import { useState, ReactNode } from "react";
 
 export default function Contact() {
   return (
@@ -46,6 +50,35 @@ export default function Contact() {
               </Link>
             </div>
           </div>
+
+          {/* Social Media Icons Row */}
+          <div className="flex gap-7 mt-7 items-center">
+            <ContactIcon
+              href="/get-linkedin"
+              ariaLabel="LinkedIn"
+              hoverColor="#2563eb"
+            >
+              <FaLinkedin size={30} />
+            </ContactIcon>
+            <ContactIcon
+              href="https://x.com/tushar_tinkon"
+              ariaLabel="Twitter"
+              hoverColor="#1a1a1a"
+              isExternal
+            >
+              <FaXTwitter size={32} />
+            </ContactIcon>
+            <ContactIcon
+              href="https://www.instagram.com/tinkonit/"
+              ariaLabel="Instagram"
+              hoverColor="#d946ef"
+              isExternal
+            >
+              <FaInstagram size={30} />
+            </ContactIcon>
+            
+          </div>
+
           <div className="text-gray-500 dark:text-gray-400 pt-6 text-sm">
             <span>
               <i>
@@ -56,5 +89,42 @@ export default function Contact() {
         </section>
       </main>
     </>
+  );
+}
+
+// --- Animated Icon Button for Socials (footer style) ---
+function ContactIcon({
+  href,
+  ariaLabel,
+  hoverColor,
+  isExternal,
+  children,
+}: {
+  href: string;
+  ariaLabel: string;
+  hoverColor: string;
+  isExternal?: boolean;
+  children: ReactNode;
+}) {
+  const [hover, setHover] = useState(false);
+  return (
+    <motion.a
+      href={href}
+      aria-label={ariaLabel}
+      className="transition-colors"
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+      style={{
+        color: hover ? hoverColor : undefined,
+        display: "inline-flex",
+      }}
+      whileHover={{ scale: 1.19 }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ type: "spring", stiffness: 340, damping: 20 }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {children}
+    </motion.a>
   );
 }
