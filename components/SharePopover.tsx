@@ -10,12 +10,13 @@ import {
 } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
+// ...imports same as before...
+
 export default function SharePopover({ url, title }: { url: string; title: string }) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const popoverRef = useRef<HTMLDivElement>(null);
 
-  // Close on click outside
   useEffect(() => {
     if (!open) return;
     const handler = (e: MouseEvent) => {
@@ -41,7 +42,7 @@ export default function SharePopover({ url, title }: { url: string; title: strin
         }}
         whileTap={{ scale: 0.95 }}
       >
-        <FaShareAlt size={20} />
+        <FaShareAlt size={22} />
       </motion.button>
       <AnimatePresence>
         {open && (
@@ -53,87 +54,71 @@ export default function SharePopover({ url, title }: { url: string; title: strin
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
           >
-            {/* WhatsApp */}
             <motion.a
               href={`https://wa.me/?text=${shareText}%20${shareUrl}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 text-gray-700 dark:text-gray-200 px-2 py-1 rounded transition font-medium
-                hover:bg-[#e9fbf1] dark:hover:bg-[#193c2c]"
+              aria-label="Share on WhatsApp"
+              className="group flex items-center gap-2 text-gray-700 dark:text-gray-200 px-2 py-1 rounded transition font-medium hover:bg-[#e9fbf1] dark:hover:bg-[#193c2c]"
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.97 }}
+              onClick={() => setOpen(false)}
             >
-              <FaWhatsapp
-                size={18}
-                className="text-gray-500 group-hover:text-green-600 transition"
-              />{" "}
+              <FaWhatsapp size={20} className="text-gray-500 group-hover:text-green-600 transition" />
               <span className="group-hover:text-green-700 dark:group-hover:text-green-400 transition">WhatsApp</span>
             </motion.a>
-            {/* X (Twitter) */}
             <motion.a
               href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 text-gray-700 dark:text-gray-200 px-2 py-1 rounded transition font-medium
-                hover:bg-[#eaf3fb] dark:hover:bg-[#182539]"
+              aria-label="Share on X (Twitter)"
+              className="group flex items-center gap-2 text-gray-700 dark:text-gray-200 px-2 py-1 rounded transition font-medium hover:bg-[#eaf3fb] dark:hover:bg-[#182539]"
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.97 }}
+              onClick={() => setOpen(false)}
             >
-              <FaTwitter
-                size={18}
-                className="text-gray-500 group-hover:text-blue-500 transition"
-              />{" "}
+              <FaTwitter size={20} className="text-gray-500 group-hover:text-blue-500 transition" />
               <span className="group-hover:text-blue-500 dark:group-hover:text-blue-400 transition">X (Twitter)</span>
             </motion.a>
-            {/* LinkedIn */}
             <motion.a
               href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 text-gray-700 dark:text-gray-200 px-2 py-1 rounded transition font-medium
-                hover:bg-[#e7f2fa] dark:hover:bg-[#192a36]"
+              aria-label="Share on LinkedIn"
+              className="group flex items-center gap-2 text-gray-700 dark:text-gray-200 px-2 py-1 rounded transition font-medium hover:bg-[#e7f2fa] dark:hover:bg-[#192a36]"
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.97 }}
+              onClick={() => setOpen(false)}
             >
-              <FaLinkedin
-                size={18}
-                className="text-gray-500 group-hover:text-blue-700 transition"
-              />{" "}
+              <FaLinkedin size={20} className="text-gray-500 group-hover:text-blue-700 transition" />
               <span className="group-hover:text-blue-700 dark:group-hover:text-blue-400 transition">LinkedIn</span>
             </motion.a>
-            {/* Facebook */}
             <motion.a
               href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 text-gray-700 dark:text-gray-200 px-2 py-1 rounded transition font-medium
-                hover:bg-[#e9f0fb] dark:hover:bg-[#192136]"
+              aria-label="Share on Facebook"
+              className="group flex items-center gap-2 text-gray-700 dark:text-gray-200 px-2 py-1 rounded transition font-medium hover:bg-[#e9f0fb] dark:hover:bg-[#192136]"
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.97 }}
+              onClick={() => setOpen(false)}
             >
-              <FaFacebook
-                size={18}
-                className="text-gray-500 group-hover:text-blue-600 transition"
-              />{" "}
+              <FaFacebook size={20} className="text-gray-500 group-hover:text-blue-600 transition" />
               <span className="group-hover:text-blue-600 dark:group-hover:text-blue-400 transition">Facebook</span>
             </motion.a>
-            {/* Copy */}
             <motion.button
-              className="group flex items-center gap-2 text-gray-700 dark:text-gray-200 px-2 py-1 rounded transition w-full font-medium
-                hover:bg-[#f3e9fb] dark:hover:bg-[#2d2136]"
+              className="group flex items-center gap-2 text-gray-700 dark:text-gray-200 px-2 py-1 rounded transition w-full font-medium hover:bg-[#f3e9fb] dark:hover:bg-[#2d2136]"
               onClick={() => {
-                navigator.clipboard.writeText(url);
+                navigator.clipboard.writeText(`${title} — Tink On It\n${url}`);
                 setCopied(true);
                 setTimeout(() => setCopied(false), 1400);
               }}
               type="button"
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.97 }}
+              aria-label="Copy link"
             >
-              <FaRegCopy
-                size={17}
-                className="text-gray-500 group-hover:text-purple-600 transition"
-              />{" "}
+              <FaRegCopy size={19} className="text-gray-500 group-hover:text-purple-600 transition" />
               <span className="group-hover:text-purple-600 dark:group-hover:text-purple-400 transition">
                 {copied ? "Copied!" : "Copy Link"}
               </span>

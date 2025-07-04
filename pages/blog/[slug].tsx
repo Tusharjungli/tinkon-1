@@ -15,13 +15,10 @@ import Divider from "../../components/Divider";
 import BookmarkButton from "../../components/BookmarkButton";
 import SharePopover from "../../components/SharePopover";
 import { AnimatePresence, motion } from "framer-motion";
-import Breadcrumb from "../../components/Breadcrumb";
 import ReadingProgress from "../../components/ReadingProgress";
-import dynamic from "next/dynamic";
 import PostActionsBar from "../../components/PostActionsBar";
 
 
-const CommentSection = dynamic(() => import("../../components/CommentSection"), { ssr: false });
 
 type BlogMeta = {
   title: string;
@@ -134,19 +131,38 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="max-w-3xl mx-auto px-4 py-16"
         >
-          {/* Breadcrumbs */}
-          <Breadcrumb
-            items={[
-              { name: "Home", href: "/" },
-              { name: "Blog", href: "/blog" },
-              { name: post.title }
-            ]}
-          />
+          
 
-          {/* Back link */}
-          <Link href="/blog" className="text-black dark:text-white underline text-sm mb-6 inline-block">
-            ← Back to all blogs
-          </Link>
+          <motion.div
+  initial={false}
+  whileHover="hover"
+  whileTap="tap"
+  className="mb-7"
+>
+  <Link
+    href="/blog"
+    className="inline-flex items-center gap-1 text-sm font-medium text-gray-700 dark:text-gray-100 group transition"
+    style={{ textDecoration: "none" }}
+    aria-label="Back to all blogs"
+  >
+    <motion.span
+      variants={{
+        hover: { x: -4, color: "#EC4899" }, // move arrow left & pink on hover
+        tap: { x: -1 },
+        initial: { x: 0 },
+      }}
+      transition={{ type: "spring", stiffness: 320, damping: 25 }}
+      className="transition-colors"
+    >
+      ←
+    </motion.span>
+    <span
+      className="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[1.5px] after:bg-pink-500 after:transition-all after:duration-200 group-hover:after:w-full"
+    >
+      Back to all blogs
+    </span>
+  </Link>
+</motion.div>
 
           {/* Blog cover image */}
           {post.coverImage && (
@@ -197,54 +213,33 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
           {recommended && recommended.length > 0 && (
             <>
               <hr className="my-10 border-gray-200 dark:border-gray-700" />
-              <div className="text-gray-700 dark:text-gray-300 text-base">
-                <strong>Liked this?</strong> You might also enjoy:
-                <ul className="list-disc list-inside mt-2">
-                  {recommended.map((r) => (
-                    <motion.li
-                      key={r.slug}
-                      initial={{ y: 0, boxShadow: "none" }}
-                      whileHover={{
-                        y: -2,
-                        boxShadow: "0 2px 10px rgba(0,0,0,0.06)"
-                      }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 140,
-                        damping: 16
-                      }}
-                      className="inline-block mb-2"
-                    >
-                      <Link
-                        href={`/blog/${r.slug}`}
-                        className="inline-block text-black dark:text-white font-semibold hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors no-underline focus:outline-none"
-                        style={{
-                          textDecoration: "none",
-                          borderBottom: "2px solid transparent",
-                          transition: "color 0.2s, border-bottom-color 0.2s"
-                        }}
-                      >
-                        {r.title}
-                      </Link>
-                      <span className="text-xs text-gray-600 dark:text-gray-400 ml-2">
-                        ({r.category})
-                      </span>
-                    </motion.li>
-                  ))}
-                </ul>
+              <div className="mb-2 text-gray-700 dark:text-gray-300 text-lg font-semibold">
+                <span>Featured Reads</span>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4 mt-3">
+                {recommended.map((r) => (
+                  <Link
+                    key={r.slug}
+                    href={`/blog/${r.slug}`}
+                    className="block rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 shadow-sm hover:shadow-lg hover:scale-[1.03] transition-all p-5 group focus:outline-none"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div className="font-bold text-lg text-black dark:text-white group-hover:text-indigo-500 mb-1 transition-colors">{r.title}</div>
+                    <div className="text-xs text-gray-400 uppercase mb-2 tracking-wide">{r.category}</div>
+                    <div className="text-sm text-gray-700 dark:text-gray-300 line-clamp-2">{r.description}</div>
+                  </Link>
+                ))}
               </div>
             </>
           )}
 
+
           {/* --- Post Actions Bar (universal like, bookmark, share) --- */}
           <PostActionsBar
-            bookmark={<BookmarkButton slug={post.slug} title={post.title} />}
-            share={<SharePopover url={url} title={post.title} />}
           />
 
 
-          {/* --- Comments Section --- */}
-          <CommentSection postSlug={post.slug} />
+          
         </motion.div>
       </AnimatePresence>
     </>
@@ -271,7 +266,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const mdxSource = await serialize(content);
 
-  // Get all posts
+  // Get all posts except current
   const allFiles = fs.readdirSync(BLOG_DIR);
   const allPosts: BlogMeta[] = allFiles
     .filter((file) => file.endsWith(".mdx"))
@@ -286,8 +281,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     })
     .filter((p) => p.slug !== slug);
 
-  // Priority 1: Shared Tags
+  // ---- NEW: Smart Recommendation Logic ----
   let recommended: BlogMeta[] = [];
+
+  // 1. Try shared tags
   if (data.tags && Array.isArray(data.tags)) {
     recommended = allPosts.filter(
       (p) =>
@@ -296,7 +293,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     );
   }
 
-  // Priority 2: Same Category
+  // 2. Same category but not already picked
   if (recommended.length < 2) {
     const more = allPosts.filter(
       (p) =>
@@ -306,7 +303,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     recommended = [...recommended, ...more];
   }
 
-  // Priority 3: Recent Posts
+  // 3. Recent posts, but not already picked
   if (recommended.length < 2) {
     const more = allPosts
       .filter((p) => !recommended.some((rec) => rec.slug === p.slug))
@@ -316,8 +313,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     recommended = [...recommended, ...more];
   }
 
-  // Finalize (max 2 posts)
-  recommended = recommended.slice(0, 2);
+  // ---- Optional: Shuffle or sort by recency to avoid always showing same ----
+  recommended = recommended
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 2);
 
   return {
     props: {
