@@ -73,7 +73,7 @@ export default function Footer() {
       </div>
 
       <div className="mt-6 text-center text-xs text-gray-500 dark:text-gray-400">
-        &copy; {new Date().getFullYear()} Tushar Panchal — Made in India for thinkers and introverts.
+        &copy; {new Date().getFullYear()} Tushar Panchal — For thinkers and introverts.
         <br />
         <span className="italic">
           Built with <span className="font-bold text-black dark:text-white">real stories</span>, imperfect journeys, and a lot of chai.
