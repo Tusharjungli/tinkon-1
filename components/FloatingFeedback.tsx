@@ -16,7 +16,6 @@ export default function FloatingFeedback() {
   const [error, setError] = useState("");
   const [showTooltip, setShowTooltip] = useState(false);
 
-  // AJAX Formspree handler
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
@@ -44,16 +43,14 @@ export default function FloatingFeedback() {
 
   return (
     <>
-      {/* FAB BUTTON with animated tooltip */}
+      {/* FAB BUTTON */}
       <motion.button
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
         onClick={() => { setShowTooltip(false); setOpen(true); }}
         className="fixed z-50 bottom-8 right-8 bg-white dark:bg-gray-500 border border-gray-300 dark:border-gray-800 shadow-lg hover:shadow-xl transition text-black dark:text-white rounded-full w-16 h-16 flex items-center justify-center backdrop-blur-lg"
         aria-label="Feedback"
-        style={{
-          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.09)",
-        }}
+        style={{ boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.09)" }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         whileHover={{ scale: 1.11, backgroundColor: "#f4f4f5", color: "#222" }}
@@ -61,7 +58,6 @@ export default function FloatingFeedback() {
         transition={{ duration: 0.24, ease: "easeOut" }}
       >
         {ChatIcon}
-        {/* Tooltip */}
         <AnimatePresence>
           {showTooltip && !open && (
             <motion.div
@@ -78,7 +74,7 @@ export default function FloatingFeedback() {
         </AnimatePresence>
       </motion.button>
 
-      {/* Modal with AnimatePresence for smooth fade/slide-in */}
+      {/* Feedback Modal */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -90,18 +86,16 @@ export default function FloatingFeedback() {
           >
             <motion.div
               className="relative w-[95vw] max-w-md m-4 rounded-2xl p-8 shadow-2xl
-                        bg-white/90 dark:bg-gray-900/95 backdrop-blur-xl border border-white/40 dark:border-gray-700 transition-colors"
+                         bg-white/90 dark:bg-gray-900/95 backdrop-blur-xl border border-white/40 dark:border-gray-700 transition-colors"
               initial={{ y: 60, opacity: 0, scale: 0.98 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: 60, opacity: 0, scale: 0.98 }}
               transition={{ duration: 0.27, ease: "easeOut" }}
             >
-              {/* Close (X) */}
               <button
                 onClick={() => { setOpen(false); setSent(false); setError(""); setLoading(false); }}
                 className="absolute top-4 right-4 text-2xl text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white transition"
                 aria-label="Close"
-                style={{ background: "transparent", border: "none" }}
               >
                 &times;
               </button>
@@ -111,42 +105,54 @@ export default function FloatingFeedback() {
                   Feedback
                 </div>
                 <p className="text-sm text-gray-500 dark:text-gray-300 mt-1">
-                  Your words land directly in my inbox. No bots, just me.<br />
+                  Your words land directly in my inbox. No bots, just me.
                   <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 block">
                     I promise I’m the only one reading this.
                   </span>
                 </p>
               </div>
+
               {!sent ? (
-                <form
-                  onSubmit={handleSubmit}
-                  className="flex flex-col gap-3"
-                  autoComplete="off"
-                >
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    disabled={loading}
-                    placeholder="Your name"
-                    className="rounded-lg p-3 bg-white/90 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-black dark:text-white focus:ring-2 focus:ring-black dark:focus:ring-gray-600 transition"
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    disabled={loading}
-                    placeholder="Your email"
-                    className="rounded-lg p-3 bg-white/90 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-black dark:text-white focus:ring-2 focus:ring-black dark:focus:ring-gray-600 transition"
-                  />
-                  <textarea
-                    name="message"
-                    required
-                    disabled={loading}
-                    placeholder="Your feedback, story, or comment"
-                    rows={4}
-                    className="rounded-lg p-3 bg-white/90 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-black dark:text-white focus:ring-2 focus:ring-black dark:focus:ring-gray-600 transition"
-                  />
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3" autoComplete="off">
+                  <div className="flex flex-col gap-1">
+                    <label htmlFor="name" className="text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      required
+                      disabled={loading}
+                      placeholder="Your name"
+                      className="rounded-lg p-3 bg-white/90 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-black dark:text-white focus:ring-2 focus:ring-black dark:focus:ring-gray-600 transition"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      disabled={loading}
+                      placeholder="Your email"
+                      className="rounded-lg p-3 bg-white/90 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-black dark:text-white focus:ring-2 focus:ring-black dark:focus:ring-gray-600 transition"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <label htmlFor="message" className="text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      disabled={loading}
+                      placeholder="Your feedback, story, or comment"
+                      rows={4}
+                      className="rounded-lg p-3 bg-white/90 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-black dark:text-white focus:ring-2 focus:ring-black dark:focus:ring-gray-600 transition"
+                    />
+                  </div>
+
                   {error && <div className="text-red-500 text-sm font-semibold">{error}</div>}
                   <button
                     type="submit"

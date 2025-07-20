@@ -39,6 +39,7 @@ export default function Footer() {
 
         {/* Footer Nav: Required Docs */}
         <div className="flex gap-6 text-sm text-gray-600 dark:text-gray-400">
+          <FooterBounceLink href="/contact">Contact</FooterBounceLink>
           <FooterBounceLink href="/privacy-policy">Privacy Policy</FooterBounceLink>
           <FooterBounceLink href="/terms">Terms</FooterBounceLink>
           <FooterBounceLink href="/disclaimer">Disclaimer</FooterBounceLink>

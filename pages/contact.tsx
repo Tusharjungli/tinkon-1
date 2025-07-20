@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { FaLinkedin, FaInstagram } from "react-icons/fa";
-import { FaXTwitter, } from "react-icons/fa6";
+import { FaXTwitter } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { useState, ReactNode } from "react";
 
@@ -21,30 +21,32 @@ export default function Contact() {
         <meta name="twitter:description" content="Contact Tushar Panchal, the introvert and writer behind Tink On It. Email or LinkedIn is just a click away!" />
         <meta name="twitter:image" content="https://tinkon.in/og-image.webp" />
       </Head>
+
       <main className="max-w-xl mx-auto py-24 px-6">
         <section className="bg-white/70 dark:bg-gray-900/85 backdrop-blur-md rounded-2xl p-8 flex flex-col transition-colors">
           <h1 className="text-4xl font-bold mb-8 text-black dark:text-white">Contact</h1>
           <p className="mb-4 text-lg text-gray-700 dark:text-gray-200">
             Got something on your mind? Want to share your own story, ask a question, or just say hi? I’m always open to a good message—even if you’re just here to recommend a dog meme.
           </p>
-          <div className="space-y-2 text-base text-gray-800 dark:text-gray-100">
+
+          <div className="space-y-4 text-base text-gray-800 dark:text-gray-100" role="group" aria-labelledby="contact-details">
             <div>
-              <span className="font-semibold">Email: </span>
+              <label htmlFor="email" className="font-semibold block mb-1 text-sm text-gray-700 dark:text-gray-300">Email</label>
               <a
-                href="mailto:tusharpanchal@gmail.com"
+                id="email"
+                href="mailto:jungli0beast@gmail.com"
                 className="text-black dark:text-white hover:underline focus:underline transition-colors"
-                style={{ textDecoration: "none" }}
               >
                 tusharpanchal@gmail.com
               </a>
             </div>
             <div>
-              <span className="font-semibold">LinkedIn: </span>
+              <label htmlFor="linkedin" className="font-semibold block mb-1 text-sm text-gray-700 dark:text-gray-300">LinkedIn</label>
               <Link
+                id="linkedin"
                 href="/get-linkedin"
                 className="text-black dark:text-white hover:underline focus:underline transition-colors"
-                aria-label="LinkedIn"
-                style={{ textDecoration: "none" }}
+                aria-label="LinkedIn profile link"
               >
                 linkedin.com/in/tusharpanchal
               </Link>
@@ -52,7 +54,7 @@ export default function Contact() {
           </div>
 
           {/* Social Media Icons Row */}
-          <div className="flex gap-7 mt-7 items-center">
+          <div className="flex gap-7 mt-7 items-center" aria-label="Social media links">
             <ContactIcon
               href="/get-linkedin"
               ariaLabel="LinkedIn"
@@ -76,7 +78,6 @@ export default function Contact() {
             >
               <FaInstagram size={30} />
             </ContactIcon>
-            
           </div>
 
           <div className="text-gray-500 dark:text-gray-400 pt-6 text-sm">
