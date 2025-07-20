@@ -13,13 +13,13 @@ export default function Contact() {
         <meta name="description" content="Contact Tushar Panchal, the introvert and writer behind Tink On It. Email or LinkedIn is just a click away!" />
         <meta property="og:title" content="Contact — Tink On It" />
         <meta property="og:description" content="Contact Tushar Panchal, the introvert and writer behind Tink On It. Email or LinkedIn is just a click away!" />
-        <meta property="og:image" content="https://tinkon.in/og-image.jpg" />
+        <meta property="og:image" content="https://tinkon.in/og-image.webp" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://tinkon.in/contact" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Contact — Tink On It" />
         <meta name="twitter:description" content="Contact Tushar Panchal, the introvert and writer behind Tink On It. Email or LinkedIn is just a click away!" />
-        <meta name="twitter:image" content="https://tinkon.in/og-image.jpg" />
+        <meta name="twitter:image" content="https://tinkon.in/og-image.webp" />
       </Head>
       <main className="max-w-xl mx-auto py-24 px-6">
         <section className="bg-white/70 dark:bg-gray-900/85 backdrop-blur-md rounded-2xl p-8 flex flex-col transition-colors">

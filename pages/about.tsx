@@ -16,7 +16,7 @@ export default function AboutPage() {
           property="og:description"
           content="Meet Tushar Panchal, the mind behind Tink On It—a raw, real, slightly stubborn introvert sharing stories on life, dogs, tech, and more."
         />
-        <meta property="og:image" content="https://tinkon.in/og-image.jpg" />
+        <meta property="og:image" content="https://tinkon.in/og-image.webp" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://tinkon.in/about" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -25,7 +25,7 @@ export default function AboutPage() {
           name="twitter:description"
           content="Meet Tushar Panchal, the mind behind Tink On It—a raw, real, slightly stubborn introvert sharing stories on life, dogs, tech, and more."
         />
-        <meta name="twitter:image" content="https://tinkon.in/og-image.jpg" />
+        <meta name="twitter:image" content="https://tinkon.in/og-image.webp" />
       </Head>
       <main className="max-w-2xl mx-auto px-4 py-16">
         <motion.div

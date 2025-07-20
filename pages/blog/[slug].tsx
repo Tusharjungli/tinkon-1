@@ -49,7 +49,7 @@ const mdxComponents = {
 
 export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDetailProps) {
   const url = `https://tinkon.in/blog/${post.slug}`;
-  const ogImage = post.ogImage || post.coverImage || "https://tinkon.in/og-image.jpg";
+  const ogImage = post.ogImage || post.coverImage || "https://tinkon.in/og-image.webp";
   const canonicalUrl = `https://tinkon.in/blog/${post.slug}`;
 
   
@@ -82,7 +82,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
               "publisher": {
                 "@type": "Organization",
                 "name": "Tink On It",
-                "logo": { "@type": "ImageObject", "url": "https://tinkon.in/og-image.jpg" }
+                "logo": { "@type": "ImageObject", "url": "https://tinkon.in/og-image.webp" }
               },
               "description": post.description,
               "url": url,

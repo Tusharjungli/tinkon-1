@@ -54,13 +54,13 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content="Blog — Tink On It" />
         <meta property="og:description" content="Browse Tushar's real, raw stories on dogs, life, tech, maturity, and more. Filter by category for introverts, thinkers, and dog people." />
-        <meta property="og:image" content="https://tinkon.in/og-image.jpg" />
+        <meta property="og:image" content="https://tinkon.in/og-image.webp" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Blog — Tink On It" />
         <meta name="twitter:description" content="Browse Tushar's real, raw stories on dogs, life, tech, maturity, and more. Filter by category for introverts, thinkers, and dog people." />
-        <meta name="twitter:image" content="https://tinkon.in/og-image.jpg" />
+        <meta name="twitter:image" content="https://tinkon.in/og-image.webp" />
       </Head>
       <div className="max-w-3xl mx-auto px-4 py-12">
         <h1 className="text-4xl font-bold mb-8">Blog</h1>

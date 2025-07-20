@@ -34,7 +34,7 @@ export default function Document() {
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://tinkon.in/" />
-        <meta property="og:image" content="https://tinkon.in/og-image.jpg" />
+        <meta property="og:image" content="https://tinkon.in/og-image.webp" />
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -43,7 +43,7 @@ export default function Document() {
           name="twitter:description"
           content="Real, raw stories for introverts, dog lovers, and more."
         />
-        <meta name="twitter:image" content="https://tinkon.in/og-image.jpg" />
+        <meta name="twitter:image" content="https://tinkon.in/og-image.webp" />
 
         {/* Google AdSense code for site verification */}
         <Script
