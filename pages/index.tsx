@@ -44,34 +44,23 @@ export default function Home({ featured, highlights }: HomeProps) {
       </Head>
 
       {/* HERO */}
-      <motion.section
-        className="max-w-2xl mx-auto py-20 px-6 text-center"
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-      >
-        <motion.h1
-          className="text-5xl font-black mb-4 tracking-tight text-black dark:text-white"
-          initial={{ letterSpacing: "-0.04em" }}
-          animate={{ letterSpacing: "-0.01em" }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
-        >
-          Tink On It
-        </motion.h1>
-        <p className="text-base text-gray-700 dark:text-gray-300 mb-6">
-          Hi, I’m <span className="font-semibold text-gray-900 dark:text-gray-100">Tushar</span>.
-        </p>
-        <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
-          This place isn’t just a blog—it’s where I think out loud. I share what’s on my mind, the good and the bad. Sometimes I talk about feeling lost, sometimes about the funny side of failing, or just stories about life with my dog and family.
-        </p>
-        <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
-          If you like honest stories and simple thoughts (sometimes a little messy), you’ll probably feel at home here. 
-          Welcome to Tink On It—read, relate, smile, or just chill.
-        </p>
-        <span className="inline-block bg-gray-200 dark:bg-gray-700 text-black dark:text-white px-5 py-2 rounded-full text-sm font-medium shadow-sm">
-          Real talk. Simple words. No filters.
-        </span>
-      </motion.section>
+      <section className="max-w-2xl mx-auto py-20 px-6 text-center">
+  <h1 className="text-5xl font-black mb-4 tracking-tight text-black dark:text-white">
+    Tink On It
+  </h1>
+  <p className="text-base text-gray-700 dark:text-gray-300 mb-6">
+    Hi, I’m <span className="font-semibold text-gray-900 dark:text-gray-100">Tushar</span>.
+  </p>
+  <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
+    This place isn’t just a blog—it’s where I think out loud...
+  </p>
+  <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
+    If you like honest stories and simple thoughts...
+  </p>
+  <span className="inline-block bg-gray-200 dark:bg-gray-700 text-black dark:text-white px-5 py-2 rounded-full text-sm font-medium shadow-sm">
+    Real talk. Simple words. No filters.
+  </span>
+</section>
 
       {/* FEATURED STORY */}
       {featured && (

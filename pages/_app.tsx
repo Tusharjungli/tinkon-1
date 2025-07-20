@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 // Configure Poppins font
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600"],
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -23,9 +23,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       {/* Google Analytics scripts */}
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-FDQH2BHV5G"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
-      <Script id="google-analytics" strategy="afterInteractive">
+      <Script id="google-analytics" strategy="lazyOnload">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}

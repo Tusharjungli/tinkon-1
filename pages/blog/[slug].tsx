@@ -166,25 +166,21 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
 
           {/* Blog cover image */}
           {post.coverImage && (
-            <motion.div
-              className="mb-8"
-              initial={{ opacity: 0, scale: 0.98 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            >
+            <div className="mb-8">
               <Image
                 src={post.coverImage}
-                alt={`Cover image for blog post '${post.title}'`}
+                alt={post.title}
                 width={800}
                 height={400}
                 className="rounded-xl mx-auto shadow-lg"
                 style={{ width: "100%", height: "auto" }}
-                priority
+                loading="lazy"
                 placeholder="blur"
                 blurDataURL="/images/blur-placeholder.png"
               />
-            </motion.div>
+            </div>
           )}
+
 
           {/* Meta info */}
           <div className="flex flex-wrap items-center gap-2 text-xs text-gray-700 dark:text-gray-300 uppercase mb-4">
