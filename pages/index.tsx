@@ -207,7 +207,7 @@ export default function Home({ featured, highlights }: HomeProps) {
           </Link>
         </motion.div>
         <p className="mt-4 text-gray-500 dark:text-gray-300 text-sm">
-          Or scroll down and get lost in the chaos of my head.
+          Or Click this black button here and get lost in the chaos of my head.
         </p>
       </motion.section>
       <FloatingFeedback />

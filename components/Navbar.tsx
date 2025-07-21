@@ -6,20 +6,13 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const categories = [
   "All",
-  "Dogs",
-  "Life",
-  "Growth",
-  "Mind",
-  "Tech",
-  "School",
-  "City",
-  "Village",
-  "Failures",
-  "Love",
-  "Faith",
-  "Spiritual",
-  "Thoughts",
+  "Mind & Emotions",
+  "Life & Growth",
+  "Tech & Tools",
+  "Spiritual & Beliefs",
+  "Addiction & Escape",
   "Personal Stories",
+  "Society & Culture",
 ];
 
 export default function Navbar() {

@@ -7,6 +7,21 @@ import { format } from "date-fns";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
+// Breadcrumb component
+const Breadcrumbs = () => (
+  <nav className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+    <ol className="list-reset flex">
+      <li>
+        <Link href="/" className="hover:text-black dark:hover:text-white">Home</Link>
+      </li>
+      <li>
+        <span className="mx-2">/</span>
+      </li>
+      <li className="text-black dark:text-white font-semibold">Blog</li>
+    </ol>
+  </nav>
+);
+
 type BlogMeta = {
   title: string;
   description: string;
@@ -17,52 +32,83 @@ type BlogMeta = {
   slug: string;
 };
 
+// YOUR NEW, SIMPLIFIED CATEGORIES:
 const CATEGORIES = [
   "All",
-  "Dogs",
-  "Life",
-  "Growth",
-  "Mind",
-  "Tech",
-  "School",
-  "City",
-  "Village",
-  "Failures",
-  "Love",
-  "Faith",
-  "Spiritual",
-  "Thoughts",
+  "Mind & Emotions",
+  "Life & Growth",
+  "Tech & Tools",
+  "Spiritual & Beliefs",
+  "Addiction & Escape",
   "Personal Stories",
+  "Society & Culture",
 ];
 
 export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
   const router = useRouter();
-  const canonicalUrl = `https://tinkon.in${router.asPath === "/blog" ? "/blog" : router.asPath.split("?")[0]}`;
+  // SAFELY get selected category from query string (default to All)
   const selected =
-    typeof router.query.category === "string" ? router.query.category : "All";
+    typeof router.query.category === "string" && CATEGORIES.includes(router.query.category)
+      ? router.query.category
+      : "All";
 
+  // Filter posts based on category
   const filtered = useMemo(() => {
     if (selected === "All" || !selected) return posts;
     return posts.filter((post) => post.category === selected);
   }, [selected, posts]);
 
+  const canonicalUrl = "https://tinkon.in/blog";
+
   return (
     <>
       <Head>
-        <title>Blog — Tink On It</title>
-        <meta name="description" content="Browse Tushar's real, raw stories on dogs, life, tech, maturity, and more. Filter by category for introverts, thinkers, and dog people." />
+        <title>Read Real Blogs on Life, Growth, Dogs, and Thoughts — Tink On It</title>
+        <meta
+          name="description"
+          content="Read raw, real blogs from Tushar on life, dogs, introversion, personal growth, and the noisy mind of a thinker. Honest stories, no filters."
+        />
+        <meta name="keywords" content="Tushar blog, life stories, introvert blog, thoughts, personal growth, dog lover, Haryana blog, real experiences, overthinking, tinkon.in" />
         <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content="Blog — Tink On It" />
-        <meta property="og:description" content="Browse Tushar's real, raw stories on dogs, life, tech, maturity, and more. Filter by category for introverts, thinkers, and dog people." />
+
+        {/* Open Graph Tags */}
+        <meta property="og:title" content="Read Real Blogs on Life, Growth, Dogs, and Thoughts — Tink On It" />
+        <meta property="og:description" content="Raw thoughts and real blogs from Tushar — covering life, dogs, personal growth, introvert musings and more." />
         <meta property="og:image" content="https://tinkon.in/og-image.webp" />
         <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en_IN" />
         <meta property="og:url" content={canonicalUrl} />
+
+        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Blog — Tink On It" />
-        <meta name="twitter:description" content="Browse Tushar's real, raw stories on dogs, life, tech, maturity, and more. Filter by category for introverts, thinkers, and dog people." />
+        <meta name="twitter:title" content="Read Real Blogs on Life, Growth, Dogs, and Thoughts — Tink On It" />
+        <meta name="twitter:description" content="Raw thoughts and real blogs from Tushar — covering life, dogs, personal growth, introvert musings and more." />
         <meta name="twitter:image" content="https://tinkon.in/og-image.webp" />
+
+        {/* Structured Data: Website Page */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Blog",
+              "name": "Tink On It",
+              "description": "Honest blogs from Tushar Panchal on life, growth, introversion, dogs, and deep thoughts.",
+              "url": "https://tinkon.in/blog",
+              "publisher": {
+                "@type": "Organization",
+                "name": "Tink On It",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://tinkon.in/og-image.webp"
+                }
+              }
+            })
+          }}
+        />
       </Head>
       <div className="max-w-3xl mx-auto px-4 py-12">
+        <Breadcrumbs />
         <h1 className="text-4xl font-bold mb-8">Blog</h1>
 
         {/* Category Filter */}
@@ -71,7 +117,7 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
             <Link
               key={cat}
               href={cat === "All" ? "/blog" : `/blog?category=${encodeURIComponent(cat)}`}
-              shallow
+              scroll={false}
               className={`px-4 py-2 rounded-full border text-sm font-semibold transition
                 ${selected === cat
                   ? "bg-black text-white border-black dark:bg-white dark:text-black dark:border-white"

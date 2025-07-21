@@ -183,11 +183,14 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
 
 
           {/* Meta info */}
-          <div className="flex flex-wrap items-center gap-2 text-xs text-gray-700 dark:text-gray-300 uppercase mb-4">
-            <span>{format(new Date(post.date), "dd MMM yyyy")}</span>
+          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <time dateTime={post.date}>
+              Published on {format(new Date(post.date), "dd MMM yyyy")}
+            </time>
             <span>—</span>
-            <span>{post.category}</span>
+            <span className="uppercase">{post.category}</span>
           </div>
+
 
           {/* Title */}
           <div className="mb-2">
@@ -231,6 +234,29 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
 
 
           {/* --- Post Actions Bar (universal like, bookmark, share) --- */}
+          <hr className="my-10 border-gray-200 dark:border-gray-700" />
+<div className="flex items-center gap-4 mt-10">
+  <Image
+    src="/images/profile.webp"
+    alt="Tushar Panchal"
+    width={60}
+    height={60}
+    className="rounded-full border border-gray-400"
+  />
+  <div>
+    <p className="text-sm text-gray-900 dark:text-gray-100 font-semibold">Tushar Panchal</p>
+    <p className="text-sm text-gray-600 dark:text-gray-400">
+      I&apos;m a chai-fueled introvert writing about whatever comes into mind and the wild world inside our heads.
+    </p>
+    <Link
+      href="/about"
+      className="text-xs text-blue-500 hover:underline"
+    >
+      Read more →
+    </Link>
+  </div>
+</div>
+
           <PostActionsBar
           />
 
