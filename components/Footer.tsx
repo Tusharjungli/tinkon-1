@@ -77,7 +77,7 @@ export default function Footer() {
         &copy; {new Date().getFullYear()} Tushar Panchal — For thinkers and introverts.
         <br />
         <span className="italic">
-          Built with <span className="font-bold text-black dark:text-white">real stories</span>, imperfect journeys, and a lot of chai.
+          Built with <span className="font-bold text-black dark:text-white">real stories</span>, imperfect journeys, and lot of chai.
         </span>
       </div>
     </footer>
