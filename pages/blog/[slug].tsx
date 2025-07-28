@@ -17,6 +17,7 @@ import SharePopover from "../../components/SharePopover";
 import { AnimatePresence, motion } from "framer-motion";
 import ReadingProgress from "../../components/ReadingProgress";
 import PostActionsBar from "../../components/PostActionsBar";
+import Script from "next/script";
 
 
 
@@ -259,6 +260,16 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
 
           <PostActionsBar
           />
+          <Script id="twitter-event-pixel" strategy="afterInteractive">
+            {`
+              twq('event', 'tw-q87ph-q87pi', {
+                value: null,
+                conversion_id: null,
+                email_address: null
+              });
+            `}
+          </Script>
+
 
 
           
