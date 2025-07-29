@@ -247,7 +247,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
   <div>
     <p className="text-sm text-gray-900 dark:text-gray-100 font-semibold">Tushar Panchal</p>
     <p className="text-sm text-gray-600 dark:text-gray-400">
-      I&apos;m a chai-fueled introvert writing about whatever comes into mind and the wild world inside our heads.
+      I&apos;m an introvert writing about whatever comes into mind and the wild world inside our heads.
     </p>
     <Link
       href="/about"
