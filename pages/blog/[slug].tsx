@@ -18,13 +18,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import ReadingProgress from "../../components/ReadingProgress";
 import PostActionsBar from "../../components/PostActionsBar";
 import Script from "next/script";
-
-
+import readingTime from "reading-time";
 
 type BlogMeta = {
   title: string;
   description: string;
   date: string;
+  lastUpdated?: string;
   category: string;
   coverImage: string;
   ogImage?: string;
@@ -36,6 +36,9 @@ type BlogDetailProps = {
   post: BlogMeta;
   mdxSource: MDXRemoteSerializeResult;
   recommended: BlogMeta[];
+  readingTime: number;
+  previousPost?: BlogMeta | null;
+  nextPost?: BlogMeta | null;
 };
 
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
@@ -48,12 +51,27 @@ const mdxComponents = {
   Divider,
 };
 
-export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDetailProps) {
+const Breadcrumbs = ({ title }: { title: string }) => (
+  <nav className="text-xs text-gray-400 dark:text-gray-500 mb-4" aria-label="breadcrumb">
+    <ol className="flex items-center gap-1">
+      <li>
+        <Link href="/" className="hover:text-black dark:hover:text-white">Home</Link>
+      </li>
+      <li><span>/</span></li>
+      <li>
+        <Link href="/blog" className="hover:text-black dark:hover:text-white">Blog</Link>
+      </li>
+      <li><span>/</span></li>
+      <li className="text-black dark:text-white font-semibold">{title.length > 25 ? title.slice(0, 25) + "..." : title}</li>
+    </ol>
+  </nav>
+);
+
+export default function BlogDetailPage({ post, mdxSource, recommended, readingTime, previousPost, nextPost }: BlogDetailProps) {
   const url = `https://tinkon.in/blog/${post.slug}`;
   const ogImage = post.ogImage || post.coverImage || "https://tinkon.in/og-image.webp";
   const canonicalUrl = `https://tinkon.in/blog/${post.slug}`;
 
-  
   return (
     <>
       <Head>
@@ -132,38 +150,36 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="max-w-3xl mx-auto px-4 py-16"
         >
-          
-
           <motion.div
-  initial={false}
-  whileHover="hover"
-  whileTap="tap"
-  className="mb-7"
->
-  <Link
-    href="/blog"
-    className="inline-flex items-center gap-1 text-sm font-medium text-gray-700 dark:text-gray-100 group transition"
-    style={{ textDecoration: "none" }}
-    aria-label="Back to all blogs"
-  >
-    <motion.span
-      variants={{
-        hover: { x: -4, color: "#EC4899" }, // move arrow left & pink on hover
-        tap: { x: -1 },
-        initial: { x: 0 },
-      }}
-      transition={{ type: "spring", stiffness: 320, damping: 25 }}
-      className="transition-colors"
-    >
-      ←
-    </motion.span>
-    <span
-      className="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[1.5px] after:bg-pink-500 after:transition-all after:duration-200 group-hover:after:w-full"
-    >
-      Back to all blogs
-    </span>
-  </Link>
-</motion.div>
+            initial={false}
+            whileHover="hover"
+            whileTap="tap"
+            className="mb-7"
+          >
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-1 text-sm font-medium text-gray-700 dark:text-gray-100 group transition"
+              style={{ textDecoration: "none" }}
+              aria-label="Back to all blogs"
+            >
+              <motion.span
+                variants={{
+                  hover: { x: -4, color: "#EC4899" }, // move arrow left & pink on hover
+                  tap: { x: -1 },
+                  initial: { x: 0 },
+                }}
+                transition={{ type: "spring", stiffness: 320, damping: 25 }}
+                className="transition-colors"
+              >
+                ←
+              </motion.span>
+              <span
+                className="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[1.5px] after:bg-pink-500 after:transition-all after:duration-200 group-hover:after:w-full"
+              >
+                Back to all blogs
+              </span>
+            </Link>
+          </motion.div>
 
           {/* Blog cover image */}
           {post.coverImage && (
@@ -182,19 +198,44 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
             </div>
           )}
 
-
           {/* Meta info */}
           <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-4">
             <time dateTime={post.date}>
               Published on {format(new Date(post.date), "dd MMM yyyy")}
             </time>
-            <span>—</span>
+            {post.lastUpdated && (
+              <>
+                <span>•</span>
+                <time dateTime={post.lastUpdated} title={`Last updated on ${format(new Date(post.lastUpdated), "dd MMM yyyy")}`}>
+                  Last updated {format(new Date(post.lastUpdated), "dd MMM yyyy")}
+                </time>
+              </>
+            )}
+            <span>•</span>
+            <span>{readingTime} min read</span>
+            <span>•</span>
             <span className="uppercase">{post.category}</span>
           </div>
 
+          {/* Tags as clickable chips */}
+          {post.tags && post.tags.length > 0 && (
+            <div className="mb-3 flex flex-wrap gap-2">
+              {post.tags.map((tag) => (
+                <Link
+                  key={tag}
+                  href={`/blog?tag=${encodeURIComponent(tag)}`}
+                  className="inline-block bg-pink-100 dark:bg-pink-800 text-pink-700 dark:text-pink-100 text-xs font-semibold px-3 py-1 rounded-full hover:bg-pink-200 dark:hover:bg-pink-700 transition-colors"
+                  style={{ textDecoration: "none" }}
+                >
+                  #{tag}
+                </Link>
+              ))}
+            </div>
+          )}
 
           {/* Title */}
           <div className="mb-2">
+            <Breadcrumbs title={post.title} />
             <h1 className="text-4xl font-bold text-black dark:text-white">{post.title}</h1>
           </div>
           {/* Bookmark and Share */}
@@ -233,33 +274,58 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
             </>
           )}
 
-
           {/* --- Post Actions Bar (universal like, bookmark, share) --- */}
           <hr className="my-10 border-gray-200 dark:border-gray-700" />
-<div className="flex items-center gap-4 mt-10">
-  <Image
-    src="/images/profile.webp"
-    alt="Tushar Panchal"
-    width={60}
-    height={60}
-    className="rounded-full border border-gray-400"
-  />
-  <div>
-    <p className="text-sm text-gray-900 dark:text-gray-100 font-semibold">Tushar Panchal</p>
-    <p className="text-sm text-gray-600 dark:text-gray-400">
-      I&apos;m an introvert writing about whatever comes into mind and the wild world inside our heads.
-    </p>
-    <Link
-      href="/about"
-      className="text-xs text-blue-500 hover:underline"
-    >
-      Read more →
-    </Link>
-  </div>
-</div>
+          <div className="flex items-center gap-4 mt-10 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 shadow-sm">
+            <Image
+              src="/images/profile.webp"
+              alt="Tushar Panchal"
+              width={60}
+              height={60}
+              className="rounded-full border border-gray-300"
+            />
+            <div>
+              <p className="text-sm font-bold text-black dark:text-white">Tushar Panchal</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                Introvert, chai lover, and lifelong brainstormer from Haryana. I write stories and real talk—dogs, late-night thoughts, failures, and all the messy stuff.
+              </p>
+              <Link
+                href="/about"
+                className="text-xs text-blue-500 hover:underline"
+              >
+                Read more about me →
+              </Link>
+            </div>
+          </div>
 
-          <PostActionsBar
-          />
+          <PostActionsBar />
+
+          {/* --- Previous/Next Navigation --- */}
+          {(previousPost || nextPost) && (
+            <div className="flex justify-between items-center gap-4 my-14">
+              {previousPost ? (
+                <Link
+                  href={`/blog/${previousPost.slug}`}
+                  className="flex-1 bg-gray-100 dark:bg-gray-800 px-4 py-4 rounded-lg hover:shadow transition hover:scale-[1.04] text-left"
+                  style={{ textDecoration: "none" }}
+                >
+                  <div className="text-xs text-gray-500 mb-1">← Previous</div>
+                  <div className="font-semibold text-black dark:text-white">{previousPost.title}</div>
+                </Link>
+              ) : <div className="flex-1" />}
+              {nextPost ? (
+                <Link
+                  href={`/blog/${nextPost.slug}`}
+                  className="flex-1 bg-gray-100 dark:bg-gray-800 px-4 py-4 rounded-lg hover:shadow transition hover:scale-[1.04] text-right"
+                  style={{ textDecoration: "none" }}
+                >
+                  <div className="text-xs text-gray-500 mb-1">Next →</div>
+                  <div className="font-semibold text-black dark:text-white">{nextPost.title}</div>
+                </Link>
+              ) : <div className="flex-1" />}
+            </div>
+          )}
+
           <Script id="twitter-event-pixel" strategy="afterInteractive">
             {`
               twq('event', 'tw-q87ph-q87pi', {
@@ -269,10 +335,6 @@ export default function BlogDetailPage({ post, mdxSource, recommended }: BlogDet
               });
             `}
           </Script>
-
-
-
-          
         </motion.div>
       </AnimatePresence>
     </>
@@ -290,7 +352,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false };
 };
 
-// Fetch post data and serialize MDX at build time, plus recommendations
+// Fetch post data and serialize MDX at build time, plus recommendations, prev/next
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string;
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
@@ -299,7 +361,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const mdxSource = await serialize(content);
 
-  // Get all posts except current
+  // Calculate reading time using `reading-time`
+  const readStats = readingTime(content);
+
+  // Get all posts, sorted by date DESC (newest first)
   const allFiles = fs.readdirSync(BLOG_DIR);
   const allPosts: BlogMeta[] = allFiles
     .filter((file) => file.endsWith(".mdx"))
@@ -312,41 +377,41 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         date: data.date ? String(data.date) : "",
       } as BlogMeta;
     })
-    .filter((p) => p.slug !== slug);
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  // ---- NEW: Smart Recommendation Logic ----
+  // Find current index for prev/next
+  const idx = allPosts.findIndex((p) => p.slug === slug);
+  const previousPost = idx > 0 ? allPosts[idx - 1] : null;
+  const nextPost = idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
+
+  // Remove current post for recommendations
+  const otherPosts = allPosts.filter((p) => p.slug !== slug);
+
+  // ---- Smart Recommendation Logic ----
   let recommended: BlogMeta[] = [];
-
-  // 1. Try shared tags
   if (data.tags && Array.isArray(data.tags)) {
-    recommended = allPosts.filter(
+    recommended = otherPosts.filter(
       (p) =>
         Array.isArray(p.tags) &&
         p.tags.some((tag: string) => data.tags.includes(tag))
     );
   }
-
-  // 2. Same category but not already picked
   if (recommended.length < 2) {
-    const more = allPosts.filter(
+    const more = otherPosts.filter(
       (p) =>
         p.category === data.category &&
         !recommended.some((rec) => rec.slug === p.slug)
     );
     recommended = [...recommended, ...more];
   }
-
-  // 3. Recent posts, but not already picked
   if (recommended.length < 2) {
-    const more = allPosts
+    const more = otherPosts
       .filter((p) => !recommended.some((rec) => rec.slug === p.slug))
       .sort((a, b) =>
         new Date(b.date).getTime() - new Date(a.date).getTime()
       );
     recommended = [...recommended, ...more];
   }
-
-  // ---- Optional: Shuffle or sort by recency to avoid always showing same ----
   recommended = recommended
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 2);
@@ -356,10 +421,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       post: {
         ...data,
         date: data.date ? String(data.date) : "",
+        lastUpdated: data.lastUpdated || data.updated || "",
         slug,
       },
       mdxSource,
       recommended,
+      readingTime: Math.round(readStats.minutes),
+      previousPost,
+      nextPost,
     },
   };
 };

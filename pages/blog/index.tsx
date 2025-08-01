@@ -32,7 +32,6 @@ type BlogMeta = {
   slug: string;
 };
 
-// YOUR NEW, SIMPLIFIED CATEGORIES:
 const CATEGORIES = [
   "All",
   "Mind & Emotions",
@@ -44,15 +43,23 @@ const CATEGORIES = [
   "Society & Culture",
 ];
 
+// Helper: Count posts per category
+const getCategoryCounts = (posts: BlogMeta[]) => {
+  const counts: { [cat: string]: number } = { All: posts.length };
+  posts.forEach((post) => {
+    counts[post.category] = (counts[post.category] || 0) + 1;
+  });
+  return counts;
+};
+
 export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
   const router = useRouter();
-  // SAFELY get selected category from query string (default to All)
   const selected =
     typeof router.query.category === "string" && CATEGORIES.includes(router.query.category)
       ? router.query.category
       : "All";
 
-  // Filter posts based on category
+  const categoryCounts = useMemo(() => getCategoryCounts(posts), [posts]);
   const filtered = useMemo(() => {
     if (selected === "All" || !selected) return posts;
     return posts.filter((post) => post.category === selected);
@@ -109,9 +116,12 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
       </Head>
       <div className="max-w-3xl mx-auto px-4 py-12">
         <Breadcrumbs />
-        <h1 className="text-4xl font-bold mb-8">Blog</h1>
+        <h1 className="text-4xl font-bold mb-4">Blog</h1>
+        <p className="mb-8 text-gray-700 dark:text-gray-300 text-base max-w-2xl">
+          Explore real, unfiltered blogs by me on life, growth, dogs, introversion, mental health, and surviving the chaos of modern life. Every post is hand-written and 100% original.
+        </p>
 
-        {/* Category Filter */}
+        {/* Category Filter with Counts */}
         <div className="flex flex-wrap gap-3 mb-10 bg-white dark:bg-gray-950 py-2 transition-colors">
           {CATEGORIES.map((cat) => (
             <Link
@@ -125,6 +135,7 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
               style={{ textDecoration: "none" }}
             >
               {cat}
+              <span className="ml-2 text-xs font-normal text-gray-400 dark:text-gray-400">({categoryCounts[cat] || 0})</span>
             </Link>
           ))}
         </div>
@@ -179,16 +190,29 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
                       {format(new Date(post.date), "dd MMM yyyy")} — <span className="uppercase">{post.category}</span>
                     </p>
                     <p className="mb-1 text-gray-800 dark:text-gray-200 line-clamp-3">{post.description}</p>
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {post.tags.map(tag => (
+                          <span
+                            key={tag}
+                            className="inline-block bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-full text-gray-600 dark:text-gray-300 font-medium"
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               </Link>
             </li>
           ))}
         </ul>
-        {/* Hide the default focus ring on links (make it accessible, but subtle) */}
+        {/* Improved Focus ring style for accessibility */}
         <style jsx global>{`
-          a:focus {
-            outline: none !important;
+          a:focus-visible {
+            outline: 2px solid #6366F1 !important;
+            outline-offset: 2px;
           }
         `}</style>
       </div>

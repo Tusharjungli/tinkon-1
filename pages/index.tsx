@@ -44,38 +44,48 @@ export default function Home({ featured, highlights }: HomeProps) {
       </Head>
 
       {/* HERO */}
-      <section className="max-w-2xl mx-auto py-20 px-6 text-center">
-  <h1 className="text-5xl font-black mb-4 tracking-tight text-black dark:text-white">
-    Tink On It
-  </h1>
-  <p className="text-base text-gray-700 dark:text-gray-300 mb-6">
-    Hi, I’m <span className="font-semibold text-gray-900 dark:text-gray-100">Tushar</span>.
-  </p>
-  <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
-    This place isn’t just a blog—it’s where I think out loud...
-  </p>
-  <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
-    If you like honest stories and simple thoughts...
-  </p>
-  <span className="inline-block bg-gray-200 dark:bg-gray-700 text-black dark:text-white px-5 py-2 rounded-full text-sm font-medium shadow-sm">
-    Real talk. Simple words. No filters.
-  </span>
-</section>
+      <section className="max-w-2xl mx-auto sm:py-20 py-12 px-4 sm:px-6 text-center">
+        <h1 className="text-5xl font-black mb-4 tracking-tight text-black dark:text-white">
+          Tink On It
+        </h1>
+        <p className="text-base text-gray-700 dark:text-gray-300 mb-6">
+          Hi, I’m <span className="font-semibold text-gray-900 dark:text-gray-100">Tushar</span>.
+        </p>
+        <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
+          This place isn’t just a blog—it’s where I think out loud...
+        </p>
+        <p className="text-lg text-gray-700 dark:text-gray-300 mb-8">
+          If you like honest stories and simple thoughts...
+        </p>
+        <span className="inline-block bg-gray-200 dark:bg-gray-700 text-black dark:text-white px-5 py-2 rounded-full text-sm font-medium shadow-sm">
+          Real talk. Simple words. No filters.
+        </span>
+      </section>
 
       {/* FEATURED STORY */}
       {featured && (
         <motion.section
-          className="max-w-3xl mx-auto px-6 mb-16"
+          className="max-w-3xl mx-auto px-4 sm:px-6 mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <div className="bg-gray-300 dark:bg-gray-700 rounded-2xl shadow p-6 transition-colors">
+          <div
+            className="bg-gray-300 dark:bg-gray-700 rounded-2xl shadow p-6 transition-colors cursor-pointer hover:shadow-xl focus:ring-2 focus:ring-indigo-300 outline-none"
+            tabIndex={0}
+            role="link"
+            aria-label={`Read featured blog: ${featured.title}`}
+            onClick={() => router.push(`/blog/${featured.slug}`)}
+            onKeyPress={e => {
+              if (e.key === "Enter" || e.key === " ") router.push(`/blog/${featured.slug}`);
+            }}
+            style={{ transition: "box-shadow 0.18s" }}
+          >
             <div className="mb-4">
               <Image
                 src={featured.coverImage}
-                alt={featured.title}
+                alt={`Cover image: ${featured.title} — ${featured.description}`}
                 width={900}
                 height={360}
                 className="rounded-lg object-cover w-full h-64"
@@ -86,19 +96,13 @@ export default function Home({ featured, highlights }: HomeProps) {
               In the Spotlight
             </span>
             <h2 className="text-2xl font-bold mt-2 mb-1 text-black dark:text-white">{featured.title}</h2>
-            <p className="text-gray-500 dark:text-gray-300 text-sm mb-3">{featured.description}</p>
-            <motion.div
-              whileHover={{ scale: 1.07, boxShadow: "0 4px 18px rgba(30,30,30,0.12)" }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-block"
-            >
-              <Link
-                href={`/blog/${featured.slug}`}
-                className="inline-block bg-black dark:bg-white text-white dark:text-black px-6 py-2 rounded-full font-semibold transition hover:bg-gray-900 dark:hover:bg-gray-100"
-              >
-                Dive In
-              </Link>
-            </motion.div>
+            <p className="text-gray-500 dark:text-gray-300 text-sm mb-2">{featured.description}</p>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
+              Published on {featured.date ? new Date(featured.date).toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric" }) : ""}
+            </p>
+            <span className="inline-block bg-black dark:bg-white text-white dark:text-black px-6 py-2 rounded-full font-semibold transition hover:bg-gray-900 dark:hover:bg-gray-100 mt-1">
+              Dive In
+            </span>
           </div>
         </motion.section>
       )}
@@ -106,7 +110,7 @@ export default function Home({ featured, highlights }: HomeProps) {
       {/* HIGHLIGHTS */}
       {highlights && highlights.length > 0 && (
         <motion.section
-          className="max-w-4xl mx-auto px-6 mb-20"
+          className="max-w-4xl mx-auto px-4 sm:px-6 mb-20"
           initial={{ opacity: 0, y: 36 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -122,16 +126,18 @@ export default function Home({ featured, highlights }: HomeProps) {
                 className="bg-gray-300 dark:bg-gray-700 rounded-xl shadow-md hover:shadow-lg transition p-4 flex flex-col cursor-pointer group"
                 whileHover={{ y: -5, scale: 1.03, boxShadow: "0 8px 24px rgba(0,0,0,0.11)" }}
                 whileTap={{ scale: 0.97 }}
-                onClick={() => window.location.href = `/blog/${post.slug}`}
+                onClick={() => router.push(`/blog/${post.slug}`)}
                 tabIndex={0}
                 onKeyPress={e => {
-                  if (e.key === "Enter") window.location.href = `/blog/${post.slug}`;
+                  if (e.key === "Enter" || e.key === " ") router.push(`/blog/${post.slug}`);
                 }}
                 style={{ outline: "none" }}
+                role="link"
+                aria-label={`Read: ${post.title}`}
               >
                 <Image
                   src={post.coverImage}
-                  alt={post.title}
+                  alt={`Blog: ${post.title} — ${post.description}`}
                   width={400}
                   height={180}
                   className="rounded-lg object-cover w-full h-36 mb-4"
@@ -139,6 +145,9 @@ export default function Home({ featured, highlights }: HomeProps) {
                 <span className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-300 mb-1">{post.category}</span>
                 <h4 className="text-lg font-bold mb-1 text-black dark:text-white">{post.title}</h4>
                 <p className="text-gray-500 dark:text-gray-300 text-sm flex-1">{post.description}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
+                  Published on {post.date ? new Date(post.date).toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric" }) : ""}
+                </p>
                 <span
                   className="inline-block mt-4 text-black dark:text-white font-semibold group-hover:underline"
                 >
@@ -146,6 +155,15 @@ export default function Home({ featured, highlights }: HomeProps) {
                 </span>
               </motion.div>
             ))}
+          </div>
+          <div className="flex justify-center mt-8">
+            <Link
+              href="/blog"
+              className="bg-indigo-700 text-white px-5 py-2 rounded-full font-semibold shadow transition hover:bg-indigo-900 dark:bg-indigo-400 dark:text-black dark:hover:bg-indigo-600"
+              style={{ textDecoration: "none" }}
+            >
+              Browse All Posts
+            </Link>
           </div>
         </motion.section>
       )}
