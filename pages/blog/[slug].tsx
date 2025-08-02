@@ -302,7 +302,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
 
           {/* --- Previous/Next Navigation --- */}
           {(previousPost || nextPost) && (
-            <div className="flex justify-between items-center gap-4 my-14">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-14">
               {previousPost ? (
                 <Link
                   href={`/blog/${previousPost.slug}`}
