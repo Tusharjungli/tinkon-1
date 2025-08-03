@@ -128,7 +128,7 @@ export default function FloatingFeedback() {
                   </div>
 
                   <div className="flex flex-col gap-1">
-                    <label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
+                    <label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300">Email(Just to say Thank You)</label>
                     <input
                       id="email"
                       name="email"
