@@ -40,7 +40,7 @@ export default function AboutPage() {
             className="rounded-full mb-4"
           >
             <Image
-              src="/images/profile.webp"
+              src="/images/profileimg.webp"
               alt="Tushar Panchal"
               width={120}
               height={120}
