@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { useState, ReactNode } from "react";
@@ -10,15 +10,15 @@ export default function Contact() {
     <>
       <Head>
         <title>Contact — Tink On It</title>
-        <meta name="description" content="Contact Tushar Panchal, the introvert and writer behind Tink On It. Email or LinkedIn is just a click away!" />
+        <meta name="description" content="Contact Tushar Panchal, the introvert and writer behind Tink On It. Email or YouTube is just a click away!" />
         <meta property="og:title" content="Contact — Tink On It" />
-        <meta property="og:description" content="Contact Tushar Panchal, the introvert and writer behind Tink On It. Email or LinkedIn is just a click away!" />
+        <meta property="og:description" content="Contact Tushar Panchal, the introvert and writer behind Tink On It. Email or YouTube is just a click away!" />
         <meta property="og:image" content="https://tinkon.in/og-image.webp" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://tinkon.in/contact" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Contact — Tink On It" />
-        <meta name="twitter:description" content="Contact Tushar Panchal, the introvert and writer behind Tink On It. Email or LinkedIn is just a click away!" />
+        <meta name="twitter:description" content="Contact Tushar Panchal, the introvert and writer behind Tink On It. Email or YouTube is just a click away!" />
         <meta name="twitter:image" content="https://tinkon.in/og-image.webp" />
       </Head>
 
@@ -41,14 +41,15 @@ export default function Contact() {
               </a>
             </div>
             <div>
-              <label htmlFor="linkedin" className="font-semibold block mb-1 text-sm text-gray-700 dark:text-gray-300">LinkedIn</label>
+              <label htmlFor="youtube" className="font-semibold block mb-1 text-sm text-gray-700 dark:text-gray-300">YouTube</label>
               <Link
-                id="linkedin"
-                href="/get-linkedin"
+                id="youtube"
+                href="https://www.youtube.com/@Tinkonit"
                 className="text-black dark:text-white hover:underline focus:underline transition-colors"
-                aria-label="LinkedIn profile link"
+                aria-label="YouTube channel link"
+                target="_blank"
               >
-                linkedin.com/in/tusharpanchal
+                youtube.com/@Tinkonit
               </Link>
             </div>
           </div>
@@ -56,11 +57,12 @@ export default function Contact() {
           {/* Social Media Icons Row */}
           <div className="flex gap-7 mt-7 items-center" aria-label="Social media links">
             <ContactIcon
-              href="/get-linkedin"
-              ariaLabel="LinkedIn"
-              hoverColor="#2563eb"
+              href="https://www.youtube.com/@Tinkonit"
+              ariaLabel="YouTube"
+              hoverColor="#ff0000"
+              isExternal
             >
-              <FaLinkedin size={30} />
+              <FaYoutube size={30} />
             </ContactIcon>
             <ContactIcon
               href="https://x.com/tushar_tinkon"
@@ -93,7 +95,7 @@ export default function Contact() {
   );
 }
 
-// --- Animated Icon Button for Socials (footer style) ---
+// --- Animated Icon Button for Socials ---
 function ContactIcon({
   href,
   ariaLabel,

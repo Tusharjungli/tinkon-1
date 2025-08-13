@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { useState, ReactNode } from "react";
@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className="border-t dark:border-white py-10 bg-white dark:bg-gray-950 mt-12 transition-colors duration-200">
       <div className="max-w-5xl mx-auto px-4 flex flex-col md:flex-row items-center md:justify-between gap-4">
-        {/* Logo and Brand (Logo NOT affected by dark mode) */}
+        {/* Logo and Brand */}
         <motion.div
           whileHover={{ scale: 1.08 }}
           transition={{ type: "spring", stiffness: 400, damping: 20 }}
@@ -21,7 +21,6 @@ export default function Footer() {
               alt="Tinkon Logo"
               width={40}
               height={40}
-              // Always stays the same, no dark:bg or dark:border!
               className="rounded-full border bg-gray-100"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = 'none';
@@ -37,7 +36,7 @@ export default function Footer() {
           </div>
         </motion.div>
 
-        {/* Footer Nav: Required Docs */}
+        {/* Footer Nav */}
         <div className="flex gap-6 text-sm text-gray-600 dark:text-gray-400">
           <FooterBounceLink href="/contact">Contact</FooterBounceLink>
           <FooterBounceLink href="/privacy-policy">Privacy Policy</FooterBounceLink>
@@ -48,11 +47,12 @@ export default function Footer() {
         {/* Social Icons */}
         <div className="flex gap-5 text-gray-500 dark:text-gray-400">
           <FooterIcon
-            href="/get-linkedin"
-            ariaLabel="LinkedIn"
-            hoverColor="#2563eb"
+            href="https://www.youtube.com/@Tinkonit"
+            ariaLabel="YouTube"
+            hoverColor="#ff0000"
+            isExternal
           >
-            <FaLinkedin size={22} />
+            <FaYoutube size={23} />
           </FooterIcon>
           <FooterIcon
             href="https://x.com/tushar_tinkon"
@@ -84,8 +84,7 @@ export default function Footer() {
   );
 }
 
-// --- Helper components for DRY, clean animations ---
-
+// --- Helper components ---
 function FooterBounceLink({ href, children }: { href: string; children: ReactNode }) {
   return (
     <motion.div

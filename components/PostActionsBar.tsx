@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { FaLinkedin, FaInstagram, FaSnapchatGhost } from "react-icons/fa";
+import { FaYoutube, FaInstagram, FaSnapchatGhost } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import SharePopover from "./SharePopover";
 
 const socials = [
   {
-    name: "LinkedIn",
-    href: "/get-linkedin",
-    icon: <FaLinkedin size={27} />,
-    hoverColor: "#2563eb",
-    isExternal: false,
+    name: "YouTube",
+    href: "https://www.youtube.com/@Tinkonit",
+    icon: <FaYoutube size={27} />,
+    hoverColor: "#ff0000",
+    isExternal: true,
   },
   {
     name: "Twitter",
@@ -44,7 +44,7 @@ export default function PostActionsBar({
   shareTitle?: string;
 }) {
   return (
-    <div className="flex justify-center gap-7 mt-10 mb-10 items-center"> {/* items-center for vertical alignment */}
+    <div className="flex justify-center gap-7 mt-10 mb-10 items-center">
       {socials.map((s) =>
         s.isExternal ? (
           <SocialIconExternal
@@ -65,13 +65,12 @@ export default function PostActionsBar({
         )
       )}
 
-      {/* SharePopover perfectly aligned and sized */}
       <motion.div
-        className="inline-flex items-center" // Ensures vertical alignment
+        className="inline-flex items-center"
         whileHover={{ scale: 1.17 }}
         whileTap={{ scale: 0.96 }}
         transition={{ type: "spring", stiffness: 340, damping: 19 }}
-        style={{ lineHeight: 0 }} // Remove any shift
+        style={{ lineHeight: 0 }}
       >
         <div className="flex items-center">
           <SharePopover url={shareUrl} title={shareTitle} />
@@ -105,7 +104,7 @@ function SocialIconExternal({
       whileHover={{ scale: 1.17 }}
       whileTap={{ scale: 0.96 }}
       transition={{ type: "spring", stiffness: 340, damping: 19 }}
-      className="items-center" // Flex and items-center for perfect baseline
+      className="items-center"
     >
       {icon}
     </motion.a>
