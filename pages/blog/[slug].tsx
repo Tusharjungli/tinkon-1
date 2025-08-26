@@ -19,6 +19,8 @@ import ReadingProgress from "../../components/ReadingProgress";
 import PostActionsBar from "../../components/PostActionsBar";
 import Script from "next/script";
 import readingTime from "reading-time";
+import NewsletterPopup from "../../components/NewsletterPopup";
+
 
 type BlogMeta = {
   title: string;
@@ -141,6 +143,16 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
         />
       </Head>
       <ReadingProgress />
+
+     <NewsletterPopup
+      slug={post.slug}
+      showAfterPercent={20}
+      SHEET_ENDPOINT="https://script.google.com/macros/s/AKfycbxCe1yKf0pNIAI-2za0R3yUqFVbaSe4bsrwWO4Xbe7YUY0xN-Am9mj_lAQucFZNntuBNg/exec"          // from step 1
+      FORMSPREE_ENDPOINT="https://formspree.io/f/xeolqlle"                 // from step 2
+    />
+
+
+
       <AnimatePresence mode="wait">
         <motion.div
           key={post.slug}
