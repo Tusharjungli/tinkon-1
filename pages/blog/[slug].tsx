@@ -146,7 +146,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
 
      <NewsletterPopup
       slug={post.slug}
-      showAfterPercent={20}
+      showAfterPercent={45}
       SHEET_ENDPOINT="https://script.google.com/macros/s/AKfycbxCe1yKf0pNIAI-2za0R3yUqFVbaSe4bsrwWO4Xbe7YUY0xN-Am9mj_lAQucFZNntuBNg/exec"          // from step 1
       FORMSPREE_ENDPOINT="https://formspree.io/f/xeolqlle"                 // from step 2
     />
