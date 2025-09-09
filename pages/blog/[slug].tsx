@@ -1,3 +1,4 @@
+// pages/blog/[slug].tsx
 import Head from "next/head";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
@@ -21,6 +22,19 @@ import Script from "next/script";
 import readingTime from "reading-time";
 import NewsletterPopup from "../../components/NewsletterPopup";
 
+// Import authors data (create data/authors.json at repo root)
+import authorsData from "../../data/authors.json";
+
+type Author = {
+  name: string;
+  title?: string;
+  bio?: string;
+  avatar?: string;
+  url?: string;
+  twitter?: string;
+};
+
+const authors: Record<string, Author> = authorsData as Record<string, Author>;
 
 type BlogMeta = {
   title: string;
@@ -28,10 +42,11 @@ type BlogMeta = {
   date: string;
   lastUpdated?: string;
   category: string;
-  coverImage: string;
+  coverImage?: string;
   ogImage?: string;
   slug: string;
   tags?: string[];
+  author?: string;
 };
 
 type BlogDetailProps = {
@@ -74,6 +89,48 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
   const ogImage = post.ogImage || post.coverImage || "https://tinkon.in/og-image.webp";
   const canonicalUrl = `https://tinkon.in/blog/${post.slug}`;
 
+  // pick author data from data/authors.json, fallback to default "tushar-panchal"
+  const authorSlug = post.author || "tushar-panchal";
+  const authorData: Author =
+    authors[authorSlug] ||
+    authors["tushar-panchal"] || {
+      name: "Tushar Panchal",
+      title: "Writer",
+      bio: "I write about life, growth and dogs.",
+      avatar: "/images/profile.webp",
+      url: "/about",
+      twitter: "",
+    };
+
+  // JSON-LD for structured data - include author info
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    image: ogImage.startsWith("http") ? ogImage : `https://tinkon.in${ogImage}`,
+    author: { "@type": "Person", name: authorData.name, url: `https://tinkon.in${authorData.url || "/about"}` },
+    datePublished: post.date,
+    dateModified: post.lastUpdated || post.date,
+    publisher: {
+      "@type": "Organization",
+      name: "Tink On It",
+      logo: { "@type": "ImageObject", url: "https://tinkon.in/og-image.webp" },
+    },
+    description: post.description,
+    url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://tinkon.in/" },
+      { "@type": "ListItem", position: 2, name: "Blog", item: "https://tinkon.in/blog" },
+      { "@type": "ListItem", position: 3, name: post.title, item: url },
+    ],
+  };
+
   return (
     <>
       <Head>
@@ -81,77 +138,27 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
         <meta name="description" content={post.description} />
         <meta property="og:title" content={`${post.title} — Tink On It`} />
         <meta property="og:description" content={post.description} />
-        <meta property="og:image" content={ogImage.startsWith('http') ? ogImage : `https://tinkon.in${ogImage}`} />
+        <meta property="og:image" content={ogImage.startsWith("http") ? ogImage : `https://tinkon.in${ogImage}`} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={url} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${post.title} — Tink On It`} />
         <meta name="twitter:description" content={post.description} />
-        <meta name="twitter:image" content={ogImage.startsWith('http') ? ogImage : `https://tinkon.in${ogImage}`} />
+        <meta name="twitter:image" content={ogImage.startsWith("http") ? ogImage : `https://tinkon.in${ogImage}`} />
         <link rel="canonical" href={canonicalUrl} />
         {/* SEO Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "BlogPosting",
-              "headline": post.title,
-              "image": ogImage.startsWith('http') ? ogImage : `https://tinkon.in${ogImage}`,
-              "author": { "@type": "Person", "name": "Tushar Panchal" },
-              "datePublished": post.date,
-              "publisher": {
-                "@type": "Organization",
-                "name": "Tink On It",
-                "logo": { "@type": "ImageObject", "url": "https://tinkon.in/og-image.webp" }
-              },
-              "description": post.description,
-              "url": url,
-              "mainEntityOfPage": { "@type": "WebPage", "@id": url }
-            }),
-          }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         {/* Breadcrumb JSON-LD */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              "itemListElement": [
-                {
-                  "@type": "ListItem",
-                  "position": 1,
-                  "name": "Home",
-                  "item": "https://tinkon.in/"
-                },
-                {
-                  "@type": "ListItem",
-                  "position": 2,
-                  "name": "Blog",
-                  "item": "https://tinkon.in/blog"
-                },
-                {
-                  "@type": "ListItem",
-                  "position": 3,
-                  "name": post.title,
-                  "item": url
-                }
-              ]
-            })
-          }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       </Head>
       <ReadingProgress />
 
-     <NewsletterPopup
-      slug={post.slug}
-      showAfterPercent={45}
-      SHEET_ENDPOINT="https://script.google.com/macros/s/AKfycbxCe1yKf0pNIAI-2za0R3yUqFVbaSe4bsrwWO4Xbe7YUY0xN-Am9mj_lAQucFZNntuBNg/exec"          // from step 1
-      FORMSPREE_ENDPOINT="https://formspree.io/f/xeolqlle"                 // from step 2
-    />
-
-
+      <NewsletterPopup
+        slug={post.slug}
+        showAfterPercent={45}
+        SHEET_ENDPOINT="https://script.google.com/macros/s/AKfycbxCe1yKf0pNIAI-2za0R3yUqFVbaSe4bsrwWO4Xbe7YUY0xN-Am9mj_lAQucFZNntuBNg/exec"
+        FORMSPREE_ENDPOINT="https://formspree.io/f/xeolqlle"
+      />
 
       <AnimatePresence mode="wait">
         <motion.div
@@ -162,12 +169,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="max-w-3xl mx-auto px-4 py-16"
         >
-          <motion.div
-            initial={false}
-            whileHover="hover"
-            whileTap="tap"
-            className="mb-7"
-          >
+          <motion.div initial={false} whileHover="hover" whileTap="tap" className="mb-7">
             <Link
               href="/blog"
               className="inline-flex items-center gap-1 text-sm font-medium text-gray-700 dark:text-gray-100 group transition"
@@ -176,7 +178,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
             >
               <motion.span
                 variants={{
-                  hover: { x: -4, color: "#EC4899" }, // move arrow left & pink on hover
+                  hover: { x: -4, color: "#EC4899" },
                   tap: { x: -1 },
                   initial: { x: 0 },
                 }}
@@ -250,6 +252,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
             <Breadcrumbs title={post.title} />
             <h1 className="text-4xl font-bold text-black dark:text-white">{post.title}</h1>
           </div>
+
           {/* Bookmark and Share */}
           <div className="flex items-center gap-2 mb-2">
             <BookmarkButton slug={post.slug} title={post.title} />
@@ -258,10 +261,12 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
 
           {/* Description */}
           <p className="text-gray-800 dark:text-gray-200 mb-8">{post.description}</p>
+
           {/* Blog Content (prose) */}
           <div className="prose prose-lg max-w-none dark:prose-invert dark:text-gray-100">
             <MDXRemote {...mdxSource} components={mdxComponents} />
           </div>
+
           {/* Recommendations */}
           {recommended && recommended.length > 0 && (
             <>
@@ -288,21 +293,23 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
 
           {/* --- Post Actions Bar (universal like, bookmark, share) --- */}
           <hr className="my-10 border-gray-200 dark:border-gray-700" />
+
+          {/* --- Dynamic Author Box (uses data/authors.json) --- */}
           <div className="flex items-center gap-4 mt-10 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 shadow-sm">
             <Image
-              src="/images/profile.webp"
-              alt="Tushar Panchal"
+              src={authorData.avatar || "/images/profile.webp"}
+              alt={authorData.name}
               width={60}
               height={60}
               className="rounded-full border border-gray-300"
             />
             <div>
-              <p className="text-sm font-bold text-black dark:text-white">Tushar Panchal</p>
+              <p className="text-sm font-bold text-black dark:text-white">{authorData.name}</p>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
-                Introvert, chai lover, and lifelong brainstormer from Haryana. I write stories and real talk—dogs, late-night thoughts, failures, and all the messy stuff.
+                {authorData.bio}
               </p>
               <Link
-                href="/about"
+                href={authorData.url || "/about"}
                 className="text-xs text-blue-500 hover:underline"
               >
                 Read more about me →
@@ -367,8 +374,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 // Fetch post data and serialize MDX at build time, plus recommendations, prev/next
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string;
-  const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
-  const source = fs.readFileSync(filePath, "utf8");
+  const filePath = path.join(BLOG_DIR, `${slug}.dx`); // fallback in case of extension mismatch
+  const filePathMdx = path.join(BLOG_DIR, `${slug}.mdx`);
+  const actualPath = fs.existsSync(filePathMdx) ? filePathMdx : filePath;
+  const source = fs.readFileSync(actualPath, "utf8");
   const { data, content } = matter(source);
 
   const mdxSource = await serialize(content);
