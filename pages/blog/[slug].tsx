@@ -21,6 +21,7 @@ import PostActionsBar from "../../components/PostActionsBar";
 import Script from "next/script";
 import readingTime from "reading-time";
 import NewsletterPopup from "../../components/NewsletterPopup";
+import CommentsForm from "../../components/CommentsForm";
 
 // Import authors data (create data/authors.json at repo root)
 import authorsData from "../../data/authors.json";
@@ -318,6 +319,16 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
           </div>
 
           <PostActionsBar />
+
+          <CommentsForm endpoint="https://formspree.io/f/xldwzloz" postSlug={post.slug} />
+
+          
+
+
+
+
+
+
 
           {/* --- Previous/Next Navigation --- */}
           {(previousPost || nextPost) && (
