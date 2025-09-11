@@ -1,5 +1,6 @@
+// pages/blog/index.tsx
 import Head from "next/head";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
@@ -52,18 +53,25 @@ const getCategoryCounts = (posts: BlogMeta[]) => {
   return counts;
 };
 
-export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
+export default function BlogIndexPage({
+  posts,
+  allPosts,
+  tag,
+  noindex,
+}: {
+  posts: BlogMeta[];
+  allPosts: BlogMeta[];
+  tag?: string | null;
+  noindex?: boolean;
+}) {
   const router = useRouter();
   const selected =
-    typeof router.query.category === "string" && CATEGORIES.includes(router.query.category)
+    typeof router.query.category === "string"
       ? router.query.category
-      : "All";
+      : tag || "All";
 
-  const categoryCounts = useMemo(() => getCategoryCounts(posts), [posts]);
-  const filtered = useMemo(() => {
-    if (selected === "All" || !selected) return posts;
-    return posts.filter((post) => post.category === selected);
-  }, [selected, posts]);
+  const categoryCounts = useMemo(() => getCategoryCounts(allPosts), [allPosts]);
+  const filtered = posts; // posts already filtered on server
 
   const canonicalUrl = "https://tinkon.in/blog";
 
@@ -113,6 +121,7 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
             })
           }}
         />
+        {noindex && <meta name="robots" content="noindex,follow" />}
       </Head>
       <div className="max-w-3xl mx-auto px-4 py-12">
         <Breadcrumbs />
@@ -220,13 +229,27 @@ export default function BlogIndexPage({ posts }: { posts: BlogMeta[] }) {
   );
 }
 
-// This runs only on the server at build time!
-export const getStaticProps: GetStaticProps = async () => {
+// This runs on each request so we can detect query (category) and decide noindex
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const { getAllPosts } = await import("@/lib/blog");
-  const posts = getAllPosts();
+  const allPosts: BlogMeta[] = getAllPosts();
+
+  const category = typeof context.query.category === "string" ? context.query.category : null;
+
+  // Filter posts server-side if a category query param is present (and not "All")
+  const posts = category && category !== "All"
+    ? allPosts.filter((p) => p.category === category)
+    : allPosts;
+
+  // Decide whether to noindex: tag pages with fewer than 3 posts
+  const noindex = !!category && posts.length < 3;
+
   return {
     props: {
       posts,
+      allPosts,
+      tag: category,
+      noindex
     },
   };
 };
