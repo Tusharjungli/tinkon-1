@@ -104,7 +104,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
     };
 
   return (
-    <>
+    <> 
       <Head>
         <title>{`${post.title} — Tink On It`}</title>
         <meta name="description" content={post.description} />
@@ -206,7 +206,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
                 <Link
                   key={tag}
                   href={`/blog?tag=${encodeURIComponent(tag)}`}
-                  className="inline-block bg-pink-100 dark:bg-pink-800 text-pink-700 dark:text-pink-100 text-xs font-semibold px-3 py-1 rounded-full hover:bg-pink-200 dark:hover:bg-pink-700 transition"
+                  className="inline-block bg-pink-100 dark:bg-pink-800 text-pink-700 dark:text-pink-100 text-xs font-semibold px-3 py-1 rounded-full hover:bg-pink-200 dark:hover:bg-pink-700 transition-colors"
                   style={{ textDecoration: "none" }}
                 >
                   #{tag}
@@ -288,6 +288,14 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
           <PostActionsBar />
 
           <CommentsForm endpoint="https://formspree.io/f/xldwzloz" postSlug={post.slug} />
+
+          
+
+
+
+
+
+
 
           {/* --- Previous/Next Navigation --- */}
           {(previousPost || nextPost) && (
