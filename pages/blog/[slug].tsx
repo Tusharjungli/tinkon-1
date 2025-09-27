@@ -103,35 +103,6 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
       twitter: "",
     };
 
-  // JSON-LD for structured data - include author info
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    image: ogImage.startsWith("http") ? ogImage : `https://tinkon.in${ogImage}`,
-    author: { "@type": "Person", name: authorData.name, url: `https://tinkon.in${authorData.url || "/about"}` },
-    datePublished: post.date,
-    dateModified: post.lastUpdated || post.date,
-    publisher: {
-      "@type": "Organization",
-      name: "Tink On It",
-      logo: { "@type": "ImageObject", url: "https://tinkon.in/og-image.webp" },
-    },
-    description: post.description,
-    url,
-    mainEntityOfPage: { "@type": "WebPage", "@id": url },
-  };
-
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://tinkon.in/" },
-      { "@type": "ListItem", position: 2, name: "Blog", item: "https://tinkon.in/blog" },
-      { "@type": "ListItem", position: 3, name: post.title, item: url },
-    ],
-  };
-
   return (
     <>
       <Head>
@@ -147,10 +118,6 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
         <meta name="twitter:description" content={post.description} />
         <meta name="twitter:image" content={ogImage.startsWith("http") ? ogImage : `https://tinkon.in${ogImage}`} />
         <link rel="canonical" href={canonicalUrl} />
-        {/* SEO Structured Data */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        {/* Breadcrumb JSON-LD */}
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       </Head>
       <ReadingProgress />
 
@@ -239,7 +206,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
                 <Link
                   key={tag}
                   href={`/blog?tag=${encodeURIComponent(tag)}`}
-                  className="inline-block bg-pink-100 dark:bg-pink-800 text-pink-700 dark:text-pink-100 text-xs font-semibold px-3 py-1 rounded-full hover:bg-pink-200 dark:hover:bg-pink-700 transition-colors"
+                  className="inline-block bg-pink-100 dark:bg-pink-800 text-pink-700 dark:text-pink-100 text-xs font-semibold px-3 py-1 rounded-full hover:bg-pink-200 dark:hover:bg-pink-700 transition"
                   style={{ textDecoration: "none" }}
                 >
                   #{tag}
@@ -321,14 +288,6 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
           <PostActionsBar />
 
           <CommentsForm endpoint="https://formspree.io/f/xldwzloz" postSlug={post.slug} />
-
-          
-
-
-
-
-
-
 
           {/* --- Previous/Next Navigation --- */}
           {(previousPost || nextPost) && (

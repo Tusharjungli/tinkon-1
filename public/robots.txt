@@ -1,9 +1,4 @@
-# *
 User-agent: *
-Allow: /
+Disallow:
 
-# Host
-Host: https://tinkon.in
-
-# Sitemaps
 Sitemap: https://tinkon.in/sitemap.xml

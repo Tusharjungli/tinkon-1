@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: "https://tinkon.in",
-  generateRobotsTxt: true,
+  generateRobotsTxt: false,
   changefreq: 'daily',
   priority: 0.7,
   sitemapSize: 5000,
