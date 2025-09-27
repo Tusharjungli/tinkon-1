@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function AboutPage() {
   return (
@@ -41,40 +42,45 @@ export default function AboutPage() {
           >
             <Image
               src="/images/profileimg.webp"
-              alt="Tushar Panchal"
+              alt="Tushar Panchal smiling, wearing glasses"
               width={120}
               height={120}
-              className="rounded-full"
+              className="rounded-full border-4 border-indigo-500 shadow-lg"
               priority
             />
           </motion.div>
           <h1 className="text-3xl font-bold mb-2 text-black dark:text-white">Hey, I&apos;m Tushar</h1>
           <div className="space-y-5 text-lg text-gray-800 dark:text-gray-100 text-center">
             <p>
-              I’m that guy who prefers dogs over people, silence over small talk, and markdown over Microsoft Word. Born in Bhiwani. Raised on curiosity and Google.
+              Welcome to <span className="font-semibold">Tink On It</span> — my cozy corner of the internet.
+              I’m that guy who prefers dogs over people, silence over small talk, and markdown over Microsoft Word.
             </p>
             <p>
-              I build websites. I break them too (then fix them, mostly). I write stories because otherwise my head would be too loud to sleep at night.
+              Born in Bhiwani. Raised on curiosity, Google, and a little too much chai. I write stories to make sense of the noise inside my head. I build websites, break them (then fix them), and sometimes share the journey.
+            </p>
+            <p>
+              <span className="font-semibold">Things I love:</span> My golden retriever (Harry), quiet mornings, loud playlists, and the smell of fresh blog ideas.
             </p>
             <p>
               If I had a superpower, it’d be overthinking everything. If I had a weakness, it’d be... overthinking everything.
             </p>
             <p>
-              I&apos;m not here to give you perfect life advice or productivity hacks. I’m here to share what it feels like to be lost, to try, to fail, to write, to rebuild, and occasionally—win.
+              <span className="italic">If we meet in real life, I might act awkward. If you like that kind of vibe, you’ll enjoy the rest of this site.</span>
             </p>
             <p>
-              <strong>Things I love:</strong> My golden retriever (Harry), quiet mornings, loud playlists, and the smell of fresh blog ideas.
-            </p>
-            <p>
-              Tink On It is my digital journal. My raw, chaotic, semi-organized brain poured into bytes. Expect late-night thoughts, unfinished ideas, funny rants, and maybe a few things you’ll relate to.
-            </p>
-            <p>
-              Welcome to my corner of the internet. No filters, no gurus. Just a guy trying to make sense of it all—one blog at a time.
+              <span className="font-semibold">Want to connect?</span> Say hi on{" "}
+              <a
+                href="https://twitter.com/tushar_tinkon"
+                className="text-blue-500 underline hover:text-blue-700"
+                target="_blank"
+                rel="noopener"
+              >
+                Twitter/X
+              </a>
+              {" "}
+              or check out my <Link href="/blog" className="underline hover:text-indigo-600">blog</Link>.
             </p>
           </div>
-          <p className="text-gray-500 dark:text-gray-400 text-center mt-8 italic">
-            If we meet in real life, I might act awkward. If you like that kind of vibe, you’ll enjoy the rest of this site.
-          </p>
         </motion.div>
       </main>
     </>
