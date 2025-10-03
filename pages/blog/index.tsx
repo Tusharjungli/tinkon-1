@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { format } from "date-fns";
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 // Breadcrumb component
@@ -129,7 +128,6 @@ export default function BlogIndexPage({
         <p className="mb-8 text-gray-700 dark:text-gray-300 text-base max-w-2xl">
           Explore real, unfiltered blogs by me on life, growth, dogs, introversion, mental health, and surviving the chaos of modern life. Every post is hand-written and 100% original.
         </p>
-
         {/* Category Filter with Counts */}
         <div className="flex flex-wrap gap-3 mb-10 bg-white dark:bg-gray-950 py-2 transition-colors">
           {CATEGORIES.map((cat) => (
@@ -140,83 +138,89 @@ export default function BlogIndexPage({
               className={`px-4 py-2 rounded-full border text-sm font-semibold transition
                 ${selected === cat
                   ? "bg-black text-white border-black dark:bg-white dark:text-black dark:border-white"
-                  : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200 hover:text-black dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700 dark:hover:text-white"}`}
+                  : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200 hover:text-black dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700 dark:hover:text-white"}
+              `}
               style={{ textDecoration: "none" }}
+              aria-label={`Show posts in category ${cat}`}
             >
               {cat}
               <span className="ml-2 text-xs font-normal text-gray-400 dark:text-gray-400">({categoryCounts[cat] || 0})</span>
             </Link>
           ))}
         </div>
-
         {/* Blog Cards */}
-        <ul>
-          {filtered.length === 0 && (
-            <div className="text-gray-600 dark:text-gray-400 italic text-center py-16">
-              No posts found for this category.
-            </div>
-          )}
-          {filtered.map((post) => (
-            <li key={post.slug} className="mb-8 pb-6 border-b last:border-b-0 last:pb-0 list-none">
-              <Link
-                href={`/blog/${post.slug}`}
-                className="block group focus:outline-none cursor-pointer transition"
-                style={{ textDecoration: "none" }}
-                tabIndex={0}
-              >
-                <motion.div
-                  whileHover={{ scale: 1.015, boxShadow: "0 4px 18px rgba(0,0,0,0.08)" }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 330, damping: 25 }}
-                  className={`
-                    flex flex-col sm:flex-row items-start gap-6
-                    bg-white dark:bg-gray-950 rounded-xl shadow-sm transition-colors
-                    px-5 py-4
-                    border border-transparent
-                    group-hover:bg-gray-50 dark:group-hover:bg-gray-900
-                    group-focus:ring-2 group-focus:ring-indigo-200 dark:group-focus:ring-gray-800
-                  `}
-                  style={{
-                    boxShadow: "0 1px 4px rgba(20,20,20,0.04)",
-                  }}
+        <section aria-label="Blog posts">
+          <ul>
+            {filtered.length === 0 && (
+              <div className="text-gray-600 dark:text-gray-400 italic text-center py-16">
+                No posts found for this category.
+              </div>
+            )}
+            {filtered.map((post) => (
+              <li key={post.slug} className="mb-8 pb-6 border-b last:border-b-0 last:pb-0 list-none">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="block group focus:outline-none cursor-pointer transition"
+                  style={{ textDecoration: "none" }}
+                  tabIndex={0}
+                  aria-label={`Read blog: ${post.title}`}
                 >
-                  {/* Cover Image */}
-                  <div className="w-full sm:w-40 flex-shrink-0 mb-4 sm:mb-0">
-                    <Image
-                      src={post.coverImage}
-                      alt={post.title}
-                      width={180}
-                      height={120}
-                      className="rounded-xl object-cover w-full h-28 shadow-sm"
-                    />
-                  </div>
-                  {/* Blog Info */}
-                  <div className="flex-1 min-w-0">
-                    <h2 className="text-2xl font-bold text-black dark:text-white group-hover:underline transition-colors mb-1">
-                      {post.title}
-                    </h2>
-                    <p className="text-gray-700 dark:text-gray-300 text-sm mb-2">
-                      {format(new Date(post.date), "dd MMM yyyy")} — <span className="uppercase">{post.category}</span>
-                    </p>
-                    <p className="mb-1 text-gray-800 dark:text-gray-200 line-clamp-3">{post.description}</p>
-                    {post.tags && post.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {post.tags.map(tag => (
-                          <span
-                            key={tag}
-                            className="inline-block bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-full text-gray-600 dark:text-gray-300 font-medium"
-                          >
-                            #{tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              </Link>
-            </li>
-          ))}
-        </ul>
+                  <article
+                    className={`
+                      flex flex-col sm:flex-row items-start gap-6
+                      bg-white dark:bg-gray-950 rounded-xl shadow-sm transition-colors
+                      px-5 py-4
+                      border border-transparent
+                      group-hover:bg-gray-50 dark:group-hover:bg-gray-900
+                      group-focus:ring-2 group-focus:ring-indigo-200 dark:group-focus:ring-gray-800
+                    `}
+                    style={{
+                      boxShadow: "0 1px 4px rgba(20,20,20,0.04)",
+                    }}
+                    aria-label={`Blog post: ${post.title}`}
+                  >
+                    {/* Cover Image */}
+                    <div className="w-full sm:w-40 flex-shrink-0 mb-4 sm:mb-0">
+                      <Image
+                        src={post.coverImage}
+                        alt={`Cover for: ${post.title} — ${post.category}`}
+                        width={180}
+                        height={120}
+                        className="rounded-xl object-cover w-full h-28 shadow-sm"
+                        loading="lazy"
+                      />
+                    </div>
+                    {/* Blog Info */}
+                    <div className="flex-1 min-w-0">
+                      <h2 className="text-2xl font-bold text-black dark:text-white group-hover:underline transition-colors mb-1">
+                        {post.title}
+                      </h2>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm mb-2">
+                        {post.date ? format(new Date(post.date), "dd MMM yyyy") : ""} — <span className="uppercase">{post.category}</span>
+                      </p>
+                      <p className="mb-1 text-gray-800 dark:text-gray-200 line-clamp-3">{post.description}</p>
+                      {post.tags && post.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {post.tags.map(tag => (
+                            <Link
+                              key={tag}
+                              href={`/blog?tag=${encodeURIComponent(tag)}`}
+                              className="inline-block bg-gray-100 dark:bg-gray-800 text-xs px-2 py-1 rounded-full text-gray-600 dark:text-gray-300 font-medium"
+                              style={{ textDecoration: "none" }}
+                              aria-label={`Show posts tagged ${tag}`}
+                            >
+                              #{tag}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
         {/* Improved Focus ring style for accessibility */}
         <style jsx global>{`
           a:focus-visible {
@@ -224,6 +228,11 @@ export default function BlogIndexPage({
             outline-offset: 2px;
           }
         `}</style>
+        <div className="mt-10 flex justify-center">
+          <Link href="/" className="text-indigo-600 underline hover:text-indigo-800 text-sm" aria-label="Back to Home">
+            ← Back to Home
+          </Link>
+        </div>
       </div>
     </>
   );

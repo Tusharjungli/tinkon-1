@@ -104,7 +104,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
     };
 
   return (
-    <> 
+    <>
       <Head>
         <title>{`${post.title} — Tink On It`}</title>
         <meta name="description" content={post.description} />
@@ -129,15 +129,16 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
       />
 
       <AnimatePresence mode="wait">
-        <motion.div
+        <motion.article
           key={post.slug}
           initial={{ opacity: 0, y: 48 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 16 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="max-w-3xl mx-auto px-4 py-16"
+          aria-label="Blog post main content"
         >
-          <motion.div initial={false} whileHover="hover" whileTap="tap" className="mb-7">
+          <motion.header initial={false} whileHover="hover" whileTap="tap" className="mb-7">
             <Link
               href="/blog"
               className="inline-flex items-center gap-1 text-sm font-medium text-gray-700 dark:text-gray-100 group transition"
@@ -161,21 +162,22 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
                 Back to all blogs
               </span>
             </Link>
-          </motion.div>
+          </motion.header>
 
           {/* Blog cover image */}
           {post.coverImage && (
             <div className="mb-8">
               <Image
                 src={post.coverImage}
-                alt={post.title}
+                alt={`Cover image for: ${post.title}`}
                 width={800}
                 height={400}
                 className="rounded-xl mx-auto shadow-lg"
                 style={{ width: "100%", height: "auto" }}
-                loading="lazy"
+                priority // Only use priority here for above-the-fold
                 placeholder="blur"
                 blurDataURL="/images/blur-placeholder.png"
+                // DO NOT use loading="lazy" here
               />
             </div>
           )}
@@ -206,8 +208,9 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
                 <Link
                   key={tag}
                   href={`/blog?tag=${encodeURIComponent(tag)}`}
-                  className="inline-block bg-pink-100 dark:bg-pink-800 text-pink-700 dark:text-pink-100 text-xs font-semibold px-3 py-1 rounded-full hover:bg-pink-200 dark:hover:bg-pink-700 transition-colors"
+                  className="inline-block bg-pink-100 dark:bg-pink-800 text-pink-700 dark:text-pink-100 text-xs font-semibold px-3 py-1 rounded-full hover:bg-pink-200 dark:hover:bg-pink-700 transition"
                   style={{ textDecoration: "none" }}
+                  aria-label={`Show posts tagged ${tag}`}
                 >
                   #{tag}
                 </Link>
@@ -266,10 +269,11 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
           <div className="flex items-center gap-4 mt-10 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 shadow-sm">
             <Image
               src={authorData.avatar || "/images/profile.webp"}
-              alt={authorData.name}
+              alt={`Photo of ${authorData.name} — ${authorData.bio || "Author at Tink On It"}`}
               width={60}
               height={60}
               className="rounded-full border border-gray-300"
+              loading="lazy" // Author avatar not above the fold, so use lazy load
             />
             <div>
               <p className="text-sm font-bold text-black dark:text-white">{authorData.name}</p>
@@ -288,14 +292,6 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
           <PostActionsBar />
 
           <CommentsForm endpoint="https://formspree.io/f/xldwzloz" postSlug={post.slug} />
-
-          
-
-
-
-
-
-
 
           {/* --- Previous/Next Navigation --- */}
           {(previousPost || nextPost) && (
@@ -323,6 +319,11 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
             </div>
           )}
 
+          {/* Optional Home link for navigation */}
+          <div className="mt-10 flex justify-center">
+            <Link href="/" className="text-indigo-600 underline hover:text-indigo-800 text-sm">← Back to Home</Link>
+          </div>
+
           <Script id="twitter-event-pixel" strategy="afterInteractive">
             {`
               twq('event', 'tw-q87ph-q87pi', {
@@ -332,7 +333,7 @@ export default function BlogDetailPage({ post, mdxSource, recommended, readingTi
               });
             `}
           </Script>
-        </motion.div>
+        </motion.article>
       </AnimatePresence>
     </>
   );

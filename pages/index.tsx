@@ -41,6 +41,16 @@ export default function Home({ featured, highlights }: HomeProps) {
           content="The homepage of Tink On It. Real, raw stories, life as an introvert, dogs, failures, late-night ideas, and the unfiltered journey of Tushar Panchal."
         />
         <link rel="canonical" href={canonicalUrl} />
+        {/* SEO & Social */}
+        <meta property="og:title" content="Tink On It — Think, Feel, Write. By Tushar Panchal" />
+        <meta property="og:description" content="Real, raw stories, life as an introvert, dogs, failures, late-night ideas, and the unfiltered journey of Tushar Panchal." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content="https://tinkon.in/og-image.webp" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Tink On It — Think, Feel, Write. By Tushar Panchal" />
+        <meta name="twitter:description" content="Real, raw stories, life as an introvert, dogs, failures, late-night ideas, and the unfiltered journey of Tushar Panchal." />
+        <meta name="twitter:image" content="https://tinkon.in/og-image.webp" />
       </Head>
 
       {/* HERO */}
@@ -70,6 +80,7 @@ export default function Home({ featured, highlights }: HomeProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
+          aria-label="Featured story"
         >
           <div
             className="bg-gray-300 dark:bg-gray-700 rounded-2xl shadow p-6 transition-colors cursor-pointer hover:shadow-xl focus:ring-2 focus:ring-indigo-300 outline-none"
@@ -85,7 +96,7 @@ export default function Home({ featured, highlights }: HomeProps) {
             <div className="mb-4">
               <Image
                 src={featured.coverImage}
-                alt={`Cover image: ${featured.title} — ${featured.description}`}
+                alt={`Featured cover for: ${featured.title} — ${featured.description}`}
                 width={900}
                 height={360}
                 className="rounded-lg object-cover w-full h-64"
@@ -115,6 +126,7 @@ export default function Home({ featured, highlights }: HomeProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: "easeOut" }}
+          aria-label="Blog highlights"
         >
           <h3 className="text-xl font-semibold mb-6 text-left text-gray-700 dark:text-white">
             Fresh from the mind...
@@ -137,10 +149,11 @@ export default function Home({ featured, highlights }: HomeProps) {
               >
                 <Image
                   src={post.coverImage}
-                  alt={`Blog: ${post.title} — ${post.description}`}
+                  alt={`Blog highlight cover: ${post.title} — ${post.description}`}
                   width={400}
                   height={180}
                   className="rounded-lg object-cover w-full h-36 mb-4"
+                  loading="lazy"
                 />
                 <span className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-300 mb-1">{post.category}</span>
                 <h4 className="text-lg font-bold mb-1 text-black dark:text-white">{post.title}</h4>
