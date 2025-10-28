@@ -13,6 +13,7 @@ const categories = [
   "Addiction & Escape",
   "Personal Stories",
   "Society & Culture",
+  "Ramayana Series",
 ];
 
 export default function Navbar() {

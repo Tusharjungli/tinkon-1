@@ -42,6 +42,7 @@ const CATEGORIES = [
   "Addiction & Escape",
   "Personal Stories",
   "Society & Culture",
+  "Ramayana Series",
 ];
 
 // Helper: Count posts per category
