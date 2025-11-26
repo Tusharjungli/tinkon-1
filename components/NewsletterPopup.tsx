@@ -178,11 +178,11 @@ export default function NewsletterPopup({
             </button>
 
             <h3 className="text-2xl font-bold text-center text-gray-900 dark:text-gray-100">
-              Before you scroll on—can we stay in touch?
+              Can we stay in touch..?
             </h3>
             <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-              Hey,If this piece is meeting you at the right moment,
-              drop your email. I’ll send you the next ones—real talk, raw thoughts, no noise. It&apos;s my promise.
+              Hey, If this piece is meeting you at the right moment,
+              drop your email. I’ll send you the next ones and no noise. It&apos;s my promise.
             </p>
 
             <form onSubmit={handleSubmit} className="mt-5 flex flex-col items-center gap-3 sm:flex-row">
@@ -198,7 +198,7 @@ export default function NewsletterPopup({
                 disabled={status === "loading"}
                 className="w-full sm:w-auto rounded-xl bg-black px-5 py-3 font-medium text-white transition-[background-color,transform] duration-200 hover:-translate-y-0.5 hover:bg-gray-800 active:translate-y-0 disabled:opacity-60 dark:bg-white dark:text-black dark:hover:bg-gray-200"
               >
-                {status === "loading" ? "Sending…" : "Send me the next one"}
+                {status === "loading" ? "Sending…" : "Click here!"}
               </button>
             </form>
 
@@ -207,7 +207,7 @@ export default function NewsletterPopup({
             )}
             {status === "done" && (
               <div className="mt-3 text-center text-sm font-medium text-green-600">
-                thank you for trusting me — you just made my day 🌿
+                thank you for trusting me... you just made my day ! ❤️
               </div>
             )}
 
