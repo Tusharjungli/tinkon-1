@@ -1,15 +1,17 @@
-import Image from "next/image";
+import Image, { ImageProps } from "next/image";
 
-export default function MDXImage(props: any) {
-  const {
-    src,
-    alt = "",
-    width = 900,
-    height = 500,
-    className = "",
-    ...rest
-  } = props;
+type MDXImageProps = ImageProps & {
+  className?: string;
+};
 
+export default function MDXImage({
+  src,
+  alt = "",
+  width = 900,
+  height = 500,
+  className = "",
+  ...rest
+}: MDXImageProps) {
   return (
     <div className="relative my-6 w-full">
       <Image
