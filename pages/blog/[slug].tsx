@@ -25,6 +25,7 @@ import CommentsForm from "../../components/CommentsForm";
 
 // Import authors data (create data/authors.json at repo root)
 import authorsData from "../../data/authors.json";
+import MDXImage from "@/components/MDXImage";
 
 type Author = {
   name: string;
@@ -62,7 +63,7 @@ type BlogDetailProps = {
 const BLOG_DIR = path.join(process.cwd(), "content/blog");
 
 const mdxComponents = {
-  Image,
+  Image: MDXImage,
   Quote,
   Note,
   Warning,
