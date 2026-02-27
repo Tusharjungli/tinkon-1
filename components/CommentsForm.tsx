@@ -63,7 +63,7 @@ export default function CommentsForm({ endpoint, postSlug }: Props) {
           name="hp_name" // visible name field
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Your name (optional)"
+          placeholder="Your name"
           className="w-full rounded-md border px-3 py-2 text-sm"
         />
 
